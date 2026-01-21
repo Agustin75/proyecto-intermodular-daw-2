@@ -11,3 +11,4 @@ class Ejemplo {
     
 }
 ?>
+<h1>hola mundo</h1>
