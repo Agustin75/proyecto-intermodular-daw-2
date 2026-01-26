@@ -50,7 +50,7 @@ class Usuario
     {
         $sql = "UPDATE pokemon_usuario
         SET favorito = :fav,
-        WHERE id_usuario = :id AND WHERE id = :idpkmn";
+        WHERE id_usuario = :id AND id = :idpkmn";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':idpkmn', $idpkmn);
