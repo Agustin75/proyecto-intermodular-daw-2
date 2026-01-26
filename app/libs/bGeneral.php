@@ -10,6 +10,20 @@
 //***** Funciones de sanitización **** //
 
 
+
+function cEmail(string $input, string $campo, array &$errores):bool {
+if (empty($input)){
+    $errores[$campo] = "El correo electronico es obligatorio";
+    return false;
+}
+if (filter_var($input, FILTER_VALIDATE_EMAIL) == false){
+    $errores[$campo] = "El formato del correo electronico no es valido";
+    return false;
+    
+}
+return true;
+}
+
 /**
  * funcion sinTildes
  *

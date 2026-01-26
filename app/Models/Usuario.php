@@ -27,6 +27,14 @@ class Usuario
         return $stmt->execute();
     }
 
+     public function buscarUsuario($nombre)
+    {
+        $sql = "SELECT * FROM usuario WHERE nombre = :nombre";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':nombre', $nombre);
+        return $stmt->execute();
+    }
+
     public function cambiarImagen($imagen, $id)
     {
         $sql = "UPDATE usuario
@@ -38,13 +46,14 @@ class Usuario
         return $stmt->execute();
     }
 
-    public function elegirFavorito($id, $fav)
+    public function elegirFavorito($id, $fav, $idpkmn)
     {
         $sql = "UPDATE pokemon_usuario
         SET favorito = :fav,
-        WHERE id_usuario = :id";
+        WHERE id_usuario = :id AND WHERE id = :idpkmn";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':idpkmn', $idpkmn);
         $stmt->bindParam(':fav', $fav);
         return $stmt->execute();
     }
