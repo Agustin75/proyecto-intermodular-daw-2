@@ -4,9 +4,13 @@ class InicioController extends Controller
     public function inicio()
     {
         $params = array(
-            'mensaje' => 'Bienvenido',
-            'mensaje2' => 'Este esqueleto puedes utilizarlo para tu proyecto',
-            'fecha' => date('d-m-Y')
+            'page_title' => 'Bienvenido al mundo de PokeHunt',
+            "paragraphs" => [
+                "Ve a la Wiki para aprender más sobre los Pokémon, o empieza a capturar Pokémon en la sección de Juegos.",
+                "Compite con otros entrenadores en los Rankings. ¿Lograrás ser el mejor maestro Pokémon?"
+            ],
+            // TODO: Añadir imagen para el home aquí
+            "image" => ""
         );
 
         require __DIR__ . '/../templates/inicio.php';

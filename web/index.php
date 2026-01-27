@@ -17,6 +17,9 @@ $session = new SessionManager(
     timeout: 600
 );
 
+// DEBUG: Descomenta esta línea para simular un usuario logueado
+// $session->login(1, "Nombre", USER_ADMIN);
+
 // Comprobaciones de seguridad (fingerprint + timeout)
 $session->checkSecurity();
 
@@ -24,7 +27,7 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
-    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => 1]
+    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => USER_GUEST]
 ];
 
 // -------------------------------------------------------------
