@@ -71,11 +71,11 @@ public function registrarUsuario(){
 
         $params = [
             'nombre' => '',
+             'contrasenya' => '',
             'email' => '',
-            'user' => '',
-            'contrasenya' => '',
+   
             'nivel' => 2,
-            'id_padre' => ''
+            
         ];
 
         $errores = [];
@@ -85,7 +85,7 @@ public function registrarUsuario(){
             $nombre      = recoge('nombre');
             $email       = recoge('email');
             $contrasenya = recoge('contrasenya');
-            $nivel       = recoge('nivel');
+            $nivel       = $this->session->getUserLevel();
             $imagen      = recoge('imagen');
 
             $nivelesPerm = [1 => 1, 2 => 2];
@@ -199,6 +199,37 @@ $Perm = [true => true, false => false];
 
 
 
+}
+
+public function cambiarNombre(){
+      $errores = [];
+        $params = [
+            'nombre_old' => '',
+            'nombre_new'   => ''
+        ];
+
+         $old = recoge('old');
+         $new = recoge('new');
+
+                $id   = $this->session->getUserId();
+
+            $m= new Usuario();
+            if($m->buscarUsuario($old) == false){
+            if (cTexto($new, "nombre", $errores) == true){
+                $m->cambiarNombre($new, $id);
+            }
+
+            }
+            else{
+                 $params['mensaje'] = 'No se ha podido cambiar el nombre, ya existe.';
+            }
+        try {
+        }catch(Throwable $e) {
+            $this->handleError($e);
+
+        }
+        require __DIR__ . '/../templates/cambioNombre.php';
+    
 }
 
 }

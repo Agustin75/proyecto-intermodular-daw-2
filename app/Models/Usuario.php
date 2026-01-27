@@ -69,4 +69,15 @@ class Usuario
         $stmt->bindParam(':act', $act);
         return $stmt->execute();
     }
+
+     public function cambiarNombre($new, $id) : bool
+    {
+        $sql = "UPDATE usuario
+        SET nombre = :act,
+        WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':nombre', $new);
+        return $stmt->execute();
+    }
 }
