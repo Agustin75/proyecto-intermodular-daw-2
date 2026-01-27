@@ -214,7 +214,7 @@ public function cambiarNombre(){
                 $id   = $this->session->getUserId();
 
             $m= new Usuario();
-            if($m->buscarUsuario($old) == false){
+            if($m->buscarUsuario($new) == false){
             if (cTexto($new, "nombre", $errores) == true){
                 $m->cambiarNombre($new, $id);
             }

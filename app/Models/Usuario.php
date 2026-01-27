@@ -73,7 +73,7 @@ class Usuario
      public function cambiarNombre($new, $id) : bool
     {
         $sql = "UPDATE usuario
-        SET nombre = :act,
+        SET nombre = :nombre,
         WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
