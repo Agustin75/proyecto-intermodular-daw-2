@@ -1,7 +1,8 @@
 <?php
 
 
-class UsuarioController extends Controller {
+class UsuarioController extends Controller
+{
 
 
 
@@ -47,13 +48,11 @@ class UsuarioController extends Controller {
 
                         header('Location: index.php?ctl=inicio');
                         exit;
-
                     } else {
                         $params['mensaje'] = 'Usuario o contraseña incorrectos.';
                     }
                 }
             }
-
         } catch (Throwable $e) {
             $this->handleError($e);
         }
@@ -62,20 +61,21 @@ class UsuarioController extends Controller {
     }
 
 
-public function registrarUsuario(){
+    public function registrarUsuario()
+    {
 
- if ($this->session->getUserLevel() > 1) {
+        if ($this->session->getUserLevel() > 1) {
             header("Location: index.php?ctl=inicio");
             exit;
         }
 
         $params = [
             'nombre' => '',
-             'contrasenya' => '',
+            'contrasenya' => '',
             'email' => '',
-   
+
             'nivel' => 2,
-            
+
         ];
 
         $errores = [];
@@ -96,7 +96,7 @@ public function registrarUsuario(){
                 'contrasenya' => $contrasenya,
                 'nivel' => $nivel,
                 'imagen' => $imagen
-           
+
             ];
 
             cTexto($nombre, "nombre", $errores);
@@ -104,39 +104,35 @@ public function registrarUsuario(){
             cUser($contrasenya, "contrasenya", $errores);
             cSelect($nivel, "nivel", $errores, $nivelesPerm);
             cTexto($imagen, "imagen", $errores, 999);
-             if (empty($errores)) {
+            if (empty($errores)) {
 
                 try {
-                         $m = new Usuario();
+                    $m = new Usuario();
 
-                        if ($m->crearUsuario($nombre,  
-                            encriptar($contrasenya),
-                            $email,
-                            $imagen
-                           
-                        )) {
-                            header("Location: index.php?ctl=inicio");
-                            exit;
-                        } else {
-                            $params['mensaje'] = 'No se ha podido registrar el usuario.';
-                        }
+                    if ($m->crearUsuario(
+                        $nombre,
+                        encriptar($contrasenya),
+                        $email,
+                        $imagen
+
+                    )) {
+                        header("Location: index.php?ctl=inicio");
+                        exit;
+                    } else {
+                        $params['mensaje'] = 'No se ha podido registrar el usuario.';
                     }
-
-                 catch (Throwable $e) {
+                } catch (Throwable $e) {
                     $this->handleError($e);
                 }
-                
-require __DIR__ . '/../templates/Registro.php';
 
-}
+                require __DIR__ . '/../templates/Registro.php';
+            }
+        }
+    }
 
-
-}
-}
-
- public function cambiarImagen()
+    public function cambiarImagen()
     {
-         $errores = [];
+        $errores = [];
         $params = [
             'id' => '',
             'imagen'   => ''
@@ -146,91 +142,87 @@ require __DIR__ . '/../templates/Registro.php';
 
 
             if (isset($_POST['bIniciarSesion'])) {
-                
+
                 $imagen = recoge('imagen');
                 $id   = $this->session->getUserId();
 
                 $params['imagen'] = $imagen;
                 $params['id'] = $id;
 
-                
 
-                    $m = new Usuario();
-                    $usuario = $m->cambiarImagen($imagen, $id);
 
-                   }
-            } catch (Throwable $e) {
+                $m = new Usuario();
+                $usuario = $m->cambiarImagen($imagen, $id);
+            }
+        } catch (Throwable $e) {
             $this->handleError($e);
         }
 
         require __DIR__ . '/../templates/cambioImagen.php';
-    
-}
+    }
 
-public function seleccionarFavorito(){
-     $errores = [];
-  $params = [
+    public function seleccionarFavorito()
+    {
+        $errores = [];
+        $params = [
             'id' => '',
             'id_pkmn'   => '',
             'fav' => '',
         ];
-$Perm = [true => true, false => false];
-                $id_pkmn = recoge('id_pokemon');
-                $fav = recogeArray('fav');
-                $id   = $this->session->getUserId();
-                
-                
-                $fav_state = false;
-                
-                $params['id_pkmn'] = $id_pkmn;
-                $params['id'] = $id;
+        $Perm = [true => true, false => false];
+        $id_pkmn = recoge('id_pokemon');
+        $fav = recogeArray('fav');
+        $id   = $this->session->getUserId();
+ try {
+            if (isset($_POST['bIniciarSesion'])) {
 
-                if(cCheck($fav, 'fav', $errores, $Perm) == true){
-                    $fav_state = true;
-                } else {
-                    $fav_state = false;
-                }
+        $fav_state = false;
 
-                 $m = new Usuario();
-                    $usuario = $m->elegirFavorito($id, $fav_state, $id_pkmn);
+        $params['id_pkmn'] = $id_pkmn;
+        $params['id'] = $id;
 
+        if (cCheck($fav, 'fav', $errores, $Perm) == true) {
+            $fav_state = true;
+        } else {
+            $fav_state = false;
+        }
 
-    require __DIR__ . '/../templates/cartapkmn.php';
+        $m = new Usuario();
+        $usuario = $m->elegirFavorito($id, $fav_state, $id_pkmn);
 
-
-
-}
-
-public function cambiarNombre(){
-      $errores = [];
+            }
+        
+    }catch (Throwable $e) {
+            $this->handleError($e);
+        }
+        require __DIR__ . '/../templates/cartaPkmn.php';
+    }
+    public function cambiarNombre()
+    {
+        $errores = [];
         $params = [
             'nombre_old' => '',
             'nombre_new'   => ''
         ];
 
-         $old = recoge('old');
-         $new = recoge('new');
+        $old = recoge('old');
+        $new = recoge('new');
 
-                $id   = $this->session->getUserId();
-
-            $m= new Usuario();
-            if($m->buscarUsuario($new) == false){
-            if (cTexto($new, "nombre", $errores) == true){
-                $m->cambiarNombre($new, $id);
-            }
-
-            }
-            else{
-                 $params['mensaje'] = 'No se ha podido cambiar el nombre, ya existe.';
-            }
+        $id   = $this->session->getUserId();
         try {
-        }catch(Throwable $e) {
+            if (isset($_POST['bIniciarSesion'])) {
+                $m = new Usuario();
+                if ($m->buscarUsuario($new) == false) {
+                    if (cTexto($new, "nombre", $errores) == true) {
+                        $m->cambiarNombre($new, $id);
+                    }
+                } else {
+                    $params['mensaje'] = 'No se ha podido cambiar el nombre, ya existe.';
+                }
+            }
+        } catch (Throwable $e) {
             $this->handleError($e);
-
         }
         require __DIR__ . '/../templates/cambioNombre.php';
-    
+    }
 }
-
-}
-?>
