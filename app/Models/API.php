@@ -4,6 +4,7 @@ define("FIRST_FORM_ID", 10001);
 class API {
     // List that holds the name, id and URL of all Pokemon from the API (Forms excluded)
     private array $allPokemonList = [];
+    private array $typesList = [];
 
     public function __construct() {
 
@@ -17,7 +18,7 @@ class API {
         // We check if we have already obtained the list
         if (empty($this->allPokemonList)) {
             // If we haven't, we obtain it from the API and sort it. The request will get all Pokemon up to the first Form ID to avoid getting Forms.
-            $this->allPokemonList = $this->obtainSortedPokemonList($this->makeRequest("pokemon?limit=" . FIRST_FORM_ID - 1)["results"]);
+            $this->allPokemonList = $this->obtainSortedPokemonList($this->makeRequest("pokemon-species?limit=" . FIRST_FORM_ID - 1)["results"]);
         }
 
         // We return the sorted list of Pokemon
@@ -36,7 +37,10 @@ class API {
             return [];
         }
 
-        return $this->obtainSortedPokemonList($typeInformation['pokemon']);
+        // We normalize the response to save the Pokemon information as ID, name and URL
+        $pokemonOfType = $this->normalizePokemonByTypeResponse($typeInformation['pokemon']);
+
+        return $this->sortNormalizedPokemonListById($pokemonOfType);
     }
 
     /**
@@ -91,9 +95,58 @@ class API {
         return $pokemonData ?? [];
     }
 
+    public function getTypesList(): array
+    {
+        if (empty($this->typesList)) {
+            $types = $this->makeRequest("type")["results"];
+
+            // We loop through the basic list of Pokemon
+            for ($i = 0; $i < count($types); $i++) {
+                // We get the current Pokemon
+                $currType = $types[$i];
+                // We split the URL to obtain the ID
+                $elements = explode("/", $currType['url']);
+                // We save the ID in the current Pokemon info. The ID is the last element before the last slash
+                $currType['id'] = (int)$elements[count($elements) - 2];
+
+                // Types not present in the main games also start at FIRST_FORM_ID, so we exclude them here
+                if ($currType["id"] < FIRST_FORM_ID) {
+                    // We add the current Pokemon to the list to return
+                    $this->typesList[] = $currType;
+                }
+            }
+
+            // We sort the new list by ID
+            array_multisort(array_column($this->typesList, 'id'), SORT_ASC, $this->typesList);
+        }
+
+        return $this->typesList;
+    }
+
     /////////////////////
     // HELPER FUNCTIONS
     /////////////////////
+    private function normalizePokemonByTypeResponse(array $response): array
+    {
+        // We return the list of Pokemon of the given type from the list saved in API, since that one uses more visually appealing names (They don't have the form in the name for Pokemon that have multiple forms)
+        $normalizedList = [];
+        $fullList = $this->getAllPokemon();
+        
+        foreach ($response as $pokemonEntry) {
+            $pokemon = $pokemonEntry['pokemon'];
+            // We split the URL to obtain the ID
+            $elements = explode("/", $pokemon['url']);
+            // We save the ID in the current Pokemon info. The ID is the last element before the last slash
+            $id = (int)$elements[count($elements) - 2];
+
+            if ($id < FIRST_FORM_ID) {
+                $normalizedList[] = $fullList[$id - 1]; // -1 because the list is 0-indexed
+            }
+        }
+
+        return $normalizedList;
+    }
+
     /**
      * @param string $endpoint - The endpoint or full URL call to the API
      * @param bool $fullURL - whether $endpoint is the full URL or just the endpoint. Default is false (just endpoint)
@@ -150,6 +203,11 @@ class API {
             }
         }
 
+        return $this->sortNormalizedPokemonListById($pokemonList);
+    }
+
+    private function sortNormalizedPokemonListById(array $pokemonList): array
+    {
         // We sort the new list by ID
         array_multisort(array_column($pokemonList, 'id'), SORT_ASC, $pokemonList);
         return $pokemonList;

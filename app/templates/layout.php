@@ -55,7 +55,9 @@
             <h5 class="text-center"> FOOTER VA AQUÍ </h5>
         </div>
     </div>
-
+    <?php if (isset($script)): ?>
+        <script type="text/javascript" src="<?= "js/" . $script ?>"></script>
+    <?php endif; ?>
 </body>
 
 </html>

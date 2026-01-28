@@ -7,6 +7,7 @@ class WikiController extends Controller
 
         $params = array(
             "pokemon_list" => $mApi->getAllPokemon(),
+            "type_list" => $mApi->getTypesList(),
         );
 
         require __DIR__ . '/../templates/displayWiki.php';
@@ -44,32 +45,23 @@ class WikiController extends Controller
 
     public function filterByType()
     {
-        $params = array(
-            "errors" => [],
-            "pokemon_list" => [],
-        );
-
+        $errors = [];
         try {
             // We check to see if the user has sent a Pokemon type to search for
             // NOTE: DEBE TENER EL MISMO NOMBRE EN EL FORMULARIO
             if (isset($_GET['type'])) {
                 // We get the Pokemon type from the form
                 $type = recoge('type');
-                cTexto($type, "type", $params["errors"], 20, 1, " -", true);
+                cNum($type, "type", $errors);
 
-                if (empty($params["errors"])) {
+                if (empty($errors)) {
                     $mApi = new API();
-                    $params["pokemon_list"] = $mApi->getPokemonByType($type);
-                }
-            } else {
-                $params['message'] = 'No existe ningún Pokemon que coincida con el tipo indicado.';
-            }
-        } catch (Throwable $e) { 
-                $params['message'] = 'No existe ningún Pokemon que coincida con el tipo indicado.';
-            // $this->handleError($e); 
-        }
 
-        require __DIR__ . '/../templates/displayWiki.php';
+                    print_r(json_encode($mApi->getPokemonByType($type)));
+                }
+            }
+        } catch (Throwable $e) {
+        }
     }
 
     public function filterByGeneration()
