@@ -24,7 +24,8 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
-    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => 1]
+    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => 1],
+    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => 1]
 ];
 
 // -------------------------------------------------------------

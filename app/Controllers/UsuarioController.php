@@ -102,8 +102,8 @@ class UsuarioController extends Controller
             cTexto($nombre, "nombre", $errores);
             cEmail($email, "email", $errores);
             cUser($contrasenya, "contrasenya", $errores);
-            cSelect($nivel, "nivel", $errores, $nivelesPerm);
-            cTexto($imagen, "imagen", $errores, 999);
+            $nivel = 2;
+           $imagen = "default";
             if (empty($errores)) {
 
                 try {
@@ -125,9 +125,10 @@ class UsuarioController extends Controller
                     $this->handleError($e);
                 }
 
-                require __DIR__ . '/../templates/Registro.php';
+               
             }
         }
+         require __DIR__ . '/../templates/Registro.php';
     }
 
     public function cambiarImagen()
