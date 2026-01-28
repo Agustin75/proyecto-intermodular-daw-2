@@ -27,7 +27,8 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
-    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => USER_GUEST]
+    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio',      'nivel' => USER_GUEST],
+    'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST]
 ];
 
 // -------------------------------------------------------------
