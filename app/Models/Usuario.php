@@ -32,7 +32,8 @@ class Usuario
         $sql = "SELECT * FROM usuario WHERE nombre = :nombre";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':nombre', $nombre);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function cambiarImagen($imagen, $id)
@@ -62,7 +63,7 @@ class Usuario
     public function activarUsuario($id, $act)
     {
         $sql = "UPDATE usuario
-        SET activo = :act,
+        SET activo = :act
         WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
@@ -73,7 +74,7 @@ class Usuario
      public function cambiarNombre($new, $id) : bool
     {
         $sql = "UPDATE usuario
-        SET nombre = :nombre,
+        SET nombre = :nombre
         WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);

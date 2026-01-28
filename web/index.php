@@ -25,7 +25,9 @@ $session->checkSecurity();
 // -------------------------------------------------------------
 $map = [
     'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => 1],
-    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => 1]
+    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => 1],
+    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => 1],
+    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => 2]
 ];
 
 // -------------------------------------------------------------

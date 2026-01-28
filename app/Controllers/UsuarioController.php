@@ -37,9 +37,9 @@ class UsuarioController extends Controller
 
                     $m = new Usuario();
                     $usuario = $m->buscarUsuario($nombre);
-
-                    if ($usuario && comprobarhash($contrasenya, $usuario['contrasenya'])) {
-
+                   var_dump($contrasenya);
+                    if (comprobarhash($contrasenya, $usuario['contrasenya'])) {
+ var_dump($contrasenya);
                         $this->session->login(
                             $usuario['id'],
                             $usuario['nombre'],
@@ -205,17 +205,21 @@ class UsuarioController extends Controller
             'nombre_old' => '',
             'nombre_new'   => ''
         ];
-
-        $old = recoge('old');
+        
+        $old = $this->session->getUserName();
+        $params['nombre_old'] = $old;
         $new = recoge('new');
 
         $id   = $this->session->getUserId();
         try {
-            if (isset($_POST['bIniciarSesion'])) {
+            if (isset($_POST['bCambiarNombre'])) {
                 $m = new Usuario();
-                if ($m->buscarUsuario($new) == false) {
+                
+                if ($m->buscarUsuario($new) == "") {
                     if (cTexto($new, "nombre", $errores) == true) {
                         $m->cambiarNombre($new, $id);
+                         header("Location: index.php?ctl=inicio");
+                        exit;
                     }
                 } else {
                     $params['mensaje'] = 'No se ha podido cambiar el nombre, ya existe.';
