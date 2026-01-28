@@ -15,7 +15,7 @@ class Usuario
         $stmt->bindParam(':nombre', $nombre); //replace the values with the variables we called into the function
         $stmt->bindParam(':psswd', $contrasenya);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':imagen', $imagen);
+        $stmt->bindParam(':img', $imagen);
         return $stmt->execute(); //run the request as well as return it
 
     }
