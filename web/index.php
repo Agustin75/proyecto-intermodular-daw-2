@@ -27,9 +27,13 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
-    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio',      'nivel' => USER_GUEST],
-    'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST],
-    'wikiFilterByType'   => ['controller' => 'WikiController',   'action' => 'filterByType', 'nivel' => USER_GUEST],
+    'inicio'                   => ['controller' => 'InicioController', 'action' => 'inicio',             'nivel' => USER_GUEST],
+    'wiki'                     => ['controller' => 'WikiController',   'action' => 'displayWiki',        'nivel' => USER_GUEST],
+    'wikiPokemon'              => ['controller' => 'WikiController',   'action' => 'displayPokemon',     'nivel' => USER_GUEST],
+
+    // Funciones API
+    'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
+    'wikiFilterByGeneration'   => ['controller' => 'APIWikiController',   'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
 ];
 
 // -------------------------------------------------------------

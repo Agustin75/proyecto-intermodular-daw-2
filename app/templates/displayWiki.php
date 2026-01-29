@@ -7,22 +7,32 @@
     <img src="<?= $params["image"] ?>" alt="Imagen de wiki">
 </div> -->
 
-<form action="index.php?ctl=wiki" method="post" name="formFilterByType">
-    <label for="typeSelect">Tipo: </label>
-    <select name="typeSelect" id="typeSelect">
-        <option value="">-- Selecciona un tipo --</option>
-        <?php foreach ($params['type_list'] as $type): ?>
-            <option value="<?= $type["id"] ?>"><?= ucfirst($type["name"]) ?></option>
-        <?php endforeach; ?>
-    </select>
-</form>
-
-<select name="pokemonSelect" id="pokemonSelect">
-    <option value="">-- Selecciona un Pokemon --</option>
-<?php foreach ($params['pokemon_list'] as $pokemon): ?>
-    <option value="<?= $pokemon["id"] ?>"><?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) ?></option>
-<?php endforeach; ?>
+<label for="typeSelect">Tipo: </label>
+<select name="typeSelect" id="typeSelect">
+    <option value="">-- Selecciona un tipo --</option>
+    <?php foreach ($params['type_list'] as $type): ?>
+        <option value="<?= $type["id"] ?>"><?= ucfirst($type["name"]) ?></option>
+    <?php endforeach; ?>
 </select>
+
+<label for="generationSelect">Generación: </label>
+<select name="generationSelect" id="generationSelect">
+    <option value="">-- Selecciona una generación --</option>
+    <?php for ($i = 1; $i <= $params['num_generations']; $i++): ?>
+        <option value="<?= $i ?>"><?= $i ?></option>
+    <?php endfor; ?>
+</select>
+
+<br>
+
+<input type="text" id="pokemonNameInput" name="pokemonNameInput" list="pokemonList">
+<datalist id="pokemonList">
+    <?php foreach ($params['pokemon_list'] as $pokemon): ?>
+        <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->
+         <!-- We add the &#8291; character to be able to listen to on click events of the datalist -->
+        <option data-id="<?= $pokemon["id"] ?>" value="<?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) . "&#8291;" ?>"></option>
+    <?php endforeach; ?>
+</datalist>
 
 <?php $contenido = ob_get_clean() ?>
 

@@ -1,9 +1,39 @@
+let pokemonNameInput;
+let typeSelect;
+let generationSelect;
+let pokemonList;
+
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("typeSelect").addEventListener("change", function() {
-        console.log("Selected type:", this.options[this.selectedIndex].value);
+    pokemonNameInput = document.getElementById("pokemonNameInput");
+    typeSelect = document.getElementById("typeSelect");
+    generationSelect = document.getElementById("generationSelect");
+    pokemonList = document.getElementById("pokemonList");
+
+    pokemonNameInput.addEventListener("input", function() {
+        // We check that an option was selected because it has the invisible character at the end
+        if (this.value.slice(-1) == "\u2063") {
+            // This line makes it so the invisible character is removed from the input, but it's not necessary because it triggers a redirection in our page
+            // this.value = this.value.slice(0, 1);
+
+            // NOTE: This could be coded better, but it works as it is
+            window.location.replace(`index.php?ctl=wikiPokemon&pokemonId=` + document.querySelector(`#pokemonList option[value='${this.value}']`).dataset.id);
+        }
+    });
+
+    typeSelect.addEventListener("change", function() {
         // We empty the select so the player can't use it while it's loading
-        document.getElementById("pokemonSelect").innerHTML = "Loading...";
+        pokemonNameInput.innerHTML = "Loading...";
+        // Reset generation filter when type filter is used
+        generationSelect.selectedIndex = 0;
         filterBy("wikiFilterByType", "type", this.options[this.selectedIndex].value);
+    });
+
+    generationSelect.addEventListener("change", function() {
+        // We empty the select so the player can't use it while it's loading
+        pokemonNameInput.innerHTML = "Loading...";
+        // Reset type filter when generation filter is used
+        typeSelect.selectedIndex = 0;
+        filterBy("wikiFilterByGeneration", "generation", this.options[this.selectedIndex].value);
     });
 });
 
@@ -15,11 +45,9 @@ async function filterBy(action, field, value) {
 
     try {
         let info = await fetch(petition);
-            console.log(info);
         if (info.ok) {
             let data = await info.json();
-            console.log(data);
-            populateSelect(document.getElementById("pokemonSelect"), data, "id", "name");
+            populatePokemonDatalist(pokemonList, data, "id", "name");
         } else {
             console.log(info.status);
         }
@@ -32,13 +60,13 @@ async function filterBy(action, field, value) {
 // These functions are more generic, might be worth moving to a different file later
 /////////////////////////////////////////////////////////////////////////////////////
 
-let populateSelect = (select, data, valueField, displayField) => {
-    select.innerHTML = "";
+let populatePokemonDatalist = (datalist, data, idField, valueField) => {
+    datalist.innerHTML = "";
     data.forEach(item => {
         let option = document.createElement("option");
-        option.value = item[valueField];
-        option.text = capializePokemonName(item[displayField]);
-        select.appendChild(option);
+        option.dataset.id = item[idField];
+        option.value = item[idField] + " - " + capializePokemonName(item[valueField]) + "\u2063";
+        datalist.appendChild(option);
     });
 }
 
