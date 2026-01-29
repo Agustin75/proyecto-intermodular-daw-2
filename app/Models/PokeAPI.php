@@ -257,7 +257,7 @@ class PokeAPI {
      * @param object $pokemonInformation the Pokemon's information from the API (Name and URL).
      * @return int the Pokemon's ID
      */
-    private function getPokemonId(object $pokemonInformation): int {
+    private function getPokemonId(array $pokemonInformation): int {
             // We split the URL to obtain the ID
             $elements = explode("/", $pokemonInformation['url']);
             // We save the ID in the current Pokemon info. The ID is the last element before the last slash
