@@ -17,6 +17,9 @@ $session = new SessionManager(
     timeout: 600
 );
 
+// DEBUG: Descomenta esta línea para simular un usuario logueado
+// $session->login(1, "Nombre", USER_ADMIN);
+
 // Comprobaciones de seguridad (fingerprint + timeout)
 $session->checkSecurity();
 
@@ -24,10 +27,11 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
-    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => 1],
-    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => 1],
-    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => 1],
-    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => 2]
+    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => USER_GUEST],
+    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
+    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => USER_GUEST],
+    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => USER_REGISTERED],
+        'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST]
 ];
 
 // -------------------------------------------------------------

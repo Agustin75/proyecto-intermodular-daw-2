@@ -28,10 +28,10 @@ class SessionManager
      * Nivel mínimo para invitados.
      * @var int
      */
-    private const ROLE_GUEST = 1;
+    private const ROLE_GUEST = USER_GUEST;
     /** * Nivel mínimo para usuarios autenticados. 
      *  @var int */
-    private const ROLE_USER  = 2;
+    private const ROLE_USER  = USER_REGISTERED;
     /** * Constructor del gestor de sesiones. * 
      * @param string $loginPage Página de destino tras logout o timeout. 
      * @param int $timeout Tiempo máximo de inactividad en segundos. */

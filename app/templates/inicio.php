@@ -1,11 +1,14 @@
 <?php ob_start() ?>
 
+<h1 class="text-center"><?php echo $params['page_title'] ?></h1>
 
-<h3 class="text-center"><b><?php echo $params['fecha'] ?></b></h3><br>  
+<div class="text-center">
+    <img src="<?= $params["image"] ?>" alt="Imagen de bienvenida">
+</div>
 
-<h3 class="text-center"><b><?php echo $params['mensaje'] ?></b></h3><br>
-
-<h4 class="text-center"><?php echo $params['mensaje2'] ?></h4><br>
+<?php foreach ($params['paragraphs'] as $paragraph): ?>
+    <p class="text-center"><?= $paragraph ?></p>
+<?php endforeach; ?>
 
 <?php $contenido = ob_get_clean() ?>
 

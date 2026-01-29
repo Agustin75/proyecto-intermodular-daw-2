@@ -22,20 +22,19 @@ class Controller
         // 1. Menú base según nivel
         // ---------------------------------------------------------
         $menusBase = [
-            1 => [
+            USER_GUEST => [
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
                 ['Rankings', 'rankings']
             ],
-            2 => [
+            USER_REGISTERED => [
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
-                ['Cambiar Nombre', 'cambiarNombre'],
                 ['Juegos', 'juegos'],
                 ['Rankings', 'rankings']
             ],
-            3 => [
+            USER_ADMIN => [
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
@@ -81,16 +80,15 @@ class Controller
         // 1. Menús a agregar según nivel
         // ---------------------------------------------------------
         $menusUsuarios = [
-            1 => [
+            USER_GUEST => [
                 ['Iniciar Sesión', 'iniciarSesion'],
                 ['Registro', 'registro']
             ],
-            2 => [
+            USER_REGISTERED => [
                 ['Mi Perfil', 'miPerfil'],
-                ['Cambiar Nombre', 'cambiarNombre'],
                 ['Cerrar Sesión', 'cerrarSesion']
             ],
-            3 => [
+            USER_ADMIN => [
                 ['DevTools', 'devTools'],
                 ['Mi Perfil', 'miPerfil'],
                 ['Cerrar Sesión', 'cerrarSesion']
