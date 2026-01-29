@@ -13,12 +13,15 @@
 			<?php endif; ?>
 		</div>
 	</div>
+	<img src="imagen">  
     <div>
 
 <?php echo "<p> ID: " . $this->session->getUserId() . "</p>";
     echo "<p> Nombre: " . $this->session->getUserName() . "</p>";
 ?>
+	</div>
 
+	<a href="index.php?ctl=cambiarNombre">Cambiar Nombre</a> <br> <a href="index.php?ctl=cambiarImagen">Cambiar Imagen</a>
 
 
 

@@ -231,7 +231,7 @@ class UsuarioController extends Controller
     {
         try {
 
-
+ 
             $this->session->logout();
 
             header("Location: index.php?ctl=inicio");
@@ -239,5 +239,17 @@ class UsuarioController extends Controller
         } catch (Throwable $e) {
             $this->handleError($e);
         }
+    }
+
+    public function mostrarPerfil()
+    {
+        try {
+
+ 
+            
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+        require __DIR__ . '/../templates/miPerfil.php';
     }
 }

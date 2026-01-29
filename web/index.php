@@ -35,6 +35,7 @@ $map = [
     'cerrarSesion' => ['controller' => 'UsuarioController', 'action' => 'salir', 'nivel' => USER_REGISTERED],
     'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST],
     'wikiPokemon'              => ['controller' => 'WikiController',   'action' => 'displayPokemon',     'nivel' => USER_GUEST],
+    'miPerfil'   => ['controller' => 'UsuarioController',   'action' => 'mostrarPerfil', 'nivel' => USER_GUEST],
 
     // Funciones API
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
