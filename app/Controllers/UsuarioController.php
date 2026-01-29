@@ -37,9 +37,9 @@ class UsuarioController extends Controller
 
                     $m = new Usuario();
                     $usuario = $m->buscarUsuario($nombre);
-                   var_dump($contrasenya);
+                    var_dump($contrasenya);
                     if (comprobarhash($contrasenya, $usuario['contrasenya'])) {
- var_dump($contrasenya);
+                        var_dump($contrasenya);
                         $this->session->login(
                             $usuario['id'],
                             $usuario['nombre'],
@@ -103,7 +103,7 @@ class UsuarioController extends Controller
             cEmail($email, "email", $errores);
             cUser($contrasenya, "contrasenya", $errores);
             $nivel = 2;
-           $imagen = "default";
+            $imagen = "default";
             if (empty($errores)) {
 
                 try {
@@ -124,11 +124,9 @@ class UsuarioController extends Controller
                 } catch (Throwable $e) {
                     $this->handleError($e);
                 }
-
-               
             }
         }
-         require __DIR__ . '/../templates/Registro.php';
+        require __DIR__ . '/../templates/Registro.php';
     }
 
     public function cambiarImagen()
@@ -174,26 +172,24 @@ class UsuarioController extends Controller
         $id_pkmn = recoge('id_pokemon');
         $fav = recogeArray('fav');
         $id   = $this->session->getUserId();
- try {
+        try {
             if (isset($_POST['bIniciarSesion'])) {
 
-        $fav_state = false;
+                $fav_state = false;
 
-        $params['id_pkmn'] = $id_pkmn;
-        $params['id'] = $id;
+                $params['id_pkmn'] = $id_pkmn;
+                $params['id'] = $id;
 
-        if (cCheck($fav, 'fav', $errores, $Perm) == true) {
-            $fav_state = true;
-        } else {
-            $fav_state = false;
-        }
+                if (cCheck($fav, 'fav', $errores, $Perm) == true) {
+                    $fav_state = true;
+                } else {
+                    $fav_state = false;
+                }
 
-        $m = new Usuario();
-        $usuario = $m->elegirFavorito($id, $fav_state, $id_pkmn);
-
+                $m = new Usuario();
+                $usuario = $m->elegirFavorito($id, $fav_state, $id_pkmn);
             }
-        
-    }catch (Throwable $e) {
+        } catch (Throwable $e) {
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/cartaPkmn.php';
@@ -205,7 +201,7 @@ class UsuarioController extends Controller
             'nombre_old' => '',
             'nombre_new'   => ''
         ];
-        
+
         $old = $this->session->getUserName();
         $params['nombre_old'] = $old;
         $new = recoge('new');
@@ -214,11 +210,11 @@ class UsuarioController extends Controller
         try {
             if (isset($_POST['bCambiarNombre'])) {
                 $m = new Usuario();
-                
+
                 if ($m->buscarUsuario($new) == "") {
                     if (cTexto($new, "nombre", $errores) == true) {
                         $m->cambiarNombre($new, $id);
-                         header("Location: index.php?ctl=inicio");
+                        header("Location: index.php?ctl=inicio");
                         exit;
                     }
                 } else {
@@ -229,5 +225,19 @@ class UsuarioController extends Controller
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/cambioNombre.php';
+    }
+
+    public function Salir()
+    {
+        try {
+
+
+            $this->session->logout();
+
+            header("Location: index.php?ctl=inicio");
+            exit;
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
     }
 }

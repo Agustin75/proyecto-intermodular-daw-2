@@ -32,6 +32,7 @@ $map = [
     'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => USER_GUEST],
     'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => USER_REGISTERED],
     'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen', 'nivel' => USER_REGISTERED],
+    'cerrarSesion' => ['controller' => 'UsuarioController', 'action' => 'salir', 'nivel' => USER_REGISTERED],
     'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST]
 ];
 
