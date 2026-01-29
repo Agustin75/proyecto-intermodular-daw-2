@@ -142,7 +142,7 @@ class UsuarioController extends Controller
         try {
 
 
-            if (isset($_POST['bIniciarSesion'])) {
+            if (isset($_POST['bCambiarImagen'])) {
 
                 $imagen = recoge('imagen');
                 $id   = $this->session->getUserId();
