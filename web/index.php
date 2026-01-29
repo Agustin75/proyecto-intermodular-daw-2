@@ -31,7 +31,8 @@ $map = [
     'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
     'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => USER_GUEST],
     'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => USER_REGISTERED],
-        'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST]
+    'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen', 'nivel' => USER_REGISTERED],
+    'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST]
 ];
 
 // -------------------------------------------------------------
@@ -70,4 +71,3 @@ if (!method_exists($controller, $actionName)) {
 }
 
 $controller->$actionName();
-?>

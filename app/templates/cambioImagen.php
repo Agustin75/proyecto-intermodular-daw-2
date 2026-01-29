@@ -16,12 +16,12 @@
 	<div class="container text-center p-4">
 		<form ACTION="index.php?ctl=cambiarImagen" METHOD="post" NAME="formCambiarImagen">
 			<h5><b>Cambiar Imagen</b></h5>
-			<select NAME="new" PLACEHOLDER="Nuevo nombre"><br>
+			<select NAME="imagen" PLACEHOLDER="Nuevo nombre"><br>
                 <option value="imagen1">Imagen 1</option>
                 <option value="default">Por Defecto</option>
                 <option value="imagen2">Imagen 2</option>
             </select>
-			<input TYPE="submit" NAME="bCambiarIMagen" VALUE="Aceptar"><br>
+			<input TYPE="submit" NAME="bCambiarImagen" VALUE="Aceptar"><br>
 		</form>	
 	</div>
 	

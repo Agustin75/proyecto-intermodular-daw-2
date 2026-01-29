@@ -39,7 +39,7 @@ class Usuario
     public function cambiarImagen($imagen, $id)
     {
         $sql = "UPDATE usuario
-        SET imagen = :imagen,
+        SET imagen = :imagen
         WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);

@@ -32,7 +32,9 @@ class Controller
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
-                ['Rankings', 'rankings']
+                ['Rankings', 'rankings'],
+                ['Cambiar Nombre', 'cambiarNombre'],
+                ['Cambiar Imagen', 'cambiarImagen']
             ],
             USER_ADMIN => [
                 ['Inicio', 'inicio'],
