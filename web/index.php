@@ -36,6 +36,7 @@ $map = [
     'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST],
     'wikiPokemon'              => ['controller' => 'WikiController',   'action' => 'displayPokemon',     'nivel' => USER_GUEST],
     'miPerfil'   => ['controller' => 'UsuarioController',   'action' => 'mostrarPerfil', 'nivel' => USER_GUEST],
+    'mostrarTools' => ['controller' => 'UsuarioController',   'action' => 'mostrarTools', 'nivel' => USER_ADMIN],
 
     // Funciones API
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],

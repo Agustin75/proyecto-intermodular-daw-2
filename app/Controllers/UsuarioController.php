@@ -252,4 +252,17 @@ class UsuarioController extends Controller
         }
         require __DIR__ . '/../templates/miPerfil.php';
     }
+
+public function mostrarTools(){
+ try {
+
+ 
+            
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+        require __DIR__ . '/../templates/DevTools.php';
+
 }
+
+    }
