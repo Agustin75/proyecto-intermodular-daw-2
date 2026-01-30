@@ -10,6 +10,20 @@
 //***** Funciones de sanitización **** //
 
 
+
+function cEmail(string $input, string $campo, array &$errores):bool {
+if (empty($input)){
+    $errores[$campo] = "El correo electronico es obligatorio";
+    return false;
+}
+if (filter_var($input, FILTER_VALIDATE_EMAIL) == false){
+    $errores[$campo] = "El formato del correo electronico no es valido";
+    return false;
+    
+}
+return true;
+}
+
 /**
  * funcion sinTildes
  *
@@ -138,23 +152,39 @@ function recogeArray(string $var): array
  * @param string $text
  * @param string $campo
  * @param array $errores
- * @param integer $min
  * @param integer $max
- * @param bool $espacios
- * @param bool $case
+ * @param integer $min
+ * @param string $caracteresExtra
+ * @param bool $caseSensitive
  * @return bool
  */
-
-
-function cTexto(string $text, string $campo, array &$errores, int $max = 30, int $min = 1, bool $espacios = TRUE, bool $case = TRUE): bool
-{
-    $case = ($case === TRUE) ? "i" : "";
-    $espacios = ($espacios === TRUE) ? " " : "";
-    if ((preg_match("/^[a-zñ$espacios]{" . $min . "," . $max . "}$/u$case", sinTildes($text)))) {
-        return true;
+function cTexto(string $text, string $campo, array &$errores, int $max = 30, int $min = 1, string $caracteresExtra = "", bool $caseSensitive = false): bool {
+    // 1. Presencia
+    if ($min > 0 && empty($text)) {
+        $errores[$campo] = "El campo '$campo' es obligatorio.";
+        return false;
     }
-    $errores[$campo] = "Error en el campo $campo";
-    return false;
+    
+    // Si está vacío y no es obligatorio
+    if (empty($text)) return true;
+
+    // 2. Longitud
+    if (strlen($text) < $min || strlen($text) > $max) {
+        $errores[$campo] = "El campo '$campo' debe tener entre $min y $max caracteres.";
+        return false;
+    }
+
+    // 3. RegEx
+    $caracteresBase = 'a-zA-ZñÑáéíóúÁÉÍÓÚ';
+    $caracteresPermitidos = $caracteresBase . preg_quote($caracteresExtra, '/');
+    $banderaCase = $caseSensitive ? '' : 'i';
+    $patron = '/^[' . $caracteresPermitidos . ']+$/u' . $banderaCase;
+    
+    if (!preg_match($patron, $text)) {
+        $errores[$campo] = "El campo '$campo' contiene caracteres no permitidos.";
+        return false;
+    }
+    return true;
 }
 
 
