@@ -27,17 +27,21 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
-    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => USER_GUEST],
-    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
-    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => USER_GUEST],
-    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => USER_REGISTERED],
-    'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen', 'nivel' => USER_REGISTERED],
-    'cerrarSesion' => ['controller' => 'UsuarioController', 'action' => 'salir', 'nivel' => USER_REGISTERED],
-    'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST],
-    'wikiPokemon'              => ['controller' => 'WikiController',   'action' => 'displayPokemon',     'nivel' => USER_GUEST],
-    'miPerfil'   => ['controller' => 'UsuarioController',   'action' => 'mostrarPerfil', 'nivel' => USER_GUEST],
+    // General functions
+    'inicio'        => ['controller' => 'InicioController',  'action' => 'inicio',           'nivel' => USER_GUEST],
+    'registro'      => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
+    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion',    'nivel' => USER_GUEST],
+    'wiki'          => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
+    'wikiPokemon'   => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
+    'juegos'        => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
+    
+    // Registered user functions
+    'miPerfil'      => ['controller' => 'UsuarioController', 'action' => 'mostrarPerfil',    'nivel' => USER_REGISTERED],
+    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre',    'nivel' => USER_REGISTERED],
+    'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen',    'nivel' => USER_REGISTERED],
+    'cerrarSesion'  => ['controller' => 'UsuarioController', 'action' => 'salir',            'nivel' => USER_REGISTERED],
 
-    // Funciones API
+    // API functions
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration'   => ['controller' => 'APIWikiController',   'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
 ];

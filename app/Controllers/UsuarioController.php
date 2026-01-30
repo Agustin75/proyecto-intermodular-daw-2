@@ -37,9 +37,7 @@ class UsuarioController extends Controller
 
                     $m = new Usuario();
                     $usuario = $m->buscarUsuario($nombre);
-                    var_dump($contrasenya);
                     if (comprobarhash($contrasenya, $usuario['contrasenya'])) {
-                        var_dump($contrasenya);
                         $this->session->login(
                             $usuario['id'],
                             $usuario['nombre'],
