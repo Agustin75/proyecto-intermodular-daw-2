@@ -37,7 +37,9 @@
                 foreach ($userMenu as [$texto, $ruta]): ?>
                     <a href="index.php?ctl=<?= $ruta ?>"><?= $texto ?></a>
                 <?php endforeach; ?>
-                <?php echo "Logged as: " .  $this->session->getUserName(); ?>
+                <?php 
+                    if($this->session->getUserName() != "")
+                echo "Logged as: " .  $this->session->getUserName(); ?>
             </div>
         </div>
     </div>
