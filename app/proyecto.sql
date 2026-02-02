@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-01-2026 a las 15:19:06
+-- Tiempo de generación: 28-01-2026 a las 17:24:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -82,7 +82,7 @@ CREATE TABLE `j_trivia_enunciado` (
   `id` int(11) NOT NULL,
   `id_pokemon` int(11) NOT NULL,
   `pregunta` text NOT NULL,
-  `segundos` tinyint(4) NOT NULL
+  `tiempo` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -123,30 +123,31 @@ CREATE TABLE `pokemon_usuario` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tipo_juego`
---
-
-CREATE TABLE `tipo_juego` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `nombre` varchar(40) NOT NULL,
-  `contrasenya` varchar(40) NOT NULL,
+  `contrasenya` varchar(255) NOT NULL,
   `email` varchar(50) NOT NULL,
   `activo` tinyint(1) NOT NULL,
   `imagen` varchar(500) NOT NULL,
-  `nivel` int(1) NOT NULL,
-  `puntuacion` int(11) NOT NULL
+  `puntuacion` int(11) NOT NULL,
+  `nivel` int(1) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nombre`, `contrasenya`, `email`, `activo`, `imagen`, `puntuacion`, `nivel`) VALUES
+(1, 'admin', 'admin', 'cooladmin@pokehunt.net', 0, 'default', 0, 3),
+(2, 'ffffff', '$2y$10$WxsKF4qMD47MpurUztDxOuf1fvmrNy3h1', 'f@gmail.com', 0, 'default', 0, 0),
+(3, 'wedfs', '$2y$10$feri9CimuPPFPlsP8j.SzuRtSuvDTNjhP', 'addfs@gmail.com', 0, 'default', 0, 2),
+(4, 'usuario', '$2y$10$RyKIwVkr62c3saPB7zhtiu6q9i7eIXt2A', 'a@gmail.com', 0, 'default', 0, 2),
+(5, 'z', '$2y$10$pg9LiO/X1wNSz6uZ/.TK2e8yyGLvSyTHw', 'z@gmail.com', 0, 'default', 0, 2),
+(6, 'a', '$2y$10$0mYf6P.0ExHv6R.pxcfK6.g31bKyT9Y4/qp7fzyz9yoVDfBDTDoFq', 'a@gmail.com', 0, 'default', 0, 2);
 
 --
 -- Índices para tablas volcadas
@@ -205,16 +206,11 @@ ALTER TABLE `pokemon_usuario`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `tipo_juego`
---
-ALTER TABLE `tipo_juego`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -254,7 +250,7 @@ ALTER TABLE `j_trivia_opcion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
@@ -289,3 +285,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+

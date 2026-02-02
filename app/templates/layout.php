@@ -37,6 +37,9 @@
                 foreach ($userMenu as [$texto, $ruta]): ?>
                     <a href="index.php?ctl=<?= $ruta ?>"><?= $texto ?></a>
                 <?php endforeach; ?>
+                <?php 
+                    if($this->session->getUserName() != "")
+                echo "Logged as: " .  $this->session->getUserName(); ?>
             </div>
         </div>
     </div>
@@ -55,7 +58,9 @@
             <h5 class="text-center"> FOOTER VA AQUÍ </h5>
         </div>
     </div>
-
+    <?php if (isset($script)): ?>
+        <script type="text/javascript" src="<?= "js/" . $script ?>"></script>
+    <?php endif; ?>
 </body>
 
 </html>
