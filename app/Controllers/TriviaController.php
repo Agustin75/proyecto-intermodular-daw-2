@@ -12,14 +12,6 @@ class TriviaController extends Controller
 public function crearTrivia()
 {
 
- // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui
-
-        // Solo admin puede crear trivias
-        // if ($this->session->getUserLevel() < /* nivel admin */ ) {
-        //    header("Location: index.php?ctl=inicio");
-        //    exit;
-        //}
-
     // Initial state of the form parameters
     $params = [
         'enunciado'   => '',
@@ -302,8 +294,8 @@ public function editarTrivia()
         }
 
         // We check if the Pokémon is available for this Trivia
-        if (!$m->pokemonDisponibleParaTrivia($idPokemon, $idTrivia)) {
-            $errores[] = "Este Pokémon ya está asignado a otro juego.";
+/*  FALTA SABER DISPONIBILIDAD      if (!$m->pokemonDisponibleParaTrivia($idPokemon, $idTrivia)) {
+ *          $errores[] = "Este Pokémon ya está asignado a otro juego.";
         }
 
         /* ============================================================

@@ -155,6 +155,116 @@ class Trivia
         ];
     }
 
+        /**
+     * Edit an existing trivia.
+     *
+     * Updates the prompt and its options inside a database transaction.
+     *
+     * Steps:
+     * 1) Verify the Pokémon is not used in other games or in another trivia (excluding this one).
+     * 2) Update the prompt in `j_trivia_enunciado`.
+     * 3) Delete current relations in `j_trivia_respuesta` and re-insert according to $opciones,
+     *    reusing existing options from `j_trivia_opcion` or creating new ones as needed.
+     * 4) Remove orphaned options from `j_trivia_opcion` that are no longer referenced.
+     *
+     * @param int   $idTrivia  ID of the trivia to edit
+     * @param int   $idPokemon ID of the Pokémon associated with the trivia
+     * @param string $pregunta Text of the question/prompt
+     * @param int   $segundos  Time in seconds to answer
+     * @param array $opciones  List of options, each with keys: 'texto' and 'correcta'
+     * @return bool True on success, false on failure or if Pokémon is already in use
+     */
+
+    public function editarTrivia($idTrivia, $idPokemon, $pregunta, $segundos, $opciones)
+    {
+        try {
+            $this->conexion->beginTransaction();
+
+            // 1) Verificar que el Pokémon no esté usado en otros juegos o en otra trivia distinta a esta
+            $sqlCheck = "
+                SELECT id_pokemon FROM j_adivinanza WHERE id_pokemon = :idPokemon
+                UNION
+                SELECT id_pokemon FROM j_trivia_enunciado WHERE id_pokemon = :idPokemon AND id != :idTrivia
+                UNION
+                SELECT id_pokemon FROM j_clasificar WHERE id_pokemon = :idPokemon
+            ";
+            $stmt = $this->conexion->prepare($sqlCheck);
+            $stmt->bindParam(':idPokemon', $idPokemon);
+            $stmt->bindParam(':idTrivia', $idTrivia);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $this->conexion->rollBack();
+                return false; // Pokémon ya está en uso
+            }
+
+            // 2) Actualizar enunciado
+            $sqlUpdate = "
+                UPDATE j_trivia_enunciado
+                SET id_pokemon = :idPokemon, pregunta = :pregunta, segundos = :segundos
+                WHERE id = :idTrivia
+            ";
+            $stmt = $this->conexion->prepare($sqlUpdate);
+            $stmt->bindParam(':idPokemon', $idPokemon);
+            $stmt->bindParam(':pregunta', $pregunta);
+            $stmt->bindParam(':segundos', $segundos);
+            $stmt->bindParam(':idTrivia', $idTrivia);
+            $stmt->execute();
+
+            // 3) Eliminar relaciones actuales de respuestas y volver a insertar según $opciones
+            $sqlDelRel = "DELETE FROM j_trivia_respuesta WHERE id_pregunta = :idTrivia";
+            $stmt = $this->conexion->prepare($sqlDelRel);
+            $stmt->bindParam(':idTrivia', $idTrivia);
+            $stmt->execute();
+
+            foreach ($opciones as $op) {
+                $texto = $op['texto'];
+                $correcta = $op['correcta'];
+
+                // Reutilizar opción existente o crear nueva
+                $sqlCheckOpcion = "SELECT id FROM j_trivia_opcion WHERE opcion = :opcion";
+                $stmt = $this->conexion->prepare($sqlCheckOpcion);
+                $stmt->bindParam(':opcion', $texto);
+                $stmt->execute();
+
+                if ($stmt->rowCount() > 0) {
+                    $idOpcion = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+                } else {
+                    $sqlInsertOpcion = "INSERT INTO j_trivia_opcion (opcion) VALUES (:opcion)";
+                    $stmt = $this->conexion->prepare($sqlInsertOpcion);
+                    $stmt->bindParam(':opcion', $texto);
+                    $stmt->execute();
+                    $idOpcion = $this->conexion->lastInsertId();
+                }
+
+                // Insertar relación pregunta-opción
+                $sqlRelacion = "
+                    INSERT INTO j_trivia_respuesta (id_pregunta, id_opción, esCorrecta)
+                    VALUES (:idTrivia, :idOpcion, :correcta)
+                ";
+                $stmt = $this->conexion->prepare($sqlRelacion);
+                $stmt->bindParam(':idTrivia', $idTrivia);
+                $stmt->bindParam(':idOpcion', $idOpcion);
+                $stmt->bindParam(':correcta', $correcta);
+                $stmt->execute();
+            }
+
+            // 4) Eliminar opciones huérfanas
+            $sqlDelOrphan = "
+                DELETE FROM j_trivia_opcion
+                WHERE id NOT IN (SELECT id_opción FROM j_trivia_respuesta)
+            ";
+            $stmt = $this->conexion->prepare($sqlDelOrphan);
+            $stmt->execute();
+
+            $this->conexion->commit();
+            return true;
+        } catch (Exception $e) {
+            $this->conexion->rollBack();
+            return false;
+        }
+    }
+
      /* ============================================================
          3. DELETE TRIVIA
          ============================================================ */
@@ -193,6 +303,8 @@ class Trivia
 
         return true;
     }
+
+ 
 }
 
 ?>
