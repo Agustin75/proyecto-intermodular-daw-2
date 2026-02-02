@@ -1,11 +1,8 @@
 <?php ob_start() ?>
 
-<!-- <h1 class="text-center"><?php echo $params['page_title'] ?></h1> -->
 <h1 class="text-center">Lista de Pokemon</h1>
 <h3 class="text-center">Selecciona un Pokemon para ver su información</h3>
-<!-- <div class="text-center">
-    <img src="<?= $params["image"] ?>" alt="Imagen de wiki">
-</div> -->
+<!-- <img src="" alt="Imagen de wiki"> -->
 
 <label for="typeSelect">Tipo: </label>
 <select name="typeSelect" id="typeSelect">
@@ -29,7 +26,7 @@
 <datalist id="pokemonList">
     <?php foreach ($params['pokemon_list'] as $pokemon): ?>
         <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->
-         <!-- We add the &#8291; character to be able to listen to on click events of the datalist -->
+        <!-- We add the &#8291; character to be able to listen to on click events of the datalist -->
         <option data-id="<?= $pokemon["id"] ?>" value="<?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) . "&#8291;" ?>"></option>
     <?php endforeach; ?>
 </datalist>

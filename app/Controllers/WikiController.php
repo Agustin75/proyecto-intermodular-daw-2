@@ -1,7 +1,7 @@
 <?php
 class WikiController extends Controller
 {
-    public function displayWiki()
+    public function verWiki()
     {
         $mApi = new PokeAPI();
 
@@ -11,11 +11,11 @@ class WikiController extends Controller
             "num_generations" => $mApi->getNumGenerations(),
         );
 
-        require __DIR__ . '/../templates/displayWiki.php';
+        require __DIR__ . '/../templates/verWiki.php';
     }
     
     // TODO: A implementar con la vista Pokemon
-    // public function displayPokemon()
+    // public function verPokemon()
     // {
     //     // $mApi = new PokeAPI();
 
@@ -25,7 +25,7 @@ class WikiController extends Controller
     //     //     "num_generations" => $mApi->getNumGenerations(),
     //     // );
 
-    //     // require __DIR__ . '/../templates/displayPokemon.php';
+    //     // require __DIR__ . '/../templates/verPokemon.php';
     // }
 
     // NOTE: No necesitamos esta función de momento gracias al datalist de html
@@ -55,6 +55,6 @@ class WikiController extends Controller
     //         $params['message'] = 'No existe ningún Pokemon que coincida con el nombre indicado.';
     //     }
 
-    //     require __DIR__ . '/../templates/displayWiki.php';
+    //     require __DIR__ . '/../templates/verWiki.php';
     // }
 }
