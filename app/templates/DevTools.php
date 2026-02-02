@@ -1,5 +1,6 @@
 <?php ob_start() ?>
-	
+
+
 	<div class="container text-center p-4">
 		<div class="col-md-12" id="cabecera">
 			<h1 class="h1Inicio">Dev Tools</h1>
@@ -21,8 +22,9 @@ $m = new Usuario;
 $all = $m->listarUsuarios();
 
 foreach($all as $i){
-echo "<p> Nombre: " . $i['nombre'] . "</p> <input type=checkbox></input>";
-echo "<p>Email: " . $i['email'] . "</p> ";
+	$id = $i['id'];
+echo "<p> Nombre: " . $i['nombre']  ;
+echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <input type=checkbox name=" . $id ." )></input>";
 }
 
 
@@ -33,5 +35,5 @@ echo "<p>Email: " . $i['email'] . "</p> ";
 
 
 <?php $contenido = ob_get_clean() ?>
-
+<?php $script = "activar.js"; ?>
 <?php include 'layout.php' ?>
