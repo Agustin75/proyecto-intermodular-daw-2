@@ -3,7 +3,16 @@
 window.onload = () => {
     let inputs = document.getElementsByClassName('input');
     inputs.forEach(element => {
-        addEventListener('change', func_sendcheck($event));
+        element.addEventListener('change', new function() {
+
+        }
+
+
+
+        
+        
+        
+        );
     });
 
 
