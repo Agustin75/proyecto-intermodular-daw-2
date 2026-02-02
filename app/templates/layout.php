@@ -37,11 +37,23 @@
                 foreach ($userMenu as [$texto, $ruta]): ?>
                     <a href="index.php?ctl=<?= $ruta ?>"><?= $texto ?></a>
                 <?php endforeach; ?>
-                <?php 
-                    if($this->session->getUserName() != "")
-                echo "Logged as: " .  $this->session->getUserName(); ?>
+                <?php
+                if ($this->session->getUserName() != "")
+                    echo "Logged as: " .  $this->session->getUserName(); ?>
             </div>
         </div>
+        <?php
+        $adminMenu = $this->adminMenu();
+        if (!empty($adminMenu)): ?>
+            <div class="row">
+                <div class="text-start">
+                    <?php
+                    foreach ($adminMenu as [$texto, $ruta]): ?>
+                        <a href="index.php?ctl=<?= $ruta ?>"><?= $texto ?></a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
     <hr>
 

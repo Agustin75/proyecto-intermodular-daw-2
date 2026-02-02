@@ -110,6 +110,38 @@ class Controller
         return $menu;
     }
 
+    // Returns the admin-related menus based on current page
+    protected function adminMenu(): array
+    {
+        if ($this->session->getUserLevel() != USER_ADMIN) {
+            return [];
+        }
+
+        $ruta  = $this->currentRoute;
+
+        // ---------------------------------------------------------
+        // 1. Menús a agregar según ruta
+        // ---------------------------------------------------------
+        $menusAdmin = [
+            "juegos" => [
+                ['Jugar', 'juegos'],
+                ['Crear Juego', 'crearJuego'],
+                ['Editar Juego', 'editarJuego']
+            ],
+        ];
+
+        $menu = $menusAdmin[$ruta] ?? [];
+
+        // ---------------------------------------------------------
+        // 2. Marcar elemento activo
+        // ---------------------------------------------------------
+        foreach ($menu as &$item) {
+            $item['active'] = ($item[1] === $ruta);
+        }
+
+        return $menu;
+    }
+
     // Método para el manejo de errores y excepciones
     protected function handleError(Throwable $e): void
     {
