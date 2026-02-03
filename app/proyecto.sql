@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-01-2026 a las 17:24:33
+-- Tiempo de generación: 03-02-2026 a las 18:56:42
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,7 +47,8 @@ CREATE TABLE `j_clasificar` (
   `id_pokemon` int(11) NOT NULL,
   `id_tipo` int(11) NOT NULL,
   `num_pokemon` int(3) NOT NULL,
-  `num_opciones` int(2) NOT NULL
+  `num_opciones` int(2) NOT NULL,
+  `num_requerido` int(11) NOT NULL COMMENT 'El número de Pokémon que el usuario debe clasificar correctamente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -71,6 +72,14 @@ CREATE TABLE `j_tipo_clasificar` (
   `id` int(11) NOT NULL,
   `tipo_clasificar` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `j_tipo_clasificar`
+--
+
+INSERT INTO `j_tipo_clasificar` (`id`, `tipo_clasificar`) VALUES
+(1, 'Tipo'),
+(2, 'Generación');
 
 -- --------------------------------------------------------
 
@@ -145,9 +154,10 @@ INSERT INTO `usuario` (`id`, `nombre`, `contrasenya`, `email`, `activo`, `imagen
 (1, 'admin', 'admin', 'cooladmin@pokehunt.net', 0, 'default', 0, 3),
 (2, 'ffffff', '$2y$10$WxsKF4qMD47MpurUztDxOuf1fvmrNy3h1', 'f@gmail.com', 0, 'default', 0, 0),
 (3, 'wedfs', '$2y$10$feri9CimuPPFPlsP8j.SzuRtSuvDTNjhP', 'addfs@gmail.com', 0, 'default', 0, 2),
-(4, 'usuario', '$2y$10$RyKIwVkr62c3saPB7zhtiu6q9i7eIXt2A', 'a@gmail.com', 0, 'default', 0, 2),
+(4, 'usuario', '$2y$10$RyKIwVkr62c3saPB7zhtiu6q9i7eIXt2A', 'a@gmail.com', 0, 'default', 0, 3),
 (5, 'z', '$2y$10$pg9LiO/X1wNSz6uZ/.TK2e8yyGLvSyTHw', 'z@gmail.com', 0, 'default', 0, 2),
-(6, 'a', '$2y$10$0mYf6P.0ExHv6R.pxcfK6.g31bKyT9Y4/qp7fzyz9yoVDfBDTDoFq', 'a@gmail.com', 0, 'default', 0, 2);
+(6, 'a', '$2y$10$0mYf6P.0ExHv6R.pxcfK6.g31bKyT9Y4/qp7fzyz9yoVDfBDTDoFq', 'a@gmail.com', 0, 'default', 0, 2),
+(7, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 0, 'default', 0, 3);
 
 --
 -- Índices para tablas volcadas
@@ -226,13 +236,13 @@ ALTER TABLE `j_adivinanza`
 -- AUTO_INCREMENT de la tabla `j_clasificar`
 --
 ALTER TABLE `j_clasificar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `j_tipo_clasificar`
 --
 ALTER TABLE `j_tipo_clasificar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `j_trivia_enunciado`
@@ -250,7 +260,7 @@ ALTER TABLE `j_trivia_opcion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -279,10 +289,3 @@ ALTER TABLE `j_trivia_respuesta`
 -- Filtros para la tabla `pokemon_usuario`
 --
 ALTER TABLE `pokemon_usuario`
-  ADD CONSTRAINT `pokemon_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
