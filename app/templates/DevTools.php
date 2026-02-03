@@ -24,7 +24,7 @@ $all = $m->listarUsuarios();
 foreach($all as $i){
 	$id = $i['id'];
 echo "<p> Nombre: " . $i['nombre']  ;
-echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <input type=checkbox name=" . $id ." )></input>";
+echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <input type=hidden>" . $id ."</input><input type=checkbox></input>";
 }
 
 

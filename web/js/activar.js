@@ -2,26 +2,17 @@
 
 window.onload = () => {
     let inputs = document.getElementsByClassName('input');
-    inputs.forEach(element => {
-        element.addEventListener('change', new function() {
-
-        }
-
-
-
-        
-        
-        
-        );
+    Array.from(inputs).forEach(element => {
+        element.addEventListener('click', func_sendcheck);
     });
 
 
 }
 
 async function func_sendcheck(event) {
-    let value = event.target.name;
+    let value = event.target.previosElementSibling.value;
     let value2 = event.target.value;
-
+    console.log(value);
     let petition = new Request(`index.php?ctl=activarUser&id=${value}&act=${value2}`,
         {
             method: "GET",
