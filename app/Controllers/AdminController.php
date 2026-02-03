@@ -108,12 +108,13 @@ class AdminController extends Controller
             $id = recoge('id');
             $params['id'] = $id;
 
-            /*$m = new Clasificacion;
-            $all = $m->obtenerTrivia($id);
-            $params['id_pkmn'] = $all['enunciado'['id_pokemon']];
-            $params['pregunta'] = $all['enunciado'['pregunta']];
-            $params['tiempo'] = $all['opciones'['tiempo']];
-            $params['opciones'] = $all['opciones'];*/
+            $m = new Adivinar;
+            $all = $m->obtenerAdivinanza($id);
+            $params['id_pkmn'] = $all['id_pokemon'];
+            $params['id_tipo'] = $all['id_tipo'];
+            $params['pista1'] = $all['pista1'];
+            $params['pista2'] = $all['pista2'];
+            $params['pista3'] = $all['pista3'];
 
         }
 

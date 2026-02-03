@@ -26,7 +26,7 @@ if($all != false){
 foreach($all as $i){
 	$id = $i['id'];
 echo "<p> Nombre: " . $i['nombre']  ;
-echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <p class=id>" . $id ."</p><input type=checkbox></input>";
+echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <input type='hidden' value=" . $id . "></input><input type=checkbox></input>";
 }
 }
 
@@ -37,5 +37,5 @@ echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <p class=id>" . $id ."</p><in
 
 
 <?php $contenido = ob_get_clean() ?>
-<?php $script = "activar.js"; ?>
+<?php $script = "activar2.js"; ?>
 <?php include 'layout.php' ?>
