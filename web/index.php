@@ -13,8 +13,8 @@ require_once __DIR__ . '/../app/core/autoload.php';
 // Sesión segura
 // -------------------------------------------------------------
 $session = new SessionManager(
-    loginPage: 'index.php?ctl=inicio',
-    timeout: 600
+    'index.php?ctl=inicio',
+    600
 );
 
 // DEBUG: Descomenta esta línea para simular un usuario logueado
@@ -27,9 +27,17 @@ $session->checkSecurity();
 // Mapa de rutas
 // -------------------------------------------------------------
 $map = [
+    'inicio' => ['controller' => 'InicioController', 'action' => 'inicio', 'nivel' => USER_GUEST],
+    'registro' => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
+    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion', 'nivel' => USER_GUEST],
+    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre', 'nivel' => USER_REGISTERED],
+    'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen', 'nivel' => USER_REGISTERED],
+    'cerrarSesion' => ['controller' => 'UsuarioController', 'action' => 'salir', 'nivel' => USER_REGISTERED],
+    'wiki'   => ['controller' => 'WikiController',   'action' => 'displayWiki', 'nivel' => USER_GUEST],
+    'wikiPokemon'              => ['controller' => 'WikiController',   'action' => 'displayPokemon',     'nivel' => USER_GUEST],
+    'miPerfil'   => ['controller' => 'UsuarioController',   'action' => 'mostrarPerfil', 'nivel' => USER_GUEST],
+    'mostrarTools' => ['controller' => 'AdminController',   'action' => 'mostrarTools', 'nivel' => USER_ADMIN],
     // General functions
-    'inicio'        => ['controller' => 'InicioController',  'action' => 'inicio',           'nivel' => USER_GUEST],
-    'registro'      => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
     'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion',    'nivel' => USER_GUEST],
     'wiki'          => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
     'wikiPokemon'   => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
@@ -43,12 +51,18 @@ $map = [
 
     // Admin user functions
     // TODO: A editar cuando añadamos la funcionalidad
-    // 'crearJuego'   => ['controller' => 'UsuarioController', 'action' => 'crearJuego', 'nivel' => USER_ADMIN],
+    'crearJuego'   => ['controller' => 'AdminController', 'action' => 'crearJuego', 'nivel' => USER_ADMIN],
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
+    'crearTrivia'   => ['controller' => 'AdminController', 'action' => 'vistaTrivia', 'nivel' => USER_ADMIN],
+    'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
+    'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
+
+
     
     // API functions
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration'   => ['controller' => 'APIWikiController',   'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
+    'activarUser'              => ['controller' => 'APIUsuarioController', 'action' => 'activarUser', 'nivel' => USER_ADMIN]
 ];
 
 // -------------------------------------------------------------
