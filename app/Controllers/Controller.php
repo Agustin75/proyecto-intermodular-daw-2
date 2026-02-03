@@ -40,7 +40,8 @@ class Controller
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
-                ['Rankings', 'rankings']
+                ['Rankings', 'rankings'],
+                ['Dev Tools', 'mostrarTools']
             ]
         ];
 
@@ -91,7 +92,7 @@ class Controller
                 ['Cerrar Sesión', 'cerrarSesion']
             ],
             USER_ADMIN => [
-                ['DevTools', 'devTools'],
+                ['Dev Tools', 'mostrarTools'],
                 ['Mi Perfil', 'miPerfil'],
                 ['Cerrar Sesión', 'cerrarSesion']
             ]

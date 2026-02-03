@@ -24,7 +24,8 @@ class Usuario
     {
         $sql = "SELECT * FROM usuario ORDER BY nombre";
         $stmt = $this->conexion->prepare($sql);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
      public function buscarUsuario($nombre)
