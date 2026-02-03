@@ -2,14 +2,14 @@
 // IMPORTANTE
 // FALTA SABER LA RUTA, EL IF DEL ADMIN Y VALIDAR QUE EL POKEMON NO ESTE YA USADO
 
-class TriviaController extends Controller
+class AdivinanzaController extends Controller
 {
    /**
  * Function to create a new Trivia entry. It processes the form data, validates it,
  * builds the options structure and, if everything is correct, sends the information
  * to the Trivia model to be inserted into the database.
  */
-public function crearTrivia()
+public function crearAdivinanza()
 {
 
     // Initial state of the form parameters
