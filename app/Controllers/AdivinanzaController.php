@@ -32,7 +32,7 @@ public function crearAdivinanza()
             $id_pkmn = recoge('id_pokemon');
             $tipo = recoge('tipo');
             $pista1 = recoge('pista1');
-            $pista2 = recoge('psita2');
+            $pista2 = recoge('pista2');
             $pista3 = recoge('pista3');
 
 
@@ -103,57 +103,51 @@ public function editarAdivinanza()
     $idAdivinanza = (int) ($_GET['id'] ?? 0);
 
     // If the ID is invalid, we redirect back to the games list
-    if ($idTrivia <= 0) {
+    if ($idAdivinanza <= 0) {
         header("Location: index.php?ctl=juegos");
         exit;
     }
 
     // Initial state of the form parameters
     $params = [
-        'idTrivia'    => $idTrivia,
-        'enunciado'   => '',
-        'numOpciones' => 0,
-        'opciones'    => [],
-        'idPokemon'   => '',
-        'tiempo'      => '',
-        'mensaje'     => ''
+        'id'    => $idAdivinanza,
+        'id_pkmn'   => '',
+        'tipo' => '',
+        'pista1'    => '',
+        'pista2'   => '',
+        'pista3'      => '',
     ];
 
     // List that will hold all validation errors
     $errores = [];
 
     try {
-        $m = new Trivia();
+        $m = new Adivinar();
 
         /* ============================================================
            1. FIRST FORM LOAD (GET)
         ============================================================ */
-        if (!isset($_POST['bEditarTrivia'])) {
+        if (!isset($_POST['bEditarAdivinar'])) {
 
             // We obtain the current Trivia information
-            $trivia = $m->obtenerTrivia($idTrivia);
+            $ad = $m->obtenerAdivinanza($idAdivinanza);
 
             // If the Trivia does not exist, we show an error message
-            if (!$trivia) {
+            if (!$ad) {
                 $params['mensaje'] = "La trivia no existe.";
 // RUTA               require __DIR__ . '/../templates/triviaEditar.php';
                 return;
             }
 
             // We fill the form parameters with the existing data
-            $params['enunciado']   = $trivia['enunciado']['pregunta'];
-            $params['idPokemon']   = $trivia['enunciado']['id_pokemon'];
-            $params['tiempo']      = $trivia['enunciado']['segundos'];
-            $params['numOpciones'] = count($trivia['opciones']);
+          
+            $params['idPokemon']   = $ad['enunciado']['id_pokemon'];
+            $params['pista1']      = $ad['opciones']['pista1'];
+            $params['pista2']      = $ad['opciones']['pista2'];
+            $params['pista3']      = $ad['opciones']['pista3'];
+            
 
-            // We convert the model's options into objects for the view
-            foreach ($trivia['opciones'] as $op) {
-                $o = new stdClass();
-                $o->texto    = $op['opcion'];
-                $o->correcta = $op['esCorrecta'];
-                $params['opciones'][] = $o;
-            }
-
+            
             // We load the edit view
 // RUTA            require __DIR__ . '/../templates/triviaEditar.php';
             return;
