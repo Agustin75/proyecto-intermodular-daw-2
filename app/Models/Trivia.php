@@ -45,19 +45,7 @@ class Trivia
     {
 
         // 1. Verify the Pokémon isn't used in other games
-        $sqlCheck = "
-            SELECT id_pokemon FROM j_adivinanza WHERE id_pokemon = :id
-            UNION
-            SELECT id_pokemon FROM j_trivia_enunciado WHERE id_pokemon = :id
-            UNION
-            SELECT id_pokemon FROM j_clasificar WHERE id_pokemon = :id
-        ";
-
-        $stmt = $this->conexion->prepare($sqlCheck);
-        $stmt->bindParam(':id', $idPokemon);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
+        if ($this->isPokemonUsedInGame($idPokemon)) {
             return false; // Pokémon already used
         }
 
@@ -178,24 +166,9 @@ class Trivia
     public function editarTrivia($idTrivia, $idPokemon, $pregunta, $segundos, $opciones)
     {
         try {
-            $this->conexion->beginTransaction();
-
-            // 1) Verificar que el Pokémon no esté usado en otros juegos o en otra trivia distinta a esta
-            $sqlCheck = "
-                SELECT id_pokemon FROM j_adivinanza WHERE id_pokemon = :idPokemon
-                UNION
-                SELECT id_pokemon FROM j_trivia_enunciado WHERE id_pokemon = :idPokemon AND id != :idTrivia
-                UNION
-                SELECT id_pokemon FROM j_clasificar WHERE id_pokemon = :idPokemon
-            ";
-            $stmt = $this->conexion->prepare($sqlCheck);
-            $stmt->bindParam(':idPokemon', $idPokemon);
-            $stmt->bindParam(':idTrivia', $idTrivia);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                $this->conexion->rollBack();
-                return false; // Pokémon ya está en uso
+            // 1. Verify the Pokémon isn't used in other games
+            if ($this->isPokemonUsedInGame($idPokemon, $idTrivia)) {
+                return false; // Pokémon already used
             }
 
             // 2) Actualizar enunciado
@@ -257,10 +230,8 @@ class Trivia
             $stmt = $this->conexion->prepare($sqlDelOrphan);
             $stmt->execute();
 
-            $this->conexion->commit();
             return true;
         } catch (Exception $e) {
-            $this->conexion->rollBack();
             return false;
         }
     }
@@ -304,7 +275,52 @@ class Trivia
         return true;
     }
 
- 
+    /**
+     * Returns whether the Pokemon is already used for a Trivia game
+     * 
+     * @param int $idPokemon id of the Pokemon to check
+     * @param int $idTrivia id of the Trivia game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
+     * @return array|false the results of the query, or false if no matches were found
+     */
+    public function isPokemonUsed(int $idPokemon, int $idTrivia = -1): array | false
+    {
+        $sql = "SELECT * FROM j_trivia_enunciado WHERE id_pokemon = :idPokemon AND id != :idTrivia";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idPokemon', $idPokemon);
+        $stmt->bindParam(':idTrivia', $idTrivia);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Returns whether the Pokemon is already used for any game
+     * 
+     * @param int $idPokemon id of the Pokemon to check
+     * @param int $idTrivia id of the Trivia game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
+     * @return bool true if the Pokemon is already assigned to a game, false otherwise
+     */
+    private function isPokemonUsedInGame(int $idPokemon, int $idTrivia = -1): bool
+    {
+        // We check if the Pokemon is not already a reward for another Trivia game
+        if ($this->isPokemonUsed($idPokemon, $idTrivia) != false) {
+            return true;
+        }
+
+        // We check if the Pokemon is not already a reward for a Clasificar game
+        $mClasificar = new Clasificar();
+        if ($mClasificar->isPokemonUsed($idPokemon) != false) {
+            return true;
+        }
+
+        // TODO: A añadir cuando esté implementado
+        // $mAdivinanza = new Adivinanza();
+        // // We check if the Pokemon is not already a reward for a Guessing game
+        // if ($mAdivinanza->isPokemonUsed($idPokemon) != false) {
+        //     return false;
+        // }
+
+        return false;
+    }
 }
 
 ?>
