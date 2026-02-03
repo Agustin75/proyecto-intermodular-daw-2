@@ -14,12 +14,11 @@ public function crearAdivinanza()
 
     // Initial state of the form parameters
     $params = [
-        'enunciado'   => '',
-        'numOpciones' => '',
-        'opciones'    => [],   // List of option objects (text + correct flag)
-        'idPokemon'   => '',
-        'tiempo'      => '',
-        'mensaje'     => ''
+        'id_pkmn'   => '',
+        'tipo' => '',
+        'pista1'    => '',
+        'pista2'   => '',
+        'pista3'      => '',
     ];
 
     // List that will hold all validation errors
@@ -27,103 +26,48 @@ public function crearAdivinanza()
 
     try {
         // We check if the form has been submitted
-        if (isset($_POST['bCrearTrivia'])) {
+        if (isset($_POST['bCrearAdivinanza'])) {
 
             // 1. We obtain the form data
-            $enunciado   = recoge('enunciado');
-            $numOpciones = (int) recoge('numOpciones');
-            $idPokemon   = (int) recoge('idPokemon');
-            $tiempo      = (int) recoge('tiempo');
+            $id_pkmn = recoge('id_pokemon');
+            $tipo = recoge('tipo');
+            $pista1 = recoge('pista1');
+            $pista2 = recoge('psita2');
+            $pista3 = recoge('pista3');
 
-            // We obtain the options arrays (texts and correct answers)
-            $opcionTextos    = recogeArray('opcionTexto');     // List of option texts
-            $opcionCorrectas = recogeArray('opcionCorrecta');  // List of indices marked as correct
 
             // 2. We store the values in $params to preserve the form state
-            $params['enunciado']   = $enunciado;
-            $params['numOpciones'] = $numOpciones;
-            $params['idPokemon']   = $idPokemon;
-            $params['tiempo']      = $tiempo;
+            $params['id_pkmn']   = $id_pkmn;
+            $params['tipo'] = $tipo;
+            $params['pista1']   = $pista1;
+            $params['pista2']   = $pista2;
+            $params['pista3']   = $pista3;
+            
 
-            // We build the list of option objects
-            $opciones = [];
-            for ($i = 0; $i < $numOpciones; $i++) {
-                $texto = $opcionTextos[$i] ?? '';
-                $esCorrecta = in_array($i, $opcionCorrectas ?? []) ? 1 : 0;
-
-                $op = new stdClass();
-                $op->texto    = $texto;
-                $op->correcta = $esCorrecta;
-
-                $opciones[] = $op;
-            }
-            $params['opciones'] = $opciones;
-
+            
             // 3. Basic validation of the received data
-            if ($enunciado === '') {
-                $errores[] = "El enunciado no puede estar vacío.";
+            if ($pista1 === '' || $pista2 === '' || $pista3 === '') {
+                $errores[] = "Las pistas no pueden estar vacias.";
             }
 
-            if ($numOpciones <= 1) {
-                $errores[] = "Debe haber al menos 2 opciones.";
-            }
+            
 
-            if (count($opciones) !== $numOpciones) {
-                $errores[] = "El número de opciones no coincide.";
-            }
-
-            // We check that all options have text and at least one is correct
-            $hayCorrecta = false;
-            foreach ($opciones as $op) {
-                if (trim($op->texto) === '') {
-                    $errores[] = "Todas las opciones deben tener texto.";
-                    break;
-                }
-                if ($op->correcta) {
-                    $hayCorrecta = true;
-                }
-            }
-
-            if (!$hayCorrecta) {
-                $errores[] = "Debe haber al menos una opción correcta.";
-            }
-
-            if ($idPokemon <= 0) {
+            if ($id_pkmn <= 0) {
                 $errores[] = "Debes seleccionar un Pokémon válido.";
             }
 
-            if ($tiempo <= 0) {
-                $errores[] = "El tiempo debe ser mayor que 0.";
-            }
-
-            // -------------------------------- IMPORTANT FALTA ----------------------------------
-            // Aqui validamos tambien que el pokemon no este ya usado en otros juegos
-            // -----------------------------------------------------------------------------------
-
             // 4. If there are no validation errors, we call the Trivia model
             if (empty($errores)) {
-                $m = new Trivia();
+                $m = new Adivinar();
 
-                // We adapt the options to the format expected by the model
-                $opcionesModelo = [];
-                foreach ($opciones as $op) {
-                    $opcionesModelo[] = [
-                        'texto'    => $op->texto,
-                        'correcta' => $op->correcta
-                    ];
                 }
 
                 // We attempt to create the Trivia entry
-                $idTrivia = $m->crearTrivia(
-                    $idPokemon,
-                    $enunciado,
-                    $tiempo,
-                    $opcionesModelo
-                );
+                $idAdivinanza = $m->crearAdivinanza($id_pkmn, $tipo, $pista1, $pista2, $pista3);
 
                 // If the model returns false, something went wrong
-                if ($idTrivia === false) {
-                    $params['mensaje'] = "No se ha podido crear la trivia. El Pokémon ya está asignado a otro juego.";
+                if ($idAdivinanza === false) {
+                    $params['mensaje'] = "No se ha podido crear la Adivinanza. El Pokémon ya está asignado a otro juego.";
                 } else {
                     // Trivia created successfully → redirect to the games list
                     header("Location: index.php?ctl=juegos");
@@ -134,22 +78,18 @@ public function crearAdivinanza()
                 $params['mensaje'] = implode('<br>', $errores);
             }
         }
-    } catch (Throwable $e) {
+     catch (Throwable $e) {
         // We delegate the error handling to the controller's method
         $this->handleError($e);
     }
 
-    // We load the Trivia creation form view
-    // FALTA SABER LA RUTA
-    // require __DIR__ . '/../templates/triviaCrear.php';
+ 
+    
+     require __DIR__ . '/../templates/crearAdivinanza.php';
 }
 
-   /**
- * Function to edit an existing Trivia entry. It loads the current data on the first GET request,
- * validates the updated information on POST, rebuilds the options structure and, if everything is valid,
- * updates the Trivia entry through the model.
- */
-public function editarTrivia()
+
+public function editarAdivinanza()
 {
  // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui
 
@@ -160,7 +100,7 @@ public function editarTrivia()
         //}
 
     // We obtain the Trivia ID from the request
-    $idTrivia = (int) ($_GET['id'] ?? 0);
+    $idAdivinanza = (int) ($_GET['id'] ?? 0);
 
     // If the ID is invalid, we redirect back to the games list
     if ($idTrivia <= 0) {
