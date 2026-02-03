@@ -14,9 +14,14 @@ class AdminController extends Controller
         require __DIR__ . '/../templates/DevTools.php';
     }
 
+   public function juegosAdmin() {
+
+        require __DIR__ . '/../templates/JuegosAdmin.php';
 
 
-    public function juegosAdmin() {
+    }
+
+    public function entrarJuegos() {
 
         require __DIR__ . '/../templates/verJuegos.php';
 

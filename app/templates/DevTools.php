@@ -21,12 +21,14 @@
 $m = new Usuario;
 $all = $m->listarUsuarios();
 
+if($all != false){
+
 foreach($all as $i){
 	$id = $i['id'];
 echo "<p> Nombre: " . $i['nombre']  ;
-echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <input type=hidden>" . $id ."</input><input type=checkbox></input>";
+echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <p class=id>" . $id ."</p><input type=checkbox></input>";
 }
-
+}
 
 ?>
 	</div>
