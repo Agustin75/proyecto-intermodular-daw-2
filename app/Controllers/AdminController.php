@@ -14,9 +14,9 @@ class AdminController extends Controller
         require __DIR__ . '/../templates/DevTools.php';
     }
 
-   public function juegosAdmin() {
+   public function crearJuego() {
 
-        require __DIR__ . '/../templates/JuegosAdmin.php';
+        require __DIR__ . '/../templates/crearJuegos.php';
 
 
     }
@@ -38,7 +38,7 @@ class AdminController extends Controller
         'opciones' => '',
     ];
     
-        if($params['modo'] !== "nueva"){
+        if($params['modo'] == "editar"){
             $id = recoge('id');
             $params['id'] = $id;
 
@@ -55,7 +55,7 @@ class AdminController extends Controller
 
 
 
-        require __DIR__ . '/../templates/vistaTrivia.php';
+        require __DIR__ . '/../templates/crearTrivia.php';
 
 
     }
@@ -87,7 +87,7 @@ class AdminController extends Controller
 
 
 
-        require __DIR__ . '/../templates/vistaClasificar.php';
+        require __DIR__ . '/../templates/crearClasificar.php';
 
 
     }
@@ -121,7 +121,7 @@ class AdminController extends Controller
 
 
 
-        require __DIR__ . '/../templates/vistaAdivinanza.php';
+        require __DIR__ . '/../templates/crearAdivinanza.php';
 
 
     }

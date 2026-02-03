@@ -13,8 +13,8 @@ require_once __DIR__ . '/../app/core/autoload.php';
 // Sesión segura
 // -------------------------------------------------------------
 $session = new SessionManager(
-    loginPage: 'index.php?ctl=inicio',
-    timeout: 600
+    'index.php?ctl=inicio',
+    600
 );
 
 // DEBUG: Descomenta esta línea para simular un usuario logueado
@@ -51,8 +51,13 @@ $map = [
 
     // Admin user functions
     // TODO: A editar cuando añadamos la funcionalidad
-    // 'crearJuego'   => ['controller' => 'UsuarioController', 'action' => 'crearJuego', 'nivel' => USER_ADMIN],
+    'crearJuego'   => ['controller' => 'AdminController', 'action' => 'crearJuego', 'nivel' => USER_ADMIN],
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
+    'crearTrivia'   => ['controller' => 'AdminController', 'action' => 'vistaTrivia', 'nivel' => USER_ADMIN],
+    'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
+    'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
+
+
     
     // API functions
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
