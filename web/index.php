@@ -1,4 +1,9 @@
+
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // -------------------------------------------------------------
 // Front Controller del mini-framework
 // -------------------------------------------------------------
@@ -43,7 +48,8 @@ $map = [
     'crearJuego'        => ['controller' => 'AdminController', 'action' => 'crearJuego',      'nivel' => USER_ADMIN],
     // TODO: A editar cuando añadamos la funcionalidad
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
-    'crearTrivia'       => ['controller' => 'AdminController', 'action' => 'vistaTrivia',     'nivel' => USER_ADMIN],
+    'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
+    'crearTrivia'  => ['controller' => 'TriviaController',  'action' => 'crearTrivia',  'nivel' => USER_ADMIN],
     'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
     'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
     

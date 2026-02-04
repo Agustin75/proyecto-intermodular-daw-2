@@ -11,144 +11,119 @@ class TriviaController extends Controller
  */
 public function crearTrivia()
 {
+    if ($this->session->getUserLevel() < USER_ADMIN) {
+        header("Location: index.php?ctl=inicio");
+        exit;
+    }
 
-    // Initial state of the form parameters
     $params = [
-        'enunciado'   => '',
-        'numOpciones' => '',
-        'opciones'    => [],   // List of option objects (text + correct flag)
-        'idPokemon'   => '',
+        'modo'        => 'crear',
+        'id'          => 0,
+        'pregunta'    => '',
         'tiempo'      => '',
-        'mensaje'     => ''
+        'opciones'    => [],
+        'id_pkmn'     => '',
+        'mensaje'     => '',
+        'pokemon_list' => (new PokeAPI())->getAllPokemon(),
+        'type_list'    => (new PokeAPI())->getTypesList(),
+        'num_generations' => (new PokeAPI())->getNumGenerations()
     ];
 
-    // List that will hold all validation errors
     $errores = [];
 
     try {
-        // We check if the form has been submitted
         if (isset($_POST['bCrearTrivia'])) {
 
-            // 1. We obtain the form data
-            $enunciado   = recoge('enunciado');
+            // Recoger datos
+            $pregunta   = recoge('enunciado');
+            $tiempo     = (int) recoge('tiempo');
             $numOpciones = (int) recoge('numOpciones');
-            $idPokemon   = (int) recoge('idPokemon');
-            $tiempo      = (int) recoge('tiempo');
+            $pkmnInput  = recoge('pokemonNameInput');
 
-            // We obtain the options arrays (texts and correct answers)
-            $opcionTextos    = recogeArray('opcionTexto');     // List of option texts
-            $opcionCorrectas = recogeArray('opcionCorrecta');  // List of indices marked as correct
+            // Extraer ID del Pokémon (formato "25 - Pikachu")
+            $idPokemon = intval(explode(" - ", $pkmnInput)[0]);
 
-            // 2. We store the values in $params to preserve the form state
-            $params['enunciado']   = $enunciado;
-            $params['numOpciones'] = $numOpciones;
-            $params['idPokemon']   = $idPokemon;
-            $params['tiempo']      = $tiempo;
+            $opcionTextos    = recogeArray('opcionTexto');
+            $opcionCorrectas = recogeArray('opcionCorrecta');
 
-            // We build the list of option objects
+            // Guardar estado
+            $params['pregunta'] = $pregunta;
+            $params['tiempo']   = $tiempo;
+            $params['id_pkmn']  = $idPokemon;
+
+            // Construir opciones como objetos
             $opciones = [];
             for ($i = 0; $i < $numOpciones; $i++) {
-                $texto = $opcionTextos[$i] ?? '';
-                $esCorrecta = in_array($i, $opcionCorrectas ?? []) ? 1 : 0;
-
-                $op = new stdClass();
-                $op->texto    = $texto;
-                $op->correcta = $esCorrecta;
-
-                $opciones[] = $op;
+                $o = new stdClass();
+                $o->texto = $opcionTextos[$i] ?? '';
+                $o->correcta = in_array($i, $opcionCorrectas ?? []) ? 1 : 0;
+                $opciones[] = $o;
             }
             $params['opciones'] = $opciones;
 
-            // 3. Basic validation of the received data
-            if ($enunciado === '') {
-                $errores[] = "El enunciado no puede estar vacío.";
-            }
+            // Validaciones
+            if ($pregunta === '') $errores[] = "El enunciado no puede estar vacío.";
+            if ($tiempo <= 0) $errores[] = "El tiempo debe ser mayor que 0.";
+            if ($numOpciones < 2) $errores[] = "Debe haber al menos 2 opciones.";
+            if (!$idPokemon) $errores[] = "Debes seleccionar un Pokémon válido.";
 
-            if ($numOpciones <= 1) {
-                $errores[] = "Debe haber al menos 2 opciones.";
-            }
-
-            if (count($opciones) !== $numOpciones) {
-                $errores[] = "El número de opciones no coincide.";
-            }
-
-            // We check that all options have text and at least one is correct
             $hayCorrecta = false;
             foreach ($opciones as $op) {
                 if (trim($op->texto) === '') {
                     $errores[] = "Todas las opciones deben tener texto.";
                     break;
                 }
-                if ($op->correcta) {
-                    $hayCorrecta = true;
-                }
+                if ($op->correcta) $hayCorrecta = true;
+            }
+            if (!$hayCorrecta) $errores[] = "Debe haber al menos una opción correcta.";
+
+            // Si hay errores → volver a la vista
+            if (!empty($errores)) {
+                $params['mensaje'] = implode("<br>", $errores);
+                require __DIR__ . '/../templates/crearTrivia.php';
+                return;
             }
 
-            if (!$hayCorrecta) {
-                $errores[] = "Debe haber al menos una opción correcta.";
+            // Llamar al modelo
+            $m = new Trivia();
+
+            $opcionesModelo = [];
+            foreach ($opciones as $op) {
+                $opcionesModelo[] = [
+                    'texto'    => $op->texto,
+                    'correcta' => $op->correcta
+                ];
             }
 
-            if ($idPokemon <= 0) {
-                $errores[] = "Debes seleccionar un Pokémon válido.";
+            $idTrivia = $m->crearTrivia(
+                $idPokemon,
+                $pregunta,
+                $tiempo,
+                $opcionesModelo
+            );
+
+            if ($idTrivia === false) {
+                $params['mensaje'] = "No se ha podido crear la trivia. El Pokémon ya está asignado a otro juego.";
+                require __DIR__ . '/../templates/crearTrivia.php';
+                return;
             }
 
-            if ($tiempo <= 0) {
-                $errores[] = "El tiempo debe ser mayor que 0.";
-            }
-
-            // -------------------------------- IMPORTANT FALTA ----------------------------------
-            // Aqui validamos tambien que el pokemon no este ya usado en otros juegos
-            // -----------------------------------------------------------------------------------
-
-            // 4. If there are no validation errors, we call the Trivia model
-            if (empty($errores)) {
-                $m = new Trivia();
-
-                // We adapt the options to the format expected by the model
-                $opcionesModelo = [];
-                foreach ($opciones as $op) {
-                    $opcionesModelo[] = [
-                        'texto'    => $op->texto,
-                        'correcta' => $op->correcta
-                    ];
-                }
-
-                // We attempt to create the Trivia entry
-                $idTrivia = $m->crearTrivia(
-                    $idPokemon,
-                    $enunciado,
-                    $tiempo,
-                    $opcionesModelo
-                );
-
-                // If the model returns false, something went wrong
-                if ($idTrivia === false) {
-                    $params['mensaje'] = "No se ha podido crear la trivia. El Pokémon ya está asignado a otro juego.";
-                } else {
-                    // Trivia created successfully → redirect to the games list
-                    header("Location: index.php?ctl=juegos");
-                    exit;
-                }
-            } else {
-                // If there were validation errors, we show them in the view
-                $params['mensaje'] = implode('<br>', $errores);
-            }
+            // Éxito
+            header("Location: index.php?ctl=juegos");
+            exit;
         }
-    } catch (Throwable $e) {
-        // We delegate the error handling to the controller's method
-        $this->handleError($e);
-    }
 
-    // We load the Trivia creation form view
-    // FALTA SABER LA RUTA
-    // require __DIR__ . '/../templates/triviaCrear.php';
+    } catch (Throwable $e) {
+    echo "<pre>";
+    var_dump($e);
+    echo "</pre>";
+    die();
 }
 
-   /**
- * Function to edit an existing Trivia entry. It loads the current data on the first GET request,
- * validates the updated information on POST, rebuilds the options structure and, if everything is valid,
- * updates the Trivia entry through the model.
- */
+
+    require __DIR__ . '/../templates/crearTrivia.php';
+}
+
 public function editarTrivia()
 {
  // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui

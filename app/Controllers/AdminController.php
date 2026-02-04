@@ -29,6 +29,8 @@ class AdminController extends Controller
     }
      public function vistaTrivia() {
 
+       $mApi = new PokeAPI();
+
        $params = [
         'modo'   => '',
         'id' => '',
@@ -36,6 +38,9 @@ class AdminController extends Controller
         'pregunta' => '',
         'tiempo' => '',
         'opciones' => '',
+        'pokemon_list' => $mApi->getAllPokemon(),
+        'type_list' => $mApi->getTypesList(),
+        'num_generations' => $mApi->getNumGenerations(),
     ];
     
         if($params['modo'] == "editar"){

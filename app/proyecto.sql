@@ -113,7 +113,7 @@ CREATE TABLE `j_trivia_opcion` (
 
 CREATE TABLE `j_trivia_respuesta` (
   `id_pregunta` int(11) NOT NULL,
-  `id_opción` int(11) NOT NULL,
+  `id_opcion` int(11) NOT NULL,
   `esCorrecta` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -205,8 +205,8 @@ ALTER TABLE `j_trivia_opcion`
 -- Indices de la tabla `j_trivia_respuesta`
 --
 ALTER TABLE `j_trivia_respuesta`
-  ADD PRIMARY KEY (`id_pregunta`,`id_opción`),
-  ADD KEY `id_opción` (`id_opción`);
+  ADD PRIMARY KEY (`id_pregunta`,`id_opcion`),
+  ADD KEY `id_opcion` (`id_opcion`);
 
 --
 -- Indices de la tabla `pokemon_usuario`
@@ -282,7 +282,7 @@ ALTER TABLE `j_clasificar`
 -- Filtros para la tabla `j_trivia_respuesta`
 --
 ALTER TABLE `j_trivia_respuesta`
-  ADD CONSTRAINT `j_trivia_respuesta_ibfk_1` FOREIGN KEY (`id_opción`) REFERENCES `j_trivia_opcion` (`id`),
+  ADD CONSTRAINT `j_trivia_respuesta_ibfk_1` FOREIGN KEY (`id_opcion`) REFERENCES `j_trivia_opcion` (`id`),
   ADD CONSTRAINT `j_trivia_respuesta_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `j_trivia_enunciado` (`id`);
 
 --
