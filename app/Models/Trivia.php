@@ -30,9 +30,8 @@ class Trivia
     * Create a new trivia.
     *
     * Flow:
-    * 1) Verify the Pokémon is not used in other games (prevents duplicates by id_pokemon).
-    * 2) Insert the prompt into `j_trivia_enunciado`.
-    * 3) For each option: reuse the option if it already exists in `j_trivia_opcion`,
+    * 1) Insert the prompt into `j_trivia_enunciado`.
+    * 2) For each option: reuse the option if it already exists in `j_trivia_opcion`,
     *    or create it and finally insert the relation into `j_trivia_respuesta`.
     *
     * @param int $idPokemon ID of the Pokémon associated with the trivia
@@ -44,12 +43,7 @@ class Trivia
     public function crearTrivia($idPokemon, $pregunta, $segundos, $opciones)
     {
 
-        // 1. Verify the Pokémon isn't used in other games
-        if ($this->isPokemonUsedInGame($idPokemon)) {
-            return false; // Pokémon already used
-        }
-
-        // 2. Insert prompt
+        // 1. Insert prompt
         $sqlInsertTrivia = "
             INSERT INTO j_trivia_enunciado (id_pokemon, pregunta, segundos)
             VALUES (:idPokemon, :pregunta, :segundos)
@@ -63,7 +57,7 @@ class Trivia
 
         $idTrivia = $this->conexion->lastInsertId();
 
-        // 3. Insert options (reuse existing option or create a new one)
+        // 2. Insert options (reuse existing option or create a new one)
         foreach ($opciones as $op) {
             $texto = $op["texto"];
             $correcta = $op["correcta"];
@@ -149,11 +143,10 @@ class Trivia
      * Updates the prompt and its options inside a database transaction.
      *
      * Steps:
-     * 1) Verify the Pokémon is not used in other games or in another trivia (excluding this one).
-     * 2) Update the prompt in `j_trivia_enunciado`.
-     * 3) Delete current relations in `j_trivia_respuesta` and re-insert according to $opciones,
+     * 1) Update the prompt in `j_trivia_enunciado`.
+     * 2) Delete current relations in `j_trivia_respuesta` and re-insert according to $opciones,
      *    reusing existing options from `j_trivia_opcion` or creating new ones as needed.
-     * 4) Remove orphaned options from `j_trivia_opcion` that are no longer referenced.
+     * 3) Remove orphaned options from `j_trivia_opcion` that are no longer referenced.
      *
      * @param int   $idTrivia  ID of the trivia to edit
      * @param int   $idPokemon ID of the Pokémon associated with the trivia
@@ -166,12 +159,7 @@ class Trivia
     public function editarTrivia($idTrivia, $idPokemon, $pregunta, $segundos, $opciones)
     {
         try {
-            // 1. Verify the Pokémon isn't used in other games
-            if ($this->isPokemonUsedInGame($idPokemon, $idTrivia)) {
-                return false; // Pokémon already used
-            }
-
-            // 2) Actualizar enunciado
+            // 1) Actualizar enunciado
             $sqlUpdate = "
                 UPDATE j_trivia_enunciado
                 SET id_pokemon = :idPokemon, pregunta = :pregunta, segundos = :segundos
@@ -184,7 +172,7 @@ class Trivia
             $stmt->bindParam(':idTrivia', $idTrivia);
             $stmt->execute();
 
-            // 3) Eliminar relaciones actuales de respuestas y volver a insertar según $opciones
+            // 2) Eliminar relaciones actuales de respuestas y volver a insertar según $opciones
             $sqlDelRel = "DELETE FROM j_trivia_respuesta WHERE id_pregunta = :idTrivia";
             $stmt = $this->conexion->prepare($sqlDelRel);
             $stmt->bindParam(':idTrivia', $idTrivia);
@@ -222,7 +210,7 @@ class Trivia
                 $stmt->execute();
             }
 
-            // 4) Eliminar opciones huérfanas
+            // 3) Eliminar opciones huérfanas
             $sqlDelOrphan = "
                 DELETE FROM j_trivia_opcion
                 WHERE id NOT IN (SELECT id_opción FROM j_trivia_respuesta)
@@ -290,36 +278,6 @@ class Trivia
         $stmt->bindParam(':idTrivia', $idTrivia);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Returns whether the Pokemon is already used for any game
-     * 
-     * @param int $idPokemon id of the Pokemon to check
-     * @param int $idTrivia id of the Trivia game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
-     * @return bool true if the Pokemon is already assigned to a game, false otherwise
-     */
-    private function isPokemonUsedInGame(int $idPokemon, int $idTrivia = -1): bool
-    {
-        // We check if the Pokemon is not already a reward for another Trivia game
-        if ($this->isPokemonUsed($idPokemon, $idTrivia) != false) {
-            return true;
-        }
-
-        // We check if the Pokemon is not already a reward for a Clasificar game
-        $mClasificar = new Clasificar();
-        if ($mClasificar->isPokemonUsed($idPokemon) != false) {
-            return true;
-        }
-
-        // TODO: A añadir cuando esté implementado
-        // $mAdivinanza = new Adivinanza();
-        // // We check if the Pokemon is not already a reward for a Guessing game
-        // if ($mAdivinanza->isPokemonUsed($idPokemon) != false) {
-        //     return false;
-        // }
-
-        return false;
     }
 }
 

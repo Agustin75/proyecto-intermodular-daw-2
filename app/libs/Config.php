@@ -9,6 +9,9 @@ define("USER_GUEST", 1);
 define("USER_REGISTERED", 2);
 define("USER_ADMIN", 3);
 
+define("MODE_CREATE", 1);
+define("MODE_EDIT", 2);
+
 
 $mvc_vis_css = "estilo.css";
 
