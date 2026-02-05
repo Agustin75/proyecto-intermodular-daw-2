@@ -6,15 +6,19 @@ class ClasificarController extends Controller
      */
     public function crearClasificar()
     {
+        $mClasificar = new Clasificar();
+
         // Initial state of the form parameters
         $params = [
             // We set the mode to create so the view knows what fields to display
             'modo' => MODE_CREATE,
-            'idTipo' => '',
+            'idTipo' => -1,
             'idPokemon' => '',
             'numOpciones' => '',
             'numPokemon' => '',
-            'numRequerido' => ''
+            'numRequerido' => '',
+            'pokemon_list' => (new PokeAPI())->getAllPokemon(),
+            'tiposClasificar' => $mClasificar->obtenerTiposClasificar()
         ];
 
         // Array to store the errors
@@ -38,6 +42,7 @@ class ClasificarController extends Controller
                 cNum($numRequerido, "numRequerido", $errores);
 
                 // 2. We store the values in $params to preserve the form state
+                $idTipo = intval($idTipo);
                 $params['idTipo'] = $idTipo;
                 $params['idPokemon'] = $idPokemon;
                 $params['numOpciones'] = $numOpciones;
@@ -65,32 +70,6 @@ class ClasificarController extends Controller
                 if ($idPokemon < 0 || $idPokemon >= count($mPokemon->getAllPokemon())) {
                     $errores[] = "Debes seleccionar un Pokémon válido.";
                 }
-
-                // We create the model before the if check because we'll need it after the check too
-                $mClasificar = new Clasificar();
-
-                // If there are no errors, we check that the Pokémon is not already in use in any game
-                if (empty($errores)) {
-                    if ($mClasificar->isPokemonUsed($idPokemon)) {
-                        $errores[] = "Este Pokémon ya está utilizado por otro juego.";
-                    }
-
-                    // The Pokémon was not used in a Clasificar game, we check Trivia
-                    if (empty($errores)) {
-                        $mTrivia = new Trivia();
-                        if ($mTrivia->isPokemonUsed($idPokemon)) {
-                            $errores[] = "Este Pokémon ya está utilizado por otro juego.";
-                        }
-
-                        // TODO: The Pokémon was not used in a Trivia game, we check Adivinanza
-                        // if (empty($errores)) {
-                        //     $mAdivinanza = new Adivinanza();
-                        //     if ($mAdivinanza->isPokemonUsed($idPokemon)) {
-                        //         $errores[] = "Este Pokémon ya está utilizado por otro juego.";
-                        //     }
-                        // }
-                    }
-                }
                 
                 // If there are no validation errors, we call the Clasificar model
                 if (empty($errores)) {
@@ -115,6 +94,6 @@ class ClasificarController extends Controller
         }
 
         // We load the Clasificar creation form view
-        require __DIR__ . '/../templates/crearClasificar.php';
+        require __DIR__ . '/../templates/formClasificar.php';
     }
 }
