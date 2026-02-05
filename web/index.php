@@ -47,11 +47,12 @@ $map = [
     // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
     'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
     'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
-
-    'crearAdivinanza'   => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',   'nivel' => USER_ADMIN],
-    'crearClasificar'   => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',   'nivel' => USER_ADMIN],
-    'editarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'editarClasificar',  'nivel' => USER_ADMIN],
-    'guardarClasificar' => ['controller' => 'ClasificarController', 'action' => 'guardarClasificar', 'nivel' => USER_ADMIN],
+    'crearAdivinanza'    => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',    'nivel' => USER_ADMIN],
+    
+    'crearClasificar'    => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',    'nivel' => USER_ADMIN],
+    'editarClasificar'   => ['controller' => 'ClasificarController', 'action' => 'editarClasificar',   'nivel' => USER_ADMIN],
+    'guardarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'guardarClasificar',  'nivel' => USER_ADMIN],
+    'eliminarClasificar' => ['controller' => 'ClasificarController', 'action' => 'eliminarClasificar', 'nivel' => USER_ADMIN],
     
     // API functions
     'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],

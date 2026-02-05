@@ -54,7 +54,7 @@
 
 <br>
 <?php if ($params["modo"] === MODE_EDIT): ?>
-    <button id="bEliminarClasificar">Eliminar</button>
+    <a href="index.php?ctl=eliminarClasificar&idClasificar=<?= htmlspecialchars($params['idClasificar']) ?>" class="btn btn-danger btn-sm">Eliminar</a>
 <?php endif; ?>
 
 <datalist id="pokemonList">

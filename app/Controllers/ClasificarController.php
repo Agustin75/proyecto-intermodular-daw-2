@@ -70,14 +70,14 @@ class ClasificarController extends Controller
                 if ($idPokemon < 0 || $idPokemon >= count($mPokemon->getAllPokemon())) {
                     $errores[] = "Debes seleccionar un Pokémon válido.";
                 }
-                
+
                 // If there are no validation errors, we call the Clasificar model
                 if (empty($errores)) {
                     $idClasificar = $mClasificar->crearClasificar($idPokemon, $idTipo, $numPokemon, $numOpciones, $numRequerido);
 
                     // If the model returns false, something went wrong
                     if ($idClasificar === false) {
-                        $params['mensaje'] = "No se ha podido crear la clasificación. El Pokémon ya está asignado a otro juego.";
+                        $errores[] = "No se ha podido crear la clasificación. El Pokémon ya está asignado a otro juego.";
                     } else {
                         // Clasificación created successfully → redirect to the games list
                         header("Location: index.php?ctl=gestionarJuegos");
@@ -85,7 +85,7 @@ class ClasificarController extends Controller
                     }
                 } else {
                     // If there were validation errors, we show them in the view
-                    $params['mensaje'] = implode('<br>', $errores);
+                    $params["mensaje"] = implode('<br>', $errores);
                 }
             }
         } catch (Throwable $e) {
@@ -96,7 +96,7 @@ class ClasificarController extends Controller
         // We load the Clasificar creation form view
         require __DIR__ . '/../templates/formClasificar.php';
     }
-    
+
     /**
      * Handles the displaying of the edit view for Clasificar games
      */
@@ -105,7 +105,7 @@ class ClasificarController extends Controller
         // We check if we received the id of a Clasificar game
         if (!isset($_GET["idClasificar"])) {
             $params["mensaje"] = "Error: No se seleccionó ningún juego de Clasificar";
-            
+
             // We didn't receive an id, return to the previous page
             header("index.php?ctl=gestionarJuegos");
             exit;
@@ -123,7 +123,7 @@ class ClasificarController extends Controller
 
         if (!$game) {
             $params["mensaje"] = "Error: No existe un juego de Clasificar con ese id.";
-            
+
             // We didn't receive a valid id, return to the previous page
             header("index.php?ctl=gestionarJuegos");
             exit;
@@ -154,7 +154,8 @@ class ClasificarController extends Controller
     /**
      * Handles the updating of Clasificar games in the database
      */
-    public function guardarClasificar() {
+    public function guardarClasificar()
+    {
         $mClasificar = new Clasificar();
 
         // Initial state of the form parameters
@@ -226,12 +227,12 @@ class ClasificarController extends Controller
                 if ($idPokemon < 0 || $idPokemon >= count($mPokemon->getAllPokemon())) {
                     $errores[] = "Debes seleccionar un Pokémon válido.";
                 }
-                
+
                 // If there are no validation errors, we call the Clasificar model
                 if (empty($errores)) {
                     // If the model returns false, something went wrong
                     if ($mClasificar->editarClasificar($idClasificar, $idPokemon, $idTipo, $numPokemon, $numOpciones, $numRequerido) === false) {
-                        $params['mensaje'] = "No se ha podido editar el juego de Clasificar. El id del juego no es válido o el Pokémon ya está asignado a otro juego.";
+                        $errores[] = "No se ha podido editar el juego de Clasificar. El id del juego no es válido o el Pokémon ya está asignado a otro juego.";
                     } else {
                         // Clasificación created successfully → redirect to the games list
                         header("Location: index.php?ctl=gestionarJuegos");
@@ -249,5 +250,57 @@ class ClasificarController extends Controller
 
         // We load the Clasificar creation form view
         require __DIR__ . '/../templates/formClasificar.php';
+    }
+
+
+    /**
+     * Handles the displaying of the edit view for Clasificar games
+     * 
+     * Redirects to the games list page upon successful or unsuccessful deletion.
+     * TODO: Make it so it stays in the edit page if Eliminar is called from there?
+     */
+    public function eliminarClasificar()
+    {
+        // We check if we received the id of a Clasificar game
+        if (!isset($_GET["idClasificar"])) {
+            $params["mensaje"] = "Error: No se seleccionó ningún juego de Clasificar";
+
+            // We didn't receive an id, return to the previous page
+            header("Location: index.php?ctl=gestionarJuegos");
+            exit;
+        }
+
+        // Array to store the errors
+        $errores = [];
+
+        $idClasificar = $_GET["idClasificar"];
+        cNum($idClasificar, "idClasificar", $errores);
+
+        $mClasificar = new Clasificar();
+
+        $game = $mClasificar->obtenerClasificar($idClasificar);
+
+        if (!$game) {
+            $errores[] = "Error: No existe un juego de Clasificar con ese id.";
+
+            // We didn't receive a valid id, return to the previous page
+            header("Location: index.php?ctl=gestionarJuegos");
+            exit;
+        }
+
+        if (!$mClasificar->eliminarClasificar($idClasificar)) {
+            $errores[] = "Error: Hubo un error intentando eliminar el juego de Clasificar.";
+
+            header("Location: index.php?ctl=gestionarJuegos");
+            exit;
+        }
+
+        if (!empty($errores)) {
+            // TODO: This may be irrelevant if we're redirecting, need to find a way to display the error message
+            $params['mensaje'] = implode('<br>', $errores);
+        }
+
+        header("Location: index.php?ctl=gestionarJuegos");
+        exit;
     }
 }
