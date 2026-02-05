@@ -41,78 +41,87 @@ class Trivia
     * @param array $opciones List of options, each with keys: 'texto' and 'correcta'
     * @return int|false ID of the created trivia, or false if the Pokémon is already in use
      */
-    public function crearTrivia($idPokemon, $pregunta, $segundos, $opciones)
-    {
+    public function crearTrivia($idPokemon, $pregunta, $tiempo, $opciones)
+{
+    // 1. Verificar que el Pokémon no esté usado
+    $sqlCheck = "
+    SELECT id_pokemon FROM (
+        SELECT id_pokemon FROM j_adivinanza
+        UNION
+        SELECT id_pokemon FROM j_trivia_enunciado
+        UNION
+        SELECT id_pokemon FROM j_clasificar
+    ) AS t
+    WHERE id_pokemon = :id
+";
 
-        // 1. Verify the Pokémon isn't used in other games
-        if ($this->isPokemonUsedInGame($idPokemon)) {
-            return false; // Pokémon already used
-        }
+$stmt = $this->conexion->prepare($sqlCheck);
+$stmt->bindParam(':id', $idPokemon);
+$stmt->execute();
 
-        // 2. Insert prompt
-        $sqlInsertTrivia = "
-            INSERT INTO j_trivia_enunciado (id_pokemon, pregunta, segundos)
-            VALUES (:idPokemon, :pregunta, :segundos)
-        ";
 
-        $stmt = $this->conexion->prepare($sqlInsertTrivia);
-        $stmt->bindParam(':idPokemon', $idPokemon);
-        $stmt->bindParam(':pregunta', $pregunta);
-        $stmt->bindParam(':segundos', $segundos);
-        $stmt->execute();
-
-        $idTrivia = $this->conexion->lastInsertId();
-
-        // 3. Insert options (reuse existing option or create a new one)
-        foreach ($opciones as $op) {
-            $texto = $op["texto"];
-            $correcta = $op["correcta"];
-
-            // Does the option already exist?
-            $sqlCheckOpcion = "SELECT id FROM j_trivia_opcion WHERE opcion = :opcion";
-            $stmt = $this->conexion->prepare($sqlCheckOpcion);
-            $stmt->bindParam(':opcion', $texto);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                $idOpcion = $stmt->fetch(PDO::FETCH_ASSOC)["id"];
-            } else {
-                // Insert new option
-                $sqlInsertOpcion = "INSERT INTO j_trivia_opcion (opcion) VALUES (:opcion)";
-                $stmt = $this->conexion->prepare($sqlInsertOpcion);
-                $stmt->bindParam(':opcion', $texto);
-                $stmt->execute();
-                $idOpcion = $this->conexion->lastInsertId();
-            }
-
-            // Insert relation in j_trivia_respuesta
-            $sqlRelacion = "
-                INSERT INTO j_trivia_respuesta (id_pregunta, id_opción, esCorrecta)
-                VALUES (:idTrivia, :idOpcion, :correcta)
-            ";
-
-            $stmt = $this->conexion->prepare($sqlRelacion);
-            $stmt->bindParam(':idTrivia', $idTrivia);
-            $stmt->bindParam(':idOpcion', $idOpcion);
-            $stmt->bindParam(':correcta', $correcta);
-            $stmt->execute();
-        }
-
-        return $idTrivia;
+    if ($stmt->rowCount() > 0) {
+        return false;
     }
 
-     /* ============================================================
-         2. GET COMPLETE TRIVIA BY ID
-         ============================================================ */
-     /**
-      * Get the complete trivia by its ID.
-      *
-      * Retrieves the prompt from `j_trivia_enunciado` and the associated options
-      * (id, text and whether they are correct) from `j_trivia_respuesta` + `j_trivia_opcion`.
-      *
-      * @param int $idTrivia
-      * @return array|null Array with keys 'enunciado' and 'opciones', or null if not found
-      */
+    // 2. Insertar enunciado
+    $sqlInsert = "
+        INSERT INTO j_trivia_enunciado (id_pokemon, pregunta, tiempo)
+        VALUES (:idPokemon, :pregunta, :tiempo)
+    ";
+
+    $stmt = $this->conexion->prepare($sqlInsert);
+    $stmt->bindParam(':idPokemon', $idPokemon);
+    $stmt->bindParam(':pregunta', $pregunta);
+    $stmt->bindParam(':tiempo', $tiempo);
+    $stmt->execute();
+
+    $idTrivia = $this->conexion->lastInsertId();
+
+    // 3. Insertar opciones
+    foreach ($opciones as $op) {
+        $texto = $op["texto"];
+        $correcta = $op["correcta"];
+
+        // ¿Existe ya la opción?
+        $sqlCheckOpcion = "SELECT id FROM j_trivia_opcion WHERE opcion = :opcion";
+        $stmt = $this->conexion->prepare($sqlCheckOpcion);
+        $stmt->bindParam(':opcion', $texto);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($result && isset($result["id"])) {
+    $idOpcion = $result["id"];
+} else {
+    $sqlInsertOpcion = "INSERT INTO j_trivia_opcion (opcion) VALUES (:opcion)";
+    $stmt = $this->conexion->prepare($sqlInsertOpcion);
+    $stmt->bindParam(':opcion', $texto);
+    $stmt->execute();
+    $idOpcion = $this->conexion->lastInsertId();
+}
+
+if (!$idOpcion) {
+    throw new Exception("No se pudo obtener idOpcion para la opción '$texto'");
+}
+
+
+        // Insertar relación
+        $sqlRelacion = "
+            INSERT INTO j_trivia_respuesta (id_pregunta, id_opcion, esCorrecta)
+            VALUES (:idTrivia, :idOpcion, :correcta)
+        ";
+
+        $stmt = $this->conexion->prepare($sqlRelacion);
+        $stmt->bindParam(':idTrivia', $idTrivia);
+        $stmt->bindParam(':idOpcion', $idOpcion);
+        $stmt->bindParam(':correcta', $correcta);
+        $stmt->execute();
+    }
+
+    return $idTrivia;
+}
+
     public function obtenerTrivia($idTrivia)
     {
         // Get prompt
@@ -128,7 +137,7 @@ class Trivia
         $sqlOpciones = "
             SELECT o.id, o.opcion, r.esCorrecta
             FROM j_trivia_respuesta r
-            JOIN j_trivia_opcion o ON r.id_opción = o.id
+            JOIN j_trivia_opcion o ON r.id_opcion = o.id
             WHERE r.id_pregunta = :id
         ";
 
@@ -166,10 +175,26 @@ class Trivia
     public function editarTrivia($idTrivia, $idPokemon, $pregunta, $segundos, $opciones)
     {
         try {
-            // 1. Verify the Pokémon isn't used in other games
-            if ($this->isPokemonUsedInGame($idPokemon, $idTrivia)) {
-                return false; // Pokémon already used
-            }
+            // 1. Verificar que el Pokémon no esté usado
+    $sqlCheck = "
+    SELECT id_pokemon FROM (
+        SELECT id_pokemon FROM j_adivinanza
+        UNION
+        SELECT id_pokemon FROM j_trivia_enunciado
+        UNION
+        SELECT id_pokemon FROM j_clasificar
+    ) AS t
+    WHERE id_pokemon = :id
+";
+
+$stmt = $this->conexion->prepare($sqlCheck);
+$stmt->bindParam(':id', $idPokemon);
+$stmt->execute();
+
+
+    if ($stmt->rowCount() > 0) {
+        return false;
+    }
 
             // 2) Actualizar enunciado
             $sqlUpdate = "
@@ -212,7 +237,7 @@ class Trivia
 
                 // Insertar relación pregunta-opción
                 $sqlRelacion = "
-                    INSERT INTO j_trivia_respuesta (id_pregunta, id_opción, esCorrecta)
+                    INSERT INTO j_trivia_respuesta (id_pregunta, id_opcion, esCorrecta)
                     VALUES (:idTrivia, :idOpcion, :correcta)
                 ";
                 $stmt = $this->conexion->prepare($sqlRelacion);
@@ -225,7 +250,7 @@ class Trivia
             // 4) Eliminar opciones huérfanas
             $sqlDelOrphan = "
                 DELETE FROM j_trivia_opcion
-                WHERE id NOT IN (SELECT id_opción FROM j_trivia_respuesta)
+                WHERE id NOT IN (SELECT id_opcion FROM j_trivia_respuesta)
             ";
             $stmt = $this->conexion->prepare($sqlDelOrphan);
             $stmt->execute();
@@ -267,7 +292,7 @@ class Trivia
         // 3. Delete orphaned options
         $sql = "
             DELETE FROM j_trivia_opcion
-            WHERE id NOT IN (SELECT id_opción FROM j_trivia_respuesta)
+            WHERE id NOT IN (SELECT id_opcion FROM j_trivia_respuesta)
         ";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -275,52 +300,7 @@ class Trivia
         return true;
     }
 
-    /**
-     * Returns whether the Pokemon is already used for a Trivia game
-     * 
-     * @param int $idPokemon id of the Pokemon to check
-     * @param int $idTrivia id of the Trivia game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
-     * @return array|false the results of the query, or false if no matches were found
-     */
-    public function isPokemonUsed(int $idPokemon, int $idTrivia = -1): array | false
-    {
-        $sql = "SELECT * FROM j_trivia_enunciado WHERE id_pokemon = :idPokemon AND id != :idTrivia";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':idPokemon', $idPokemon);
-        $stmt->bindParam(':idTrivia', $idTrivia);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Returns whether the Pokemon is already used for any game
-     * 
-     * @param int $idPokemon id of the Pokemon to check
-     * @param int $idTrivia id of the Trivia game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
-     * @return bool true if the Pokemon is already assigned to a game, false otherwise
-     */
-    private function isPokemonUsedInGame(int $idPokemon, int $idTrivia = -1): bool
-    {
-        // We check if the Pokemon is not already a reward for another Trivia game
-        if ($this->isPokemonUsed($idPokemon, $idTrivia) != false) {
-            return true;
-        }
-
-        // We check if the Pokemon is not already a reward for a Clasificar game
-        $mClasificar = new Clasificar();
-        if ($mClasificar->isPokemonUsed($idPokemon) != false) {
-            return true;
-        }
-
-        // TODO: A añadir cuando esté implementado
-        // $mAdivinanza = new Adivinanza();
-        // // We check if the Pokemon is not already a reward for a Guessing game
-        // if ($mAdivinanza->isPokemonUsed($idPokemon) != false) {
-        //     return false;
-        // }
-
-        return false;
-    }
+    
 }
 
 ?>

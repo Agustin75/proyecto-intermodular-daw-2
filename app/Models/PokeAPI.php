@@ -20,7 +20,8 @@ class PokeAPI {
         // We check if we have already obtained the list
         if (empty($this->allPokemonList)) {
             // If we haven't, we obtain it from the API and sort it. The request will get all Pokemon up to the first Form ID to avoid getting Forms.
-            $this->allPokemonList = $this->obtainSortedPokemonList($this->makeRequest("pokemon-species?limit=" . FIRST_FORM_ID - 1)["results"]);
+            $this->allPokemonList = $this->obtainSortedPokemonList(
+                $this->makeRequest("pokemon-species?limit=" . (FIRST_FORM_ID - 1))["results"]);
         }
 
         // We return the sorted list of Pokemon
@@ -78,7 +79,7 @@ class PokeAPI {
      * @param int|string $type - the name or id of the type to filter by (fire, water, etc.)
      * @return array - a list of Pokemon info with: name, URL and ID, sorted by ID. If there was an error, returns an empty array
      */
-    public function getPokemonByType(int|string $type) : array {
+    public function getPokemonByType($type) : array {
         $typeInformation = $this->makeRequest("type/$type?limit=" . FIRST_FORM_ID - 1);
 
         // If $typeInformation is null there was an error, so we return an empty array
@@ -157,7 +158,7 @@ class PokeAPI {
      * @param bool $fullURL - whether $endpoint is the full URL or just the endpoint. Default is false (just endpoint)
      * @return array|null - an array containing the response from the API. If there was an error, returns an empty array
      */
-    private function makeRequest(string $endpoint, bool $fullURL = false): array | null
+    private function makeRequest(string $endpoint, bool $fullURL = false)
     {
         // If $fullURL is true, then $endpoint is the full call to the API. Otherwise, we append it to the base URL.
         $url = ($fullURL ? "" :  "https://pokeapi.co/api/v2/") . $endpoint;

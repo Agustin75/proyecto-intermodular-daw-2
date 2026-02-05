@@ -29,6 +29,8 @@ class AdminController extends Controller
     }
      public function vistaTrivia() {
 
+       $mApi = new PokeAPI();
+
        $params = [
         'modo'   => '',
         'id' => '',
@@ -36,6 +38,9 @@ class AdminController extends Controller
         'pregunta' => '',
         'tiempo' => '',
         'opciones' => '',
+        'pokemon_list' => $mApi->getAllPokemon(),
+        'type_list' => $mApi->getTypesList(),
+        'num_generations' => $mApi->getNumGenerations(),
     ];
     
         if($params['modo'] == "editar"){
@@ -56,38 +61,6 @@ class AdminController extends Controller
 
 
         require __DIR__ . '/../templates/crearTrivia.php';
-
-
-    }
-     public function vistaClasificar() {
-
-       $params = [
-        'modo'   => '',
-        'id' => '',
-        'id_pkmn' => '',
-        'id_tipo' => '',
-        'num_pkmn' => '',
-        'num_opciones' => '',
-    ];
-    
-        if($params['modo'] !== "nueva"){
-            $id = recoge('id');
-            $params['id'] = $id;
-
-            /*$m = new Clasificar;
-            $all = $m->obtenerClasificar($id);
-            $params['id_pkmn'] = $all['enunciado'['id_pokemon']];
-            $params['pregunta'] = $all['enunciado'['pregunta']];
-            $params['tiempo'] = $all['opciones'['tiempo']];
-            $params['opciones'] = $all['opciones'];*/
-
-        }
-
-
-
-
-
-        require __DIR__ . '/../templates/crearClasificar.php';
 
 
     }

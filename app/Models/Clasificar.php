@@ -21,11 +21,6 @@ class Clasificar
      */
     public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): int|false
     {
-        // We check if the Pokemon is not already a reward for another game
-        if ($this->isPokemonUsedInGame($idPokemon)) {
-            return false;
-        }
-
         $sql = "INSERT INTO j_clasificar (id_pokemon, id_tipo, num_pokemon, num_opciones, num_requerido)
                 VALUES (:idPokemon, :idTipo, :numPokemon, :numOpciones, :numRequerido)";
 
@@ -85,11 +80,6 @@ class Clasificar
     public function editarClasificar(int $idClasificar, int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): bool
     {
         try {
-            // We check if the Pokemon is not already a reward for another game, passing in the id of the current game so it ignores it
-            if ($this->isPokemonUsedInGame($idPokemon, $idClasificar)) {
-                return false;
-            }
-
             // We update the classification
             $sql = "UPDATE j_clasificar
                     SET id_pokemon = :idPokemon, id_tipo = :idTipo, num_pokemon = :numPokemon, num_opciones = :numOpciones, num_requerido = :numRequerido
@@ -138,35 +128,5 @@ class Clasificar
         $stmt->bindParam(':idClasificar', $idClasificar);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Returns whether the Pokemon is already used for any game
-     * 
-     * @param int $idPokemon id of the Pokemon to check
-     * @param int $idClasificar id of the Clasificar game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
-     * @return bool true if the Pokemon is already assigned to a game, false otherwise
-     */
-    private function isPokemonUsedInGame(int $idPokemon, int $idClasificar = -1): bool
-    {
-        // We check if the Pokemon is not already a reward for another Clasify game
-        if ($this->isPokemonUsed($idPokemon, $idClasificar) != false) {
-            return true;
-        }
-
-        // We check if the Pokemon is not already a reward for a Trivia game
-        $mTrivia = new Trivia();
-        if ($mTrivia->isPokemonUsed($idPokemon) != false) {
-            return true;
-        }
-
-        // TODO: A añadir cuando esté implementado
-        // $mAdivinanza = new Adivinanza();
-        // // We check if the Pokemon is not already a reward for a Guessing game
-        // if ($mAdivinanza->isPokemonUsed($idPokemon) != false) {
-        //     return false;
-        // }
-
-        return false;
     }
 }
