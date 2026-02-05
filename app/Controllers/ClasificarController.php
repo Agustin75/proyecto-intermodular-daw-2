@@ -83,7 +83,9 @@ class ClasificarController extends Controller
                         header("Location: index.php?ctl=gestionarJuegos");
                         exit;
                     }
-                } else {
+                } 
+                
+                if (!empty($errores)) {
                     // If there were validation errors, we show them in the view
                     $params["mensaje"] = implode('<br>', $errores);
                 }
@@ -238,7 +240,9 @@ class ClasificarController extends Controller
                         header("Location: index.php?ctl=gestionarJuegos");
                         exit;
                     }
-                } else {
+                }
+                
+                if (!empty($errores)) {
                     // If there were validation errors, we show them in the view
                     $params['mensaje'] = implode('<br>', $errores);
                 }
