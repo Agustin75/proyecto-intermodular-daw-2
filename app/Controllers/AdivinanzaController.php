@@ -4,11 +4,6 @@
 
 class AdivinanzaController extends Controller
 {
-   /**
- * Function to create a new Trivia entry. It processes the form data, validates it,
- * builds the options structure and, if everything is correct, sends the information
- * to the Trivia model to be inserted into the database.
- */
 public function crearAdivinanza()
 {
 
@@ -21,7 +16,7 @@ public function crearAdivinanza()
         'pista3'      => '',
     ];
 
-    // List that will hold all validation errors
+ 
     $errores = [];
 
     try {
@@ -134,7 +129,7 @@ public function editarAdivinanza()
 
             // If the Trivia does not exist, we show an error message
             if (!$ad) {
-                $params['mensaje'] = "La trivia no existe.";
+                $params['mensaje'] = "La adivinanza no existe.";
 // RUTA               require __DIR__ . '/../templates/triviaEditar.php';
                 return;
             }
@@ -158,74 +153,34 @@ public function editarAdivinanza()
         ============================================================ */
 
         // We obtain the updated form data
-        $enunciado   = recoge('enunciado');
-        $numOpciones = (int) recoge('numOpciones');
-        $idPokemon   = (int) recoge('idPokemon');
-        $tiempo      = (int) recoge('tiempo');
-
-        $opcionTextos    = recogeArray('opcionTexto');
-        $opcionCorrectas = recogeArray('opcionCorrecta');
+        $pista1   = recoge('pista1');
+        $pista2 = (int) recoge('pista2');
+        $pista3   = (int) recoge('pista3');
+        
 
         // We store the updated values in $params to preserve the form state
-        $params['enunciado']   = $enunciado;
-        $params['numOpciones'] = $numOpciones;
-        $params['idPokemon']   = $idPokemon;
-        $params['tiempo']      = $tiempo;
-
-        // We rebuild the list of option objects
-        $opciones = [];
-        for ($i = 0; $i < $numOpciones; $i++) {
-            $o = new stdClass();
-            $o->texto    = $opcionTextos[$i] ?? '';
-            $o->correcta = in_array($i, $opcionCorrectas ?? []) ? 1 : 0;
-            $opciones[] = $o;
-        }
-        $params['opciones'] = $opciones;
+        $params['pista1']   = $pista1;
+        $params['pista2'] = $pista2;
+        $params['pista3']   = $pista3;
+        
 
         /* ============================================================
            3. VALIDATION
         ============================================================ */
 
-        // We validate the question text
-        if ($enunciado === '') {
-            $errores[] = "El enunciado no puede estar vacío.";
-        }
-
-        // We ensure there are at least two options
-        if ($numOpciones < 2) {
-            $errores[] = "Debe haber al menos 2 opciones.";
-        }
-
-        // We verify that the number of options matches the expected count
-        if (count($opciones) !== $numOpciones) {
-            $errores[] = "El número de opciones no coincide.";
-        }
-
-        // We check that all options have text and at least one is correct
-        $hayCorrecta = false;
-        foreach ($opciones as $op) {
-            if (trim($op->texto) === '') {
-                $errores[] = "Todas las opciones deben tener texto.";
-                break;
+    
+        if ($pista1 === '' || $pista2 === '' || $pista3 === '') {
+                $errores[] = "Las pistas no pueden estar vacias.";
             }
-            if ($op->correcta) {
-                $hayCorrecta = true;
-            }
-        }
 
-        if (!$hayCorrecta) {
-            $errores[] = "Debe haber al menos una opción correcta.";
-        }
 
         // We validate the Pokémon ID
         if ($idPokemon <= 0) {
             $errores[] = "Debes seleccionar un Pokémon válido.";
         }
 
-        // We validate the time limit
-        if ($tiempo <= 0) {
-            $errores[] = "El tiempo debe ser mayor que 0.";
-        }
+
+     
 
         // We check if the Pokémon is available for this Trivia
 /*  FALTA SABER DISPONIBILIDAD      if (!$m->pokemonDisponibleParaTrivia($idPokemon, $idTrivia)) {
@@ -245,27 +200,12 @@ public function editarAdivinanza()
            5. UPDATE TRIVIA IN THE MODEL
         ============================================================ */
 
-        // We convert the options to the format expected by the model
-        $opcionesModelo = [];
-        foreach ($opciones as $op) {
-            $opcionesModelo[] = [
-                'texto'    => $op->texto,
-                'correcta' => $op->correcta
-            ];
-        }
-
         // We attempt to update the Trivia entry
-        $ok = $m->editarTrivia(
-            $idTrivia,
-            $idPokemon,
-            $enunciado,
-            $tiempo,
-            $opcionesModelo
-        );
+        $ok = $m->editarAdivinanza($idPokemon, $idAdivinanza, $pista1, $pista2, $pista3);
 
         // If the update failed, we show an error message
         if (!$ok) {
-            $params['mensaje'] = "No se ha podido actualizar la trivia.";
+            $params['mensaje'] = "No se ha podido actualizar la Adivinanza.";
 // RUTA            require __DIR__ . '/../templates/triviaEditar.php';
             return;
         }
@@ -286,7 +226,7 @@ public function editarAdivinanza()
  * checks the provided Trivia ID and, if valid, requests the model to remove the entry.
  * If the deletion fails, an error view is displayed.
  */
-public function eliminarTrivia()
+public function eliminarAdivinanza()
 {
      // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui
 
@@ -297,18 +237,17 @@ public function eliminarTrivia()
         //}
 
     try {
-        // We obtain the Trivia ID from the request
-        $idTrivia = (int) ($_GET['id'] ?? 0);
+        
+        $idAdivinanza = (int) ($_GET['id'] ?? 0);
 
-        // If the ID is invalid, we redirect back to the games list
-        if ($idTrivia <= 0) {
+        if ($idAdivinanza <= 0) {
             header("Location: index.php?ctl=juegos");
             exit;
         }
 
         // We call the model to attempt the deletion
-        $m = new Trivia();
-        $ok = $m->eliminarTrivia($idTrivia);
+        $m = new Adivinar();
+        $ok = $m->eliminarAdivinanza($idAdivinanza);
 
         // If the deletion failed, we show an error message
         if (!$ok) {

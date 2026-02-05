@@ -1,23 +1,10 @@
 <?php
-/**
- * Class Trivia
- *
- * Manages basic CRUD operations related to trivia:
- * - Create a trivia (prompt + options)
- * - Retrieve a complete trivia by id
- * - Delete a trivia and clean up orphaned options
- *
- * Uses the PDO connection provided by `Database::getConnection()`.
- */
+
 class Adivinar
 {
     /** @var PDO PDO database connection */
     private PDO $conexion;
 
-    /**
-     * Trivia constructor.
-     * Initializes the PDO connection from the `Database` class.
-     */
     public function __construct()
     {
         $this->conexion = Database::getConnection();
