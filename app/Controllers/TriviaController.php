@@ -61,6 +61,16 @@ public function crearTrivia()
             }
             $params['opciones'] = $opciones;
 
+            // Comprobación: no permitir opciones duplicadas (ignorando mayúsculas/espacios vacíos)
+            $normalized = array_map(function($t) {
+                return mb_strtolower(trim($t));
+            }, $opcionTextos ?? []);
+            // Filtramos vacíos para no generar falso positivo por opciones vacías (se validan aparte)
+            $nonEmpty = array_filter($normalized, fn($v) => $v !== '');
+            if (count(array_unique($nonEmpty)) < count($nonEmpty)) {
+                $errores[] = "No puede haber opciones repetidas.";
+            }
+
             // Validaciones
             if ($pregunta === '') $errores[] = "El enunciado no puede estar vacío.";
             if ($tiempo <= 0) $errores[] = "El tiempo debe ser mayor que 0.";

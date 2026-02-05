@@ -19,7 +19,7 @@ class Clasificar
      * @param int $numRequerido Amount of classificactions the player needs to answer correctly to obtain the Pokemon
      * @return int|false ID of the created Clasificar game, or false if the Pokémon is already in use
      */
-    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): int|false
+    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido)
     {
         $sql = "INSERT INTO j_clasificar (id_pokemon, id_tipo, num_pokemon, num_opciones, num_requerido)
                 VALUES (:idPokemon, :idTipo, :numPokemon, :numOpciones, :numRequerido)";
@@ -43,7 +43,7 @@ class Clasificar
      * @param int $idClasificar
      * @return array|false Object PDO with all the informacion from the selected Clasificar game, or false if no game was found
      */
-    public function obtenerClasificar($idClasificar): array | false
+    public function obtenerClasificar($idClasificar)
     {
         $sql = "SELECT * FROM j_clasificar WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
@@ -120,7 +120,7 @@ class Clasificar
      * @param int $idClasificar id of the Clasificar game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
      * @return array|false the results of the query, or false if no matches were found
      */
-    public function isPokemonUsed(int $idPokemon, int $idClasificar = -1): array | false
+    public function isPokemonUsed(int $idPokemon, int $idClasificar = -1)
     {
         $sql = "SELECT * FROM j_clasificar WHERE id_pokemon = :idPokemon AND id != :idClasificar";
         $stmt = $this->conexion->prepare($sql);
