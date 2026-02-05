@@ -11,7 +11,7 @@
     <div style="width:33%; border:1px solid #ccc; padding:15px;">
         <h2>Trivia</h2>
 
-        <a href="index.php?ctl=vistaTrivia" class="btn btn-primary">Crear Trivia</a>
+        <a href="index.php?ctl=crearTrivia" class="btn btn-primary">Crear Trivia</a>
         <br><br>
 
         <?php if (empty($params["trivias"])): ?>

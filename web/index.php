@@ -33,24 +33,26 @@ $map = [
     'wiki'          => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
     'wikiPokemon'   => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
     'juegos'        => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
-    
+
     // Registered user functions
     'miPerfil'      => ['controller' => 'UsuarioController', 'action' => 'mostrarPerfil',    'nivel' => USER_REGISTERED],
     'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre',    'nivel' => USER_REGISTERED],
     'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen',    'nivel' => USER_REGISTERED],
     'cerrarSesion'  => ['controller' => 'UsuarioController', 'action' => 'salir',            'nivel' => USER_REGISTERED],
-    
+
     // Admin user functions
     'mostrarTools'      => ['controller' => 'AdminController', 'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
     'crearJuego'        => ['controller' => 'AdminController', 'action' => 'crearJuegos',      'nivel' => USER_ADMIN],
     // TODO: A editar cuando añadamos la funcionalidad
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
-    'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
+    // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
     'crearTrivia'  => ['controller' => 'TriviaController',  'action' => 'crearTrivia',  'nivel' => USER_ADMIN],
+    'eliminarTrivia'  => ['controller' => 'TriviaController',  'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
+
     'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
     'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
-    
-    
+
+
 
     // API functions
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
