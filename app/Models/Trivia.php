@@ -300,6 +300,16 @@ $stmt->execute();
         return true;
     }
 
+public function obtenerTodasLasTrivias()
+{
+    $sql = "SELECT id, id_pokemon FROM j_trivia_enunciado ORDER BY id DESC";
+    $stmt = $this->conexion->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+
     
 }
 

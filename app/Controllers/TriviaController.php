@@ -109,7 +109,7 @@ public function crearTrivia()
             }
 
             // Éxito
-            header("Location: index.php?ctl=juegos");
+            header("Location: index.php?ctl=gestionarJuegos");
             exit;
         }
 
@@ -329,13 +329,7 @@ public function editarTrivia()
  */
 public function eliminarTrivia()
 {
-     // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui
 
-        // Solo admin puede crear trivias
-        // if ($this->session->getUserLevel() < /* nivel admin */ ) {
-        //    header("Location: index.php?ctl=inicio");
-        //    exit;
-        //}
 
     try {
         // We obtain the Trivia ID from the request
@@ -343,7 +337,7 @@ public function eliminarTrivia()
 
         // If the ID is invalid, we redirect back to the games list
         if ($idTrivia <= 0) {
-            header("Location: index.php?ctl=juegos");
+            header("Location: index.php?ctl=getstionarJuegos");
             exit;
         }
 
@@ -359,7 +353,7 @@ public function eliminarTrivia()
         }
 
         // Successful deletion → redirect to the games list
-        header("Location: index.php?ctl=juegos");
+        header("Location: index.php?ctl=gestionarJuegos");
         exit;
 
     } catch (Throwable $e) {
