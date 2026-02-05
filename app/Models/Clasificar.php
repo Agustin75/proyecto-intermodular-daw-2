@@ -78,7 +78,7 @@ class Clasificar
      */
     public function listarJuegosClasificar(): array
     {
-        $sql = "SELECT * FROM j_clasificar";
+        $sql = "SELECT * FROM j_clasificar ORDER BY id_pokemon";
         $stmt = $this->conexion->query($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

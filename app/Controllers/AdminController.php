@@ -3,66 +3,54 @@
 
 class AdminController extends Controller
 {
+    public function gestionarJuegos()
+    {
+        $mTrivia = new Trivia();
+        $mClasificar = new Clasificar();
+        $api = new PokeAPI();
 
-public function crearJuegos()
-{
-    $mTrivia = new Trivia();
-    $api = new PokeAPI();
+        // Obtain all games from the database
+        $trivias = $mTrivia->obtenerTodasLasTrivias();
+        $clasificar = $mClasificar->listarJuegosClasificar();
 
-    // Obtener trivias desde la BD
-    $trivias = $mTrivia->obtenerTodasLasTrivias();
+        // Add the names of the Pokémon
+        foreach ($trivias as $i => $t) {
+            $pokemon = $api->getPokemonById($t["id_pokemon"]);
+            $trivias[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
+        }
 
-    // Añadir nombre del Pokémon usando la API
-    foreach ($trivias as $i => $t) {
-        $pokemon = $api->getPokemonById($t["id_pokemon"]);
-        $trivias[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
+        foreach ($clasificar as $i => $t) {
+            $pokemon = $api->getPokemonById($t["id_pokemon"]);
+            $clasificar[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
+        }
+
+        $params = [
+            "trivias" => $trivias,
+            "clasificar" => $clasificar
+        ];
+
+        require __DIR__ . '/../templates/crearJuegos.php';
     }
-
-    $params = [
-        "trivias" => $trivias
-    ];
-
-    require __DIR__ . '/../templates/crearJuegos.php';
-}
-
-
-
-
-
 
     public function mostrarTools()
     {
-       
         require __DIR__ . '/../templates/DevTools.php';
     }
 
-   public function crearJuego() {
+    public function vistaAdivinanza()
+    {
 
-        require __DIR__ . '/../templates/crearJuegos.php';
+        $params = [
+            'modo'   => '',
+            'id' => '',
+            'id_pkmn' => '',
+            'id_tipo' => '',
+            'pista1' => '',
+            'pista2' => '',
+            'pista3' => '',
+        ];
 
-
-    }
-
-    public function entrarJuegos() {
-
-        require __DIR__ . '/../templates/verJuegos.php';
-
-
-    }
-
- public function vistaAdivinanza() {
-
-       $params = [
-        'modo'   => '',
-        'id' => '',
-        'id_pkmn' => '',
-        'id_tipo' => '',
-        'pista1' => '',
-        'pista2' => '',
-        'pista3' => '',
-    ];
-    
-        if($params['modo'] !== "nueva"){
+        if ($params['modo'] !== "nueva") {
             $id = recoge('id');
             $params['id'] = $id;
 
@@ -72,17 +60,8 @@ public function crearJuegos()
             $params['pregunta'] = $all['enunciado'['pregunta']];
             $params['tiempo'] = $all['opciones'['tiempo']];
             $params['opciones'] = $all['opciones'];*/
-
         }
 
-
-
-
-
         require __DIR__ . '/../templates/crearAdivinanza.php';
-
-
     }
-
-
 }

@@ -41,22 +41,22 @@ $map = [
     'cerrarSesion'  => ['controller' => 'UsuarioController', 'action' => 'salir',            'nivel' => USER_REGISTERED],
 
     // Admin user functions
-    'mostrarTools'      => ['controller' => 'AdminController', 'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
-    'crearJuego'        => ['controller' => 'AdminController', 'action' => 'crearJuego',      'nivel' => USER_ADMIN],
-    // TODO: A editar cuando añadamos la funcionalidad
+    'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
+    'gestionarJuegos' => ['controller' => 'AdminController',  'action' => 'gestionarJuegos', 'nivel' => USER_ADMIN],
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
     // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
-    'crearTrivia'  => ['controller' => 'TriviaController',  'action' => 'crearTrivia',  'nivel' => USER_ADMIN],
-    'eliminarTrivia'  => ['controller' => 'TriviaController',  'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
+    'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
+    'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
 
-    'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
-    'crearClasificar'   => ['controller' => 'ClasificarController', 'action' => 'crearClasificar', 'nivel' => USER_ADMIN],
-    'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
-
+    'crearAdivinanza'   => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',   'nivel' => USER_ADMIN],
+    'crearClasificar'   => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',   'nivel' => USER_ADMIN],
+    'editarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'editarClasificar',  'nivel' => USER_ADMIN],
+    'guardarClasificar' => ['controller' => 'ClasificarController', 'action' => 'guardarClasificar', 'nivel' => USER_ADMIN],
+    
     // API functions
-    'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
-    'wikiFilterByGeneration'   => ['controller' => 'APIWikiController',   'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
-    'activarUser'              => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',       'nivel' => USER_ADMIN]
+    'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
+    'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
+    'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN]
 ];
 
 // -------------------------------------------------------------

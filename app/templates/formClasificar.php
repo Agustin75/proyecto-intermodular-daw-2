@@ -24,14 +24,17 @@
 
 <div class="container-fluid text-left">
     <div class="container">
-        <form ACTION="index.php?ctl=<?= $params["modo"] === MODE_CREATE ? "crearClasificar" : "editarClasificar" ?>" METHOD="post">
+        <form ACTION="index.php?ctl=<?= $params["modo"] === MODE_CREATE ? "crearClasificar" : "guardarClasificar" ?>" METHOD="post">
+            <?php if ($params["modo"] === MODE_EDIT): ?>
+                <input type="hidden" id="idClasificar" name="idClasificar" value="<?= htmlspecialchars($params['idClasificar']) ?>">
+            <?php endif; ?>
             <label for="idPokemon">Pokémon de recompensa: </label>
             <input type="text" id="idPokemon" name="idPokemon" list="pokemonList" value="<?= htmlspecialchars($params['idPokemon']) ?>"><br>
             <label for="selectTipoClasificar">Clasificar por: </label>
             <select name="idTipo" id="selectTipoClasificar">
                 <option value="-1">-- Selecciona un tipo de juego --</option>
                 <?php foreach ($params["tiposClasificar"] as $tipo): ?>
-                    <option value="<?= $tipo["id"] ?>"<?= $tipo["id"] === $params["idTipo"] ? 'selected="selected"' : "" ?>><?= $tipo["tipo_clasificar"] ?></option>
+                    <option value="<?= $tipo["id"] ?>" <?= $tipo["id"] === $params["idTipo"] ? 'selected="selected"' : "" ?>><?= $tipo["tipo_clasificar"] ?></option>
                 <?php endforeach; ?>
             </select><br>
             <label for="numPokemon">Número de Pokémon a mostrar: </label>
@@ -43,7 +46,7 @@
             <?php if ($params["modo"] === MODE_CREATE): ?>
                 <input TYPE="submit" name="bCrearClasificar" VALUE="Crear"><br>
             <?php else: ?>
-                <input TYPE="submit" name="bEditarClasificar" VALUE="Editar"><br>
+                <input TYPE="submit" name="bGuardarClasificar" VALUE="Guardar"><br>
             <?php endif; ?>
         </form>
     </div>
