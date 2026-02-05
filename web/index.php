@@ -42,7 +42,7 @@ $map = [
     
     // Admin user functions
     'mostrarTools'      => ['controller' => 'AdminController', 'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
-    'crearJuego'        => ['controller' => 'AdminController', 'action' => 'crearJuego',      'nivel' => USER_ADMIN],
+    'crearJuego'        => ['controller' => 'AdminController', 'action' => 'crearJuegos',      'nivel' => USER_ADMIN],
     // TODO: A editar cuando añadamos la funcionalidad
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
     'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
@@ -50,6 +50,8 @@ $map = [
     'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
     'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
     
+    
+
     // API functions
     'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration'   => ['controller' => 'APIWikiController',   'action' => 'filterByGeneration', 'nivel' => USER_GUEST],

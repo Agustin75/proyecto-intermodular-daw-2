@@ -4,6 +4,28 @@
 class AdminController extends Controller
 {
 
+public function crearJuegos()
+{
+    $mTrivia = new Trivia();
+    $api = new PokeAPI();
+
+    // Obtener trivias desde la BD
+    $trivias = $mTrivia->obtenerTodasLasTrivias();
+
+    // Añadir nombre del Pokémon usando la API
+    foreach ($trivias as $i => $t) {
+        $pokemon = $api->getPokemonById($t["id_pokemon"]);
+        $trivias[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
+    }
+
+    $params = [
+        "trivias" => $trivias
+    ];
+
+    require __DIR__ . '/../templates/crearJuegos.php';
+}
+
+
 
 
 
