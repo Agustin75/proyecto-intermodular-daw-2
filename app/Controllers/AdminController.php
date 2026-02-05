@@ -4,6 +4,28 @@
 class AdminController extends Controller
 {
 
+public function crearJuegos()
+{
+    $mTrivia = new Trivia();
+    $api = new PokeAPI();
+
+    // Obtener trivias desde la BD
+    $trivias = $mTrivia->obtenerTodasLasTrivias();
+
+    // Añadir nombre del Pokémon usando la API
+    foreach ($trivias as $i => $t) {
+        $pokemon = $api->getPokemonById($t["id_pokemon"]);
+        $trivias[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
+    }
+
+    $params = [
+        "trivias" => $trivias
+    ];
+
+    require __DIR__ . '/../templates/crearJuegos.php';
+}
+
+
 
 
 
@@ -24,43 +46,6 @@ class AdminController extends Controller
     public function entrarJuegos() {
 
         require __DIR__ . '/../templates/verJuegos.php';
-
-
-    }
-     public function vistaTrivia() {
-
-       $mApi = new PokeAPI();
-
-       $params = [
-        'modo'   => '',
-        'id' => '',
-        'id_pkmn' => '',
-        'pregunta' => '',
-        'tiempo' => '',
-        'opciones' => '',
-        'pokemon_list' => $mApi->getAllPokemon(),
-        'type_list' => $mApi->getTypesList(),
-        'num_generations' => $mApi->getNumGenerations(),
-    ];
-    
-        if($params['modo'] == "editar"){
-            $id = recoge('id');
-            $params['id'] = $id;
-
-            $m = new Trivia;
-            $all = $m->obtenerTrivia($id);
-            $params['id_pkmn'] = $all['enunciado'['id_pokemon']];
-            $params['pregunta'] = $all['enunciado'['pregunta']];
-            $params['tiempo'] = $all['opciones'['tiempo']];
-            $params['opciones'] = $all['opciones'];
-
-        }
-
-
-
-
-
-        require __DIR__ . '/../templates/crearTrivia.php';
 
 
     }
