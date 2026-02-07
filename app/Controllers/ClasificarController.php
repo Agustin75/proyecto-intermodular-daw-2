@@ -312,14 +312,10 @@ class ClasificarController extends Controller
         exit;
     }
 
-
-
-
-
-
-
+    // TODO: Decide if we want to tell the user how many they need to get right to win
     public function jugarClasificar()
     {
+        // TODO: The player can resend the information after answering all questions. Doesn't break anything by doing so, but would ideally want to account for it and send them back to the games screen
         $params = [];
         $params["gameState"] = GAME_STATE_PLAYING;
 
@@ -340,9 +336,10 @@ class ClasificarController extends Controller
                 // Variable to fill up and send to $params
                 $clasificarGame = [
                     // [
-                    //     "pokemon_imagen" => "imagen",
+                    //     "pokemon_id" => 1,
+                    //     "pokemon_imagen" => "url imagen",
                     //     "pokemon_nombre" => "nombre",
-                    //     "options" => ["Fire", ...]
+                    //     "options" => ["Fire", ...] or [1, 3, ...]
                     //     ]
                     // ],
                 ];
@@ -351,8 +348,8 @@ class ClasificarController extends Controller
                 $numPokemon = $selectedGame["num_pokemon"];
                 $idTipo = $selectedGame["id_tipo"];
 
+                // Array to save the Pokemon chosen
                 $pokemonIds = [];
-
                 $mPokeAPI = new PokeAPI();
                 // We get the total amount of existing Pokémon
                 $totalNumOfPokemon = $mPokeAPI->getNumPokemon();
@@ -364,11 +361,12 @@ class ClasificarController extends Controller
 
                     // If we have enough Pokemon saved
                     if (count($pokemonIds) == $numPokemon) {
-                        // We make sure every entry in the array is unique before leaving the while so the check works as intended
+                        // We make sure every entry in the array is unique before continuing
                         $pokemonIds = array_unique($pokemonIds);
                     }
                 }
 
+                // If we're in a Generacion game
                 if ($idTipo === CLASIFICAR_GENERACION) {
                     // We generate the base array to use for picking generation options
                     $generationsArray = [];
@@ -378,18 +376,18 @@ class ClasificarController extends Controller
 
                     // We loop through all the selected Pokemon
                     foreach ($pokemonIds as $index => $pokemonId) {
-                        // We save its image
+                        // We save its information
                         $clasificarGame[$index]["pokemon_id"] = $pokemonId;
                         $clasificarGame[$index]["pokemon_image"] = $mPokeAPI->getPokemonNormalSprite($pokemonId);
                         $clasificarGame[$index]["pokemon_name"] = $mPokeAPI->getPokemonName($pokemonId);
                         // We grab its generation
                         $pokemonGeneration = $mPokeAPI->getPokemonGeneration($pokemonId);
-                        // We set the generations array to the array of all generations
+                        // We set the selected generations array to the array of all generations
                         $generationsSelected = $generationsArray;
 
                         // We don't need to do anything else if the number of options is equal to the number of Generations
                         if ($numOpciones < $mPokeAPI->getNumGenerations()) {
-                            // We shuffle the array of generations
+                            // We shuffle the array of selected generations
                             shuffle($generationsSelected);
                             // We cut the array so there are as many entries as $numOpciones
                             array_splice($generationsSelected, $numOpciones);
@@ -401,36 +399,36 @@ class ClasificarController extends Controller
                             }
                         }
 
+                        // We sort the array
+                        sort($generationsSelected);
+
                         foreach ($generationsSelected as $generation) {
-                            // We add each generation to the options array, indicating whether the generation is the correct answer
+                            // We add each generation to the options array
                             $clasificarGame[$index]["options"][] = $generation;
-                            // $clasificarGame[$index]["options"][] = ["value" => $generation, "correct" => $generation === $pokemonGeneration];
                         }
                     }
                 } else if ($idTipo === CLASIFICAR_TIPO) {
                     // We loop through all the selected Pokemon
                     foreach ($pokemonIds as $index => $pokemonId) {
-                        // We save its image
+                        // We save its information
                         $clasificarGame[$index]["pokemon_id"] = $pokemonId;
                         $clasificarGame[$index]["pokemon_image"] = $mPokeAPI->getPokemonNormalSprite($pokemonId);
                         $clasificarGame[$index]["pokemon_name"] = $mPokeAPI->getPokemonName($pokemonId);
 
-                        // Check what type of game it is
-                        // Choose $numOpciones random types/generations to show the player, with only 1 of them being correct
                         // TODO: This works, but it takes too long to load even if there are few options, would be ideal to optimize it if there's time
                         // We obtain the Pokemon's types (array of just the names)
                         $pokemonTypes = $mPokeAPI->getPokemonTypes($pokemonId);
                         // We obtain the list of all Pokemon types (Bidimensional array with id, name, url)
                         $listOfTypes = $mPokeAPI->getTypesList();
-                        // We crear a new array where to save the random types chosen
+                        // We create a new array to save the random types chosen
                         $selectedTypes = [];
-                        // We continue to generate a new type while there aren't enough options (-1, the last one will be picked from the Pokemon's type so it's correct)
+                        // We continue to get a new type while there aren't enough options (-1, the last one will be picked from the Pokemon's type so there is exactly 1 correct type)
                         while (count($selectedTypes) < $numOpciones - 1) {
                             // We obtain a random index in the array of types
                             $randId = rand(0, count($listOfTypes) - 1);
                             // We remove the type from the array
                             $type = array_splice($listOfTypes, $randId, 1)[0];
-                            // If the type is not one of the Pokemon's types we add its name to the array (A correct type is added at the end)
+                            // If the type is not one of the Pokemon's types we add its name to the array
                             if (!in_array($type["name"], $pokemonTypes)) {
                                 $selectedTypes[] = $type["name"];
                             }
@@ -438,33 +436,37 @@ class ClasificarController extends Controller
 
                         // We add one of the Pokemon's type to the array of options so we have a correct answer
                         $selectedTypes[] = $pokemonTypes[array_rand($pokemonTypes)];
-                        // We randomize the array
-                        shuffle($selectedTypes);
+                        // We sort the array so the types always show up alphabetically
+                        sort($selectedTypes);
 
+                        // We add each type to the options array
                         foreach ($selectedTypes as $type) {
-                            // We add each type to the options array, indicating whether the type is the correct answer
                             $clasificarGame[$index]["options"][] = $type;
-                            // $clasificarGame[$index]["options"][] = ["value" => $type, "correct" => in_array($type, $pokemonTypes)];
                         }
                     }
                 }
 
+                // We add all the information the game will need to the $params variable
                 $params["game"] = $clasificarGame;
                 $params["idTipo"] = $idTipo;
                 $params["gameId"] = $selectedGame["id"];
                 $params["idPokemon"] = $selectedGame["id_pokemon"];
                 $params["numRequerido"] = $selectedGame["num_requerido"];
             }
+            // We're going back to an already started game (because the player didn't select all the answers)
         } else {
             $errors = [];
             $params["gameFound"] = false;
 
+            // We obtain the current game's id
             $gameId = recoge("gameId");
 
-            if(cNum($gameId, "gameId", $errors)) {
+            // If it was a number
+            if (cNum($gameId, "gameId", $errors)) {
                 $mClasificar = new Clasificar();
-
+                // We obtain the game from the database
                 $game = $mClasificar->obtenerClasificar($gameId);
+                // If the game doesn't exist (the id received was wrong)
                 if ($game === false) {
                     $errors[] = "No se encontró un juego con ese id.";
                 } else {
@@ -472,84 +474,114 @@ class ClasificarController extends Controller
                     $params["idTipo"] = $gameType;
                     $params["gameFound"] = true;
 
-                    $opciones = $_POST["options"];
-                    $numOpciones = count($opciones);
                     $respuestas = [];
+                    $allAnswersSelected = true;
 
-                    $allAnswersSelected = $numOpciones > 0;
-
+                    // We look through all the player answers
                     for ($i = 0; $i < $game["num_pokemon"]; $i++) {
+                        // We obtain each one
                         $respuestas[] = recoge("question" . $i);
+                        // If the answer was empty, the player didn't answer it
                         if (empty($respuestas[$i])) {
+                            // So we update the boolean
                             $allAnswersSelected = false;
-                            break;
+                            // We continue looping so we can return all of the player's answers
                         }
                     }
 
-                    // The player answered all the questions, check to see if they won
+                    // We obtain the pokemon_ids
                     $pokemonIds = recogeArray("pokemon_ids");
 
-                    if (count($pokemonIds) === 0) {
+                    // If the amount of Pokemon obtained is different than the amount of Pokemon in this game, there was an error
+                    if (count($pokemonIds) !== $game["num_pokemon"]) {
                         $errors[] = "Hubo un error obteniendo los resultados.";
+                        $params['mensaje'] = implode('<br>', $errors);
 
+                        // We move to a different page
                         header("Location: index.php?ctl=juegos");
                         exit;
                     }
 
                     $mPokeAPI = new PokeAPI();
 
+                    // The player answered all the questions, check to see if they won
                     if ($allAnswersSelected) {
                         $correctAnswers = 0;
 
+                        // We loop through ever Pokemon in the game
                         foreach ($pokemonIds as $index => $pokemonId) {
+                            // We check the type of Clasificar game
                             switch ($gameType) {
                                 case CLASIFICAR_TIPO:
+                                    // We obtain the Pokemon's types
                                     $pokemonTypes = $mPokeAPI->getPokemonTypes($pokemonId);
 
-                                    // if ($opciones[$index]) {
-                                        if (in_array($respuestas[$index], $pokemonTypes)) {
-                                            $correctAnswers++;
-                                        }
-                                    // }
-
-                                    if ($correctAnswers >= $game["num_requerido"]) {
-                                        // The player won, give them the Pokemon and take them to the win screen (Could be the same screen)
-                                        $pokemonWonId = $game["id_pokemon"];
-                                        $mPokemonUsuario = new PokemonUsuario();
-                                        $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $pokemonWonId);
-
-                                        $params["imagen_pokemon_recompensa"] = $mPokeAPI->getPokemonNormalSprite($pokemonWonId);
-                                        $params["nombre_pokemon_recompensa"] = $mPokeAPI->getPokemonName($pokemonWonId);
-                                        $params["gameState"] = GAME_STATE_WON;
-                                        // We return to the jugarClasificar template from here
-                                    } else {
-                                        $params["gameState"] = GAME_STATE_LOST;
+                                    // If the player's answer was one of the Pokemon's type
+                                    if (in_array($respuestas[$index], $pokemonTypes)) {
+                                        // We increase correct answers
+                                        $correctAnswers++;
                                     }
                                     break;
                                 case CLASIFICAR_GENERACION:
-                                    // TODO: FILL UP GENERATION GAMES
+                                    // We obtain the Pokemon's generation
+                                    $pokemonGeneration = $mPokeAPI->getPokemonGeneration($pokemonId);
+
+                                    // If the player's answer was the Pokemon's generation ($respuestas is in string format, $pokemonGeneration is in int format)
+                                    if ($respuestas[$index] == $pokemonGeneration) {
+                                        // We increase correct answers
+                                        $correctAnswers++;
+                                    }
                                     break;
                             }
                         }
 
-                    // The user didn't select all the answers, return to the previous state of the game
+                        // If the player answer enough questions correctly
+                        if ($correctAnswers >= $game["num_requerido"]) {
+                            // The player won, give them the Pokemon
+                            $pokemonWonId = $game["id_pokemon"];
+                            $mPokemonUsuario = new PokemonUsuario();
+                            $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $pokemonWonId);
+
+                            // We set the variables necessary to display the Pokemon won here
+                            $params["imagen_pokemon_recompensa"] = $mPokeAPI->getPokemonNormalSprite($pokemonWonId);
+                            $params["nombre_pokemon_recompensa"] = $mPokeAPI->getPokemonName($pokemonWonId);
+                            $params["gameState"] = GAME_STATE_WON;
+                            // We return to the jugarClasificar template from here
+                        } else {
+                            // The player did not answer enough questions correctly, so they lose
+                            $params["gameState"] = GAME_STATE_LOST;
+                        }
+
+                        // The user didn't select all the answers, return to the previous state of the game
                     } else {
                         $clasificarGame = [];
 
-                        for ($i = 0; $i < $game["num_pokemon"]; $i++) {
-                            $clasificarGame[$i]["pokemon_id"] = $pokemonIds[$i];
-                            $clasificarGame[$i]["pokemon_image"] = $mPokeAPI->getPokemonNormalSprite($pokemonIds[$i]);
-                            $clasificarGame[$i]["pokemon_name"] = $mPokeAPI->getPokemonName($pokemonIds[$i]);
-                            $clasificarGame[$i]["options"] = $opciones[$i];
-                            if (!empty($respuestas[$i])) {
-                                $params["question" . $i] = $respuestas[$i];
-                            }
-                        }
+                        // We check the options field exists manually (since it's a bidimensional array)
+                        if (!isset($_POST["options"])) {
+                            $errors[] = "Hubo un error intentando mostrar el juego, intenta seleccionar un nuevo juego.";
+                            $params['mensaje'] = implode('<br>', $errors);
+                        } else {
+                            $opciones = $_POST["options"];
 
-                        $params["game"] = $clasificarGame;
-                        $params["gameId"] = $gameId;
-                        $params["idPokemon"] = $game["id_pokemon"];
-                        $params["numRequerido"] = $game["num_requerido"];
+                            // We save the information of every Pokemon (including id, types/generations selected, etc)
+                            for ($i = 0; $i < $game["num_pokemon"]; $i++) {
+                                $clasificarGame[$i]["pokemon_id"] = $pokemonIds[$i];
+                                $clasificarGame[$i]["pokemon_image"] = $mPokeAPI->getPokemonNormalSprite($pokemonIds[$i]);
+                                $clasificarGame[$i]["pokemon_name"] = $mPokeAPI->getPokemonName($pokemonIds[$i]);
+                                $clasificarGame[$i]["options"] = $opciones[$i];
+
+                                // We save the player's chosen answers
+                                if (!empty($respuestas[$i])) {
+                                    $params["question" . $i] = $respuestas[$i];
+                                }
+                            }
+
+                            $params['mensaje'] = "Quedan Pokemon por clasificar.";
+                            $params["game"] = $clasificarGame;
+                            $params["gameId"] = $gameId;
+                            $params["idPokemon"] = $game["id_pokemon"];
+                            $params["numRequerido"] = $game["num_requerido"];
+                        }
                     }
                 }
             }
