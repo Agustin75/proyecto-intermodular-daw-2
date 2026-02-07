@@ -150,7 +150,26 @@ class Clasificar
         $stmt->bindParam(':id', $idClasificar);
         return $stmt->execute();
     }
-
+    /**************************************
+     * EXTRA QUERIES USING OTHER TABLES
+    /**************************************/
+    /**
+     * Returns the list of Clasificar games that the player has yet to complete
+     *
+     * @param int $idUsuario - the User to check
+     * @return array All the Clasificar games found that the player hasn't completed yet
+     */
+    public function obtenerJuegosSinCompletar(int $idUsuario) : array
+    {
+        $sql = "SELECT * FROM j_clasificar
+                WHERE id_pokemon NOT IN (
+                    SELECT id_pokemon FROM pokemon_usuario WHERE id_usuario = :idUsuario
+                )";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /**
      * Returns the list of Clasificar types (Tipo y Generación)

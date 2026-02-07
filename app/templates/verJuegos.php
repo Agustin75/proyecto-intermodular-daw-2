@@ -17,7 +17,7 @@
             <p>Por cada intento fallido revelará una nueva pista</p>
             <p>Cuanto menos intentos utilices, mayor será tu puntuación</p>
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
-                <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=adivinanza">Jugar</a>
+                <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarAdivinanza">Jugar</a>
             <?php endif; ?>
         </div>
         <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
@@ -27,7 +27,7 @@
             <p>Tienes un límite de tiempo para responder a la pregunta</p>
             <p>Cuanto más opciones correctas selecciones, mayor será tu puntuación</p>
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
-                <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=trivia">Jugar</a>
+                <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarTrivia">Jugar</a>
             <?php endif; ?>
         </div>
         <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
@@ -36,7 +36,7 @@
             <p>En este juego verás múltiples Pokémon. Para cada uno, deberás elegir cuál es su tipo o generación.</p>
             <p>Cuanto menos errores cometas, mayor será tu puntuación</p>
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
-                <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=clasificar">Jugar</a>
+                <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarClasificar">Jugar</a>
             <?php endif; ?>
         </div>
     </div>

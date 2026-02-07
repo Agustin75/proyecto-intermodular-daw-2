@@ -35,10 +35,11 @@ $map = [
     'juegos'        => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
 
     // Registered user functions
-    'miPerfil'      => ['controller' => 'UsuarioController', 'action' => 'mostrarPerfil',    'nivel' => USER_REGISTERED],
-    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre',    'nivel' => USER_REGISTERED],
-    'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen',    'nivel' => USER_REGISTERED],
-    'cerrarSesion'  => ['controller' => 'UsuarioController', 'action' => 'salir',            'nivel' => USER_REGISTERED],
+    'miPerfil'         => ['controller' => 'UsuarioController',    'action' => 'mostrarPerfil',   'nivel' => USER_REGISTERED],
+    'cambiarNombre'    => ['controller' => 'UsuarioController',    'action' => 'cambiarNombre',   'nivel' => USER_REGISTERED],
+    'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
+    'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
+    'jugarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'jugarClasificar', 'nivel' => USER_REGISTERED],
 
     // Admin user functions
     'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
@@ -53,8 +54,9 @@ $map = [
     //TRIVIA:
     'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
     'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
-
-    //CLASIFICAR:
+    'crearAdivinanza'    => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',    'nivel' => USER_ADMIN],
+    
+    // CLASIFICAR:
     'crearClasificar'    => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',    'nivel' => USER_ADMIN],
     'editarClasificar'   => ['controller' => 'ClasificarController', 'action' => 'editarClasificar',   'nivel' => USER_ADMIN],
     'guardarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'guardarClasificar',  'nivel' => USER_ADMIN],
