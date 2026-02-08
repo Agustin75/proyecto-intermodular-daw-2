@@ -9,6 +9,7 @@ public function crearAdivinanza()
 
     // Initial state of the form parameters
     $params = [
+        'modo'   => MODE_CREATE,
         'id_pkmn'   => '',
         'tipo' => '',
         'pista1'    => '',
@@ -105,6 +106,7 @@ public function editarAdivinanza()
 
     // Initial state of the form parameters
     $params = [
+        'modo'  => MODE_EDIT,
         'id'    => $idAdivinanza,
         'id_pkmn'   => '',
         'tipo' => '',

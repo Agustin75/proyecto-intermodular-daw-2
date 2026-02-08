@@ -41,7 +41,7 @@ class AdminController extends Controller
     {
 
         $params = [
-            'modo'   => '',
+            'modo'   => MODE_CREATE,
             'id' => '',
             'id_pkmn' => '',
             'id_tipo' => '',
@@ -50,7 +50,7 @@ class AdminController extends Controller
             'pista3' => '',
         ];
 
-        if ($params['modo'] !== "nueva") {
+        if ($params['modo'] !== MODE_CREATE) {
             $id = recoge('id');
             $params['id'] = $id;
 

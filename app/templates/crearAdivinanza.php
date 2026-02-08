@@ -2,7 +2,7 @@
 
 
 <h1 class="text-center">
-    <?= ($params['modo'] === 'editar') ? 'Editar Adivinanza' : 'Crear Adivinanza' ?>
+    <?= ($params['modo'] === MODE_EDIT) ? 'Editar Adivinanza' : 'Crear Adivinanza' ?>
 </h1>
 
 <br>
@@ -13,7 +13,7 @@
     </div>
 <?php endif; ?>
 
-<form action="index.php?ctl=<?= ($params['modo'] === 'editar') ? 'editarAdivinanza' : 'crearAdivinanza' ?>" method="POST">
+<form action="index.php?ctl=<?= ($params['modo'] === MODE_EDIT) ? 'editarAdivinanza' : 'crearAdivinanza' ?>" method="POST">
 
     <!-- ============================
          ID DE LA TRIVIA (NO EDITABLE)
