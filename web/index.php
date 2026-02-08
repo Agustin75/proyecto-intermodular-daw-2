@@ -40,6 +40,7 @@ $map = [
     'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
     'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
     'jugarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'jugarClasificar', 'nivel' => USER_REGISTERED],
+    'jugarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'jugarAdivinanza',  'nivel' => USER_REGISTERED],
 
     // Admin user functions
     'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],

@@ -267,4 +267,33 @@ public function eliminarAdivinanza()
 }
 
 
+public function jugarAdivinanza()
+{
+         $params = [];
+        $params["gameState"] = GAME_STATE_PLAYING;
+
+        
+        if (!isset($_POST["bEnviar"])) {
+            
+            $mAdivinanza = new Adivinanza();
+
+            // Obtain the list of games the player hasn't completed (A game where he hasn't obtained the Pokémon yet)
+            $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
+            $numGamesLeft = count($gamesList);
+            $params["gameFound"] = $numGamesLeft > 0;
+
+             if ($numGamesLeft > 0) {
+                // Obtain a random game from the list
+                $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
+
+                $pista1 = $selectedGame["pista1"];
+                $pista2 = $selectedGame["pista2"];
+                $pista3 = $selectedGame["pista3"];
+                $correctPokemonId = $selectedGame["id_pokemon"];
+
+} else {
+    
+}
+}
+require __DIR__ . '/../templates/jugarAdivinanza.php';
 }
