@@ -126,8 +126,7 @@ class Controller
         $menusAdmin = [
             "juegos" => [
                 ['Jugar', 'juegos'],
-                ['Crear Juego', 'crearJuego'],
-                ['Editar Juego', 'editarJuego']
+                ['Gestionar Juegos', 'gestionarJuegos']
             ],
         ];
 

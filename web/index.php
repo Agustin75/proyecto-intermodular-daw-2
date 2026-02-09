@@ -35,16 +35,21 @@ $map = [
     'juegos'        => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
 
     // Registered user functions
-    'miPerfil'      => ['controller' => 'UsuarioController', 'action' => 'mostrarPerfil',    'nivel' => USER_REGISTERED],
-    'cambiarNombre' => ['controller' => 'UsuarioController', 'action' => 'cambiarNombre',    'nivel' => USER_REGISTERED],
-    'cambiarImagen' => ['controller' => 'UsuarioController', 'action' => 'cambiarImagen',    'nivel' => USER_REGISTERED],
-    'cerrarSesion'  => ['controller' => 'UsuarioController', 'action' => 'salir',            'nivel' => USER_REGISTERED],
+    'miPerfil'         => ['controller' => 'UsuarioController',    'action' => 'mostrarPerfil',   'nivel' => USER_REGISTERED],
+    'cambiarNombre'    => ['controller' => 'UsuarioController',    'action' => 'cambiarNombre',   'nivel' => USER_REGISTERED],
+    'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
+    'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
+    'jugarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'jugarClasificar', 'nivel' => USER_REGISTERED],
 
     // Admin user functions
-    'mostrarTools'      => ['controller' => 'AdminController', 'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
-    'crearJuego'        => ['controller' => 'AdminController', 'action' => 'crearJuegos',      'nivel' => USER_ADMIN],
-    // TODO: A editar cuando añadamos la funcionalidad
+    'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
+    'gestionarJuegos' => ['controller' => 'AdminController',  'action' => 'gestionarJuegos', 'nivel' => USER_ADMIN],
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
+    
+    //ADIVINANZA:
+    'crearAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
+    'editarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'editarAdivinanza', 'nivel' => USER_ADMIN],
+    'eliminarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'eliminarAdivinanza', 'nivel' => USER_ADMIN],
     // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
     'crearTrivia'  => ['controller' => 'TriviaController',  'action' => 'crearTrivia',  'nivel' => USER_ADMIN],
     'eliminarTrivia'  => ['controller' => 'TriviaController',  'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
@@ -57,9 +62,9 @@ $map = [
 
 
     // API functions
-    'wikiFilterByType'         => ['controller' => 'APIWikiController',   'action' => 'filterByType',       'nivel' => USER_GUEST],
-    'wikiFilterByGeneration'   => ['controller' => 'APIWikiController',   'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
-    'activarUser'              => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',       'nivel' => USER_ADMIN]
+    'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
+    'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
+    'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN]
 ];
 
 // -------------------------------------------------------------

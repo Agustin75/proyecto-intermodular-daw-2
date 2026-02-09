@@ -3,6 +3,9 @@ class APIUsuarioController extends Controller
 {
     public function activarUser()
     {
+
+    
+
         $errors = [];
         try {
             
@@ -10,11 +13,12 @@ class APIUsuarioController extends Controller
                 
                 $id = recoge('id');
                 $act = recoge('act');
-
+                
                 if (empty($errors)) {
                     $m = new Usuario();
-
+                    
                     $m->activarUsuario($id, $act);
+                    
                 }
             }
         } catch (Throwable $e) {

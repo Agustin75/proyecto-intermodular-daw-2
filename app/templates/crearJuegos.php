@@ -46,9 +46,21 @@
     ============================= -->
     <div style="width:33%; border:1px solid #ccc; padding:15px;">
         <h2>Clasificar</h2>
-        <a href="index.php?ctl=vistaClasificar" class="btn btn-primary">Crear Clasificar</a>
+        <a href="index.php?ctl=crearClasificar" class="btn btn-primary">Crear Clasificar</a>
         <br><br>
-        <p>No implementado aún</p>
+        <?php if (empty($params["clasificar"])): ?>
+            <p>No hay juegos de clasificar creados todavía.</p>
+        <?php else: ?>
+            <ul>
+                <?php foreach ($params["clasificar"] as $t): ?>
+                    <li style="margin-bottom:10px;">
+                        <?= $t["id_pokemon"] . " - " . $t["pokemon_name"] ?>
+                        <a href="index.php?ctl=editarClasificar&idClasificar=<?= $t["id"] ?>" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="index.php?ctl=eliminarClasificar&idClasificar=<?= $t["id"] ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     </div>
 
 </div>

@@ -19,8 +19,27 @@ class Clasificar
      * @param int $numRequerido Amount of classificactions the player needs to answer correctly to obtain the Pokemon
      * @return int|false ID of the created Clasificar game, or false if the Pokémon is already in use
      */
-    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido)
+    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): int|false
     {
+        // We check the Pokémon is not being used in any game
+        $sqlCheck = "SELECT id_pokemon FROM (
+                        SELECT id_pokemon FROM j_adivinanza
+                        UNION
+                        SELECT id_pokemon FROM j_trivia_enunciado
+                        UNION
+                        SELECT id_pokemon FROM j_clasificar
+                    ) AS t
+                    WHERE id_pokemon = :id";
+
+        $stmt = $this->conexion->prepare($sqlCheck);
+        $stmt->bindParam(':id', $idPokemon);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return false;
+        }
+
+        // We insert the new Clasificar game
         $sql = "INSERT INTO j_clasificar (id_pokemon, id_tipo, num_pokemon, num_opciones, num_requerido)
                 VALUES (:idPokemon, :idTipo, :numPokemon, :numOpciones, :numRequerido)";
 
@@ -59,7 +78,7 @@ class Clasificar
      */
     public function listarJuegosClasificar(): array
     {
-        $sql = "SELECT * FROM j_clasificar";
+        $sql = "SELECT * FROM j_clasificar ORDER BY id_pokemon";
         $stmt = $this->conexion->query($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -79,6 +98,25 @@ class Clasificar
 
     public function editarClasificar(int $idClasificar, int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): bool
     {
+        // We check the Pokémon is not being used in any game
+        $sqlCheck = "SELECT id_pokemon FROM (
+                        SELECT id_pokemon FROM j_adivinanza
+                        UNION
+                        SELECT id_pokemon FROM j_trivia_enunciado
+                        UNION
+                        SELECT id_pokemon FROM j_clasificar WHERE id != :idClasificar
+                    ) AS t
+                    WHERE id_pokemon = :idPokemon";
+
+        $stmt = $this->conexion->prepare($sqlCheck);
+        $stmt->bindParam(':idClasificar', $idClasificar);
+        $stmt->bindParam(':idPokemon', $idPokemon);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return false;
+        }
+
         try {
             // We update the classification
             $sql = "UPDATE j_clasificar
@@ -112,21 +150,37 @@ class Clasificar
         $stmt->bindParam(':id', $idClasificar);
         return $stmt->execute();
     }
+    /**************************************
+     * EXTRA QUERIES USING OTHER TABLES
+    /**************************************/
+    /**
+     * Returns the list of Clasificar games that the player has yet to complete
+     *
+     * @param int $idUsuario - the User to check
+     * @return array All the Clasificar games found that the player hasn't completed yet
+     */
+    public function obtenerJuegosSinCompletar(int $idUsuario) : array
+    {
+        $sql = "SELECT * FROM j_clasificar
+                WHERE id_pokemon NOT IN (
+                    SELECT id_pokemon FROM pokemon_usuario WHERE id_usuario = :idUsuario
+                )";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /**
-     * Returns whether the Pokemon is already used for a Clasificar game
-     * 
-     * @param int $idPokemon id of the Pokemon to check
-     * @param int $idClasificar id of the Clasificar game to exclude for the check (If we're editing a game, and the Pokmeon hasn't changed, it shouldn't count as a repeated Pokemon)
-     * @return array|false the results of the query, or false if no matches were found
+     * Returns the list of Clasificar types (Tipo y Generación)
+     *
+     * @return array All the entries from the table j_tipo_clasificar
      */
-    public function isPokemonUsed(int $idPokemon, int $idClasificar = -1)
+    public function obtenerTiposClasificar() : array
     {
-        $sql = "SELECT * FROM j_clasificar WHERE id_pokemon = :idPokemon AND id != :idClasificar";
+        $sql = "SELECT * FROM j_tipo_clasificar";
         $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':idPokemon', $idPokemon);
-        $stmt->bindParam(':idClasificar', $idClasificar);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

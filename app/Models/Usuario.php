@@ -61,15 +61,17 @@ class Usuario
     }
 
 
-    public function activarUsuario($id, $act)
+    public function activarUsuario($id, $act) : bool
     {
+         
         $sql = "UPDATE usuario
         SET activo = :act
         WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':act', $act);
+        $stmt->bindParam(':act', $act, PDO::PARAM_BOOL);
         return $stmt->execute();
+        
     }
 
      public function cambiarNombre($new, $id) : bool

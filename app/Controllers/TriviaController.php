@@ -119,7 +119,7 @@ public function crearTrivia()
             }
 
             // Éxito
-            header("Location: index.php?ctl=crearJuego");
+            header("Location: index.php?ctl=gestionarJuegos");
             exit;
         }
 
@@ -217,7 +217,7 @@ public function eliminarTrivia()
 
         // If the ID is invalid, we redirect back to the games list
         if ($idTrivia <= 0) {
-            header("Location: index.php?ctl=crearJuego");
+            header("Location: index.php?ctl=getstionarJuegos");
             exit;
         }
 
@@ -233,7 +233,7 @@ public function eliminarTrivia()
         }
 
         // Successful deletion → redirect to the games list
-        header("Location: index.php?ctl=crearJuego");
+        header("Location: index.php?ctl=gestionarJuegos");
         exit;
 
     } catch (Throwable $e) {
