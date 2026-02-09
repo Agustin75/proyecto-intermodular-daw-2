@@ -1,4 +1,4 @@
-?php ob_start() ?>
+<?php ob_start() ?>
 
 <h1 class="text-center">Adivina el Pokémon</h1>
 <?php if ($params["gameFound"] === false): ?>
@@ -14,4 +14,4 @@
       
         <?php endif; ?>
     <?php endif; ?>
-<?php endif; ?>
+

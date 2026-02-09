@@ -48,7 +48,7 @@ $map = [
     // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
     
     //ADIVINANZA:
-    'crearAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
+    'crearAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'crearAdivinanza', 'nivel' => USER_ADMIN],
     'editarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'editarAdivinanza', 'nivel' => USER_ADMIN],
     'eliminarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'eliminarAdivinanza', 'nivel' => USER_ADMIN],
     // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],

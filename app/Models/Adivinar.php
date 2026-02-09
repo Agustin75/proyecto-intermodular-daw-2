@@ -37,7 +37,7 @@ class Adivinar
         ";
 
         $stmt = $this->conexion->prepare($sqlInsertAdivanza);
-        $stmt->bindParam(':id_pkmn', $id_pokemon);
+        $stmt->bindParam(':id_pkmn', $idPokemon);
         $stmt->bindParam(':tipo', $tipo);
         $stmt->bindParam(':uno', $pista1);
         $stmt->bindParam(':dos', $pista2);
@@ -148,6 +148,13 @@ class Adivinar
                 )";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+       public function obtenerTiposAdivinar() : array
+    {
+        $sql = "SELECT * FROM j_tipo_adivinanza";
+        $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

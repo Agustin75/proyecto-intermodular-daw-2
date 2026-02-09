@@ -12,16 +12,9 @@
         <?= $params['mensaje'] ?>
     </div>
 <?php endif; ?>
-
+<?php if ($params['modo'] === MODE_EDIT) ?>
 <form action="index.php?ctl=<?= ($params['modo'] === MODE_EDIT) ? 'editarAdivinanza' : 'crearAdivinanza' ?>" method="POST">
-
-    <!-- ============================
-         ID DE LA TRIVIA (NO EDITABLE)
-    ============================= -->
-    <label for="idAdivinanza">ID Adivinanza:</label>
-    <input type="number" id="idAdivinanza" name="idAdivinanza" value="<?= $params['id'] ?>" readonly>
-    <br><br>
-
+<input type=hidden> <?php $params['id']?>
     <!-- ============================
          Pista 1
     ============================= -->
@@ -43,10 +36,20 @@
     <textarea id="pista3" name="pista3" rows="3" cols="60"><?= htmlspecialchars($params['pista3']) ?></textarea>
     <br><br>
 
+    <!-- =======================
+    TIPO
+    =============-->
+    <label for="tipo">Tipo por: </label>
+            <select name="tipo" id="selectTipoAdivinar">
+                <option value="-1">-- Selecciona un tipo de juego --</option>
+                <?php foreach ($params["tiposAdivinar"] as $tipo): ?>
+                    <option value="<?= $tipo["id"] ?>"> <?= $tipo["tipo_adivinanza"] ?></option>
+                <?php endforeach; ?>
+            </select><br>
     <!-- ============================
          POKÉMON RECOMPENSA
     ============================= -->
-  <label for="typeSelect">Tipo: </label>
+ <!-- <label for="typeSelect">Tipo: </label>
 <select name="typeSelect" id="typeSelect">
     <option value="">-- Selecciona un tipo --</option>
     <?php foreach ($params['type_list'] as $type): ?>
@@ -60,20 +63,19 @@
     <?php for ($i = 1; $i <= $params['num_generations']; $i++): ?>
         <option value="<?= $i ?>"><?= $i ?></option>
     <?php endfor; ?>
-</select>
+</select>-->
 
 <br><br>
 <label for="pokemonNameInput">Pokémon: </label>
 
-<input type="text" id="pokemonNameInput" name="pokemonNameInput" list="pokemonList">
-<datalist id="pokemonList">
+<input type="text" id="pokemonNameInput" name="id_pokemon" list="pokemonList">
+<datalist id="pokemonList"> 
     <?php foreach ($params['pokemon_list'] as $pokemon): ?>
         <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->
         <!-- We add the &#8291; character to be able to listen to on click events of the datalist -->
         <option data-id="<?= $pokemon["id"] ?>" value="<?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) . "&#8291;" ?>"></option>
     <?php endforeach; ?>
-</datalist><br><br>
-
+</datalist><br><br>    
     <!-- ============================
          BOTONES
     ============================= -->
