@@ -7,6 +7,7 @@ class AdminController extends Controller
     {
         $mTrivia = new Trivia();
         $mClasificar = new Clasificar();
+        $mAdivinanza = new Adivinar();
         $api = new PokeAPI();
 
         // Obtain all games from the database
