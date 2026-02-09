@@ -19,7 +19,7 @@ class Clasificar
      * @param int $numRequerido Amount of classificactions the player needs to answer correctly to obtain the Pokemon
      * @return int|false ID of the created Clasificar game, or false if the Pokémon is already in use
      */
-    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): int|false
+    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido)
     {
         // We check the Pokémon is not being used in any game
         $sqlCheck = "SELECT id_pokemon FROM (

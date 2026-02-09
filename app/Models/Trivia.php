@@ -308,6 +308,8 @@ $stmt->execute();
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
 
+        // 4. Delete pokemon from pokemon_usuario
+
         return true;
     }
 

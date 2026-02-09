@@ -287,11 +287,23 @@ public function jugarTrivia()
     $idPokemon = intval($_POST["idPokemon"]);
     $respuestasUsuario = $_POST["opcion"] ?? [];
 
-    $trivia = $mTrivia->obtenerTrivia($idTrivia);
+    // Obtener la trivia para mostrarla
+    $triviaCompleta = $mTrivia->obtenerTrivia($idTrivia);
+    $params["trivia"] = $triviaCompleta;
+    $params["idTrivia"] = $idTrivia;
+    $params["idPokemon"] = $idPokemon;
+
+    // Validar que el usuario seleccione al menos una opción
+    if (empty($respuestasUsuario)) {
+        $params["gameState"] = GAME_STATE_PLAYING;
+        $params['mensaje'] = "Debes seleccionar al menos una opción.";
+        require __DIR__ . '/../templates/jugarTrivia.php';
+        return;
+    }
 
     // Obtener respuestas correctas
     $correctas = [];
-    foreach ($trivia["opciones"] as $i => $op) {
+    foreach ($triviaCompleta["opciones"] as $i => $op) {
         if ($op->correcta == 1) {
             $correctas[] = $i;
         }
