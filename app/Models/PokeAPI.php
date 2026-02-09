@@ -7,6 +7,10 @@ class PokeAPI {
     private array $typesList = [];
     // Current number of Generations in the API
     private int $numGenerations = 0;
+    // Current number of Pokemon in the API
+    private int $numPokemon = 0;
+    // The last Pokemon we obtained information from
+    private $lastPokemonObtained = [];
 
     public function __construct() {
 
@@ -61,6 +65,19 @@ class PokeAPI {
     }
 
     /**
+     * Function to get the number of Pokemon. If the number wasn't obtained yet, it sets it as a count of the array of all Pokemon
+     * @return int - the number of Pokemon
+     */
+    public function getNumPokemon() : int
+    {
+        if ($this->numPokemon === 0) {
+            $this->numPokemon = count($this->getAllPokemon());
+        }
+
+        return $this->numPokemon;
+    }
+
+    /**
      * Function to get the number of Pokemon generations. If the number wasn't obtained yet, it makes a request to the api. Otherwise, it returns the number saved
      * @return int - the number of Pokemon generations
      */
@@ -80,7 +97,7 @@ class PokeAPI {
      * @return array - a list of Pokemon info with: name, URL and ID, sorted by ID. If there was an error, returns an empty array
      */
     public function getPokemonByType($type) : array {
-        $typeInformation = $this->makeRequest("type/$type?limit=" . FIRST_FORM_ID - 1);
+        $typeInformation = $this->makeRequest("type/$type?limit=" . (FIRST_FORM_ID - 1));
 
         // If $typeInformation is null there was an error, so we return an empty array
         if (!$typeInformation) {
@@ -101,7 +118,7 @@ class PokeAPI {
         // TODO: Validate generation being an int?
 
         // We obtain the information about the generation
-        $generationInformation = $this->makeRequest("generation/$generation?limit=" . FIRST_FORM_ID - 1);
+        $generationInformation = $this->makeRequest("generation/$generation?limit=" . (FIRST_FORM_ID - 1));
 
         // If $generationInformation is null there was an error, so we return an empty array
         if (!$generationInformation) {
@@ -143,11 +160,84 @@ class PokeAPI {
     public function getPokemonById(int $id) : array {
         // TODO: Validate id being an int?
 
-        // We obtain the Pokemon's information
-        $pokemonData = $this->makeRequest("pokemon/$id");
+        // If no Pokemon was obtained before || the last Pokemon obtained is different than the requested one
+        if (count($this->lastPokemonObtained) == 0 || $this->lastPokemonObtained["id"] != $id) {
+            // We obtain the Pokemon's information. if it's null there was an error, so we set lastPokemonObtained to an empty array
+            $this->lastPokemonObtained = $this->makeRequest("pokemon/$id") ?? [];
+            // We obtain the species information from that Pokemon to save the generation as well
+            $speciesInformation = $this->makeRequest("pokemon-species/$id") ?? [];
+            // If there was no error
+            if (count($speciesInformation) > 0) {
+                // We add a generation field to $lastPokemonObtained
+                $this->lastPokemonObtained["generation"] = $this->getURLId($speciesInformation["generation"]["url"]);
+            }
+        }
 
-        // If $pokemonData is null there was an error, so we return an empty array
-        return $pokemonData ?? [];
+        return $this->lastPokemonObtained;
+    }
+
+    /**
+     * @param int $id - the id of the Pokemon to obtain the information from
+     * @return string - the name of the Pokémon
+     */
+    public function getPokemonName(int $id) : string {
+        // TODO: Validate id being an int?
+
+        // We obtain the data for the requested Pokemon
+        $pokemon = $this->getPokemonById($id);
+
+        // TODO: Make sure this doesn't break when the pokemon data doesn't exist
+        return ucfirst($pokemon["name"] ?? "");
+    }
+
+    /**
+     * @param int $id - the id of the Pokemon to obtain the information from
+     * @return string - the url to the front sprite, or an empty string if no Pokemon with that id could be found
+     */
+    public function getPokemonNormalSprite(int $id) : string {
+        // TODO: Validate id being an int?
+
+        // We obtain the data for the requested Pokemon
+        $pokemon = $this->getPokemonById($id);
+
+        // TODO: Make sure this doesn't break when the pokemon data doesn't exist
+        return $pokemon["sprites"]["front_default"] ?? "";
+    }
+
+    /**
+     * @param int $id - the id of the Pokemon to obtain the information from
+     * @return int - the generation the Pokemon belongs to
+     */
+    public function getPokemonGeneration(int $id) : int {
+        // TODO: Validate id being an int?
+
+        // We obtain the data for the requested Pokemon
+        $pokemon = $this->getPokemonById($id);
+
+        // TODO: Make sure this doesn't break when the pokemon data doesn't exist
+        return $pokemon["generation"] ?? 0;
+    }
+
+    /**
+     * @param int $id - the id of the Pokemon to obtain the information from
+     * @return array - an array with the name of the types the Pokemon has
+     */
+    public function getPokemonTypes(int $id) : array {
+        // TODO: Validate id being an int?
+
+        // We obtain the data for the requested Pokemon
+        $pokemon = $this->getPokemonById($id);
+
+        $types = [];
+
+        // We loop through the Pokemon's type structure
+        foreach ($pokemon["types"] as $type) {
+            // We save the name of each type to the types array
+            $types[] = $type["type"]["name"];
+        }
+
+        // We return the types
+        return $types;
     }
 
     /////////////////////
@@ -198,7 +288,7 @@ class PokeAPI {
             // We get the current Pokemon
             $currPokemon = $basicPokemonList[$i];
             // We save the ID in the current Pokemon info. The ID is the last element before the last slash
-            $currPokemon['id'] = $this->getPokemonId($currPokemon);
+            $currPokemon['id'] = $this->getURLId($currPokemon["url"]);
 
             // If the ID does not correspond to a Form, we add it to the list
             if ($currPokemon["id"] < FIRST_FORM_ID) {
@@ -221,7 +311,7 @@ class PokeAPI {
         $fullList = $this->getAllPokemon();
         
         foreach ($response as $pokemonEntry) {
-            $id = $this->getPokemonId($pokemonEntry["pokemon"]);
+            $id = $this->getURLId($pokemonEntry["pokemon"]["url"]);
 
             if ($id < FIRST_FORM_ID) {
                 // -1 because the list is 0-indexed
@@ -243,7 +333,7 @@ class PokeAPI {
         $fullList = $this->getAllPokemon();
         
         foreach ($response as $pokemonEntry) {
-            $id = $this->getPokemonId($pokemonEntry);
+            $id = $this->getURLId($pokemonEntry["url"]);
 
             if ($id < FIRST_FORM_ID) {
                 // -1 because the list is 0-indexed
@@ -255,12 +345,12 @@ class PokeAPI {
     }
 
     /**
-     * @param object $pokemonInformation the Pokemon's information from the API (Name and URL).
-     * @return int the Pokemon's ID
+     * @param string $urlToExtract the URL string to extract the ID from.
+     * @return int the ID in the URL
      */
-    private function getPokemonId(array $pokemonInformation): int {
+    private function getURLId(string $urlToExtract): int {
             // We split the URL to obtain the ID
-            $elements = explode("/", $pokemonInformation['url']);
+            $elements = explode("/", $urlToExtract);
             // We save the ID in the current Pokemon info. The ID is the last element before the last slash
             $id = (int)$elements[count($elements) - 2];
 

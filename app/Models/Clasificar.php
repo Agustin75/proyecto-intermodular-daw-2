@@ -19,7 +19,7 @@ class Clasificar
      * @param int $numRequerido Amount of classificactions the player needs to answer correctly to obtain the Pokemon
      * @return int|false ID of the created Clasificar game, or false if the Pokémon is already in use
      */
-    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido): int|false
+    public function crearClasificar(int $idPokemon, int $idTipoClasificacion, int $numPokemon, int $numOpciones, int $numRequerido)
     {
         // We check the Pokémon is not being used in any game
         $sqlCheck = "SELECT id_pokemon FROM (
@@ -62,7 +62,7 @@ class Clasificar
      * @param int $idClasificar
      * @return array|false Object PDO with all the informacion from the selected Clasificar game, or false if no game was found
      */
-    public function obtenerClasificar($idClasificar): array | false
+    public function obtenerClasificar($idClasificar)
     {
         $sql = "SELECT * FROM j_clasificar WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);
@@ -150,7 +150,26 @@ class Clasificar
         $stmt->bindParam(':id', $idClasificar);
         return $stmt->execute();
     }
-
+    /**************************************
+     * EXTRA QUERIES USING OTHER TABLES
+    /**************************************/
+    /**
+     * Returns the list of Clasificar games that the player has yet to complete
+     *
+     * @param int $idUsuario - the User to check
+     * @return array All the Clasificar games found that the player hasn't completed yet
+     */
+    public function obtenerJuegosSinCompletar(int $idUsuario) : array
+    {
+        $sql = "SELECT * FROM j_clasificar
+                WHERE id_pokemon NOT IN (
+                    SELECT id_pokemon FROM pokemon_usuario WHERE id_usuario = :idUsuario
+                )";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     /**
      * Returns the list of Clasificar types (Tipo y Generación)
