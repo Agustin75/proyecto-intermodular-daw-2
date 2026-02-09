@@ -51,22 +51,23 @@ $map = [
     'editarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'editarAdivinanza', 'nivel' => USER_ADMIN],
     'eliminarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'eliminarAdivinanza', 'nivel' => USER_ADMIN],
     // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
-    'crearTrivia'  => ['controller' => 'TriviaController',  'action' => 'crearTrivia',  'nivel' => USER_ADMIN],
-    'eliminarTrivia'  => ['controller' => 'TriviaController',  'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
-    'editarTrivia' => ['controller' => 'TriviaController', 'action' => 'editarTrivia', 'nivel' => USER_ADMIN],
-
-
-    'crearAdivinanza'   => ['controller' => 'AdminController', 'action' => 'vistaAdivinanza', 'nivel' => USER_ADMIN],
-    'crearClasificar'   => ['controller' => 'AdminController', 'action' => 'vistaClasificar', 'nivel' => USER_ADMIN],
-
-
-
+    //TRIVIA:
+    'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
+    'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
+    'editarTrivia'  => ['controller' => 'TriviaController', 'action' => 'editarTrivia',  'nivel' => USER_ADMIN],
+    'crearAdivinanza'    => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',    'nivel' => USER_ADMIN],
+    
+    // CLASIFICAR:
+    'crearClasificar'    => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',    'nivel' => USER_ADMIN],
+    'editarClasificar'   => ['controller' => 'ClasificarController', 'action' => 'editarClasificar',   'nivel' => USER_ADMIN],
+    'guardarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'guardarClasificar',  'nivel' => USER_ADMIN],
+    'eliminarClasificar' => ['controller' => 'ClasificarController', 'action' => 'eliminarClasificar', 'nivel' => USER_ADMIN],
+    
     // API functions
     'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
     'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN]
 ];
-
 // -------------------------------------------------------------
 // Resolución de ruta
 // -------------------------------------------------------------

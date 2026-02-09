@@ -190,7 +190,7 @@ public function editarTrivia()
         $ok = $m->actualizarTrivia($id, $idPokemon, $pregunta, $tiempo, $opciones);
 
         if ($ok) {
-            header("Location: index.php?ctl=crearJuego");
+            header("Location: index.php?ctl=gestionarJuegos");
             exit;
         } else {
             $params['mensaje'] = "No se pudo actualizar la trivia.";
