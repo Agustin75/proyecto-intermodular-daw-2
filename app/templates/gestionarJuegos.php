@@ -12,9 +12,23 @@
     ============================= -->
     <div style="width:33%; border:1px solid #ccc; padding:15px;">
         <h2>Adivinanza</h2>
-        <a href="index.php?ctl=vistaAdivinanza" class="btn btn-primary">Crear Adivinanza</a>
+        <a href="index.php?ctl=crearAdivinanza" class="btn btn-primary">Crear Adivinanza</a>
         <br><br>
-        <p>No implementado aún</p>
+        <?php if (empty($params["adivinar"])): ?>
+            <p>No hay trivias creadas todavía.</p>
+        <?php else: ?>
+            
+            <ul>
+                <?php foreach ($params["adivinar"] as $t): ?>
+                    <li style="margin-bottom:10px;">
+                        <?= $t["pokemon_name"] ?> (ID <?= $t["id_pokemon"] ?>)
+
+                        <a href="index.php?ctl=editarAdivinanza&id=<?= $t["id"] ?>" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="index.php?ctl=eliminarAdivinanza&id=<?= $t["id"] ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     </div>
  <!-- ============================
          COLUMNA TRIVIA

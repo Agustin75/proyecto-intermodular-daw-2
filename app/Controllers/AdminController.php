@@ -13,7 +13,7 @@ class AdminController extends Controller
         // Obtain all games from the database
         $trivias = $mTrivia->obtenerTodasLasTrivias();
         $clasificar = $mClasificar->listarJuegosClasificar();
-
+        $adivinar = $mAdivinanza->obtenerTodasAdivinanzas();
         // Add the names of the Pokémon
         foreach ($trivias as $i => $t) {
             $pokemon = $api->getPokemonById($t["id_pokemon"]);
@@ -24,10 +24,16 @@ class AdminController extends Controller
             $pokemon = $api->getPokemonById($t["id_pokemon"]);
             $clasificar[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
         }
+        
+        foreach ($adivinar as $i => $t){
+            $pokemon = $api->getPokemonById($t["id_pokemon"]);
+            $adivinar[$i]["pokemon_name"] = ucfirst($pokemon["name"]);
+        }
 
         $params = [
             "trivias" => $trivias,
-            "clasificar" => $clasificar
+            "clasificar" => $clasificar,
+            "adivinar" => $adivinar
         ];
 
         require __DIR__ . '/../templates/gestionarJuegos.php';

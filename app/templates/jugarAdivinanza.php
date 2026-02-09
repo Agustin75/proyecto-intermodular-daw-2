@@ -9,8 +9,11 @@
     <!-- We check if the Player is currently playing a game. If they won, we don't show the following headers -->
 <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
     <?php if ($params["idTipo"] === CLASIFICAR_TIPO): ?>
-      <h2> Pista 1: </h2>
+      
+      
+        <h2> Pista 1: </h2>
       <p><?= $params["pista1"] ?></p>
+      
       
         <?php endif; ?>
     <?php endif; ?>

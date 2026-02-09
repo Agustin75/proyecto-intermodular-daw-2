@@ -141,9 +141,9 @@ class AdivinanzaController extends Controller
                 // We fill the form parameters with the existing data
 
                 $params['idPokemon']   = $ad['enunciado']['id_pokemon'];
-                $params['pista1']      = $ad['opciones']['pista1'];
-                $params['pista2']      = $ad['opciones']['pista2'];
-                $params['pista3']      = $ad['opciones']['pista3'];
+                $params['pista1']      = $ad['enunciado']['pista1'];
+                $params['pista2']      = $ad['enunciado']['pista2'];
+                $params['pista3']      = $ad['enunciado']['pista3'];
 
                 $idPokemon = $ad['enunciado']['id_pokemon'];
 
@@ -218,6 +218,7 @@ class AdivinanzaController extends Controller
             // We delegate the error handling to the controller's method
             $this->handleError($e);
         }
+        require __DIR__ . '/../templates/crearAdivinanza.php';
     }
 
 

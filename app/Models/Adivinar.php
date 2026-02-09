@@ -161,6 +161,13 @@ class Adivinar
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function obtenerTodasAdivinanzas(){
+        $sql = "SELECT * FROM j_adivinanza";
+        $stmt = $this->conexion->prepare($sql);
+         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 ?>
