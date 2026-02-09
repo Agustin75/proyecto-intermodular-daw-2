@@ -13,14 +13,8 @@
     </div>
 <?php endif; ?>
 
-<form action="index.php?ctl=<?= ($params['modo'] === 'editar') ? 'editarTrivia' : 'crearTrivia' ?>" method="POST">
+<form action="index.php?ctl=<?= ($params['modo'] === 'editar') ? 'editarTrivia&id=' . $params['id'] : 'crearTrivia' ?>" method="POST">
 
-    <!-- ============================
-         ID DE LA TRIVIA (NO EDITABLE)
-    ============================= -->
-    <label for="idTrivia">ID Trivia:</label>
-    <input type="number" id="idTrivia" name="idTrivia" value="<?= $params['id'] ?>" readonly>
-    <br><br>
 
     <!-- ============================
          ENUNCIADO
@@ -104,11 +98,7 @@
         <?= ($params['modo'] === 'editar') ? 'Actualizar Trivia' : 'Guardar Trivia' ?>
     </button>
 
-    <?php if ($params['modo'] === 'editar'): ?>
-        <button type="submit" name="bEliminarTrivia" formaction="index.php?ctl=eliminarTrivia">
-            Eliminar Trivia
-        </button>
-    <?php endif; ?>
+    
 
 </form>
 

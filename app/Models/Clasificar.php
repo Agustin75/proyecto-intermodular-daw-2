@@ -62,7 +62,7 @@ class Clasificar
      * @param int $idClasificar
      * @return array|false Object PDO with all the informacion from the selected Clasificar game, or false if no game was found
      */
-    public function obtenerClasificar($idClasificar): array | false
+    public function obtenerClasificar($idClasificar)
     {
         $sql = "SELECT * FROM j_clasificar WHERE id = :id";
         $stmt = $this->conexion->prepare($sql);

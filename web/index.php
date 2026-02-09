@@ -40,7 +40,6 @@ $map = [
     'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
     'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
     'jugarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'jugarClasificar', 'nivel' => USER_REGISTERED],
-    'jugarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'jugarAdivinanza',  'nivel' => USER_REGISTERED],
 
     // Admin user functions
     'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
@@ -55,6 +54,10 @@ $map = [
     //TRIVIA:
     'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
     'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
+    'editarTrivia'  => ['controller' => 'TriviaController', 'action' => 'editarTrivia',  'nivel' => USER_ADMIN],
+    'jugarTrivia' => ['controller' => 'TriviaController', 'action' => 'jugarTrivia', 'nivel' => USER_REGISTERED],
+
+    'crearAdivinanza'    => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',    'nivel' => USER_ADMIN],
     
     // CLASIFICAR:
     'crearClasificar'    => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',    'nivel' => USER_ADMIN],
@@ -67,7 +70,6 @@ $map = [
     'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
     'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN]
 ];
-
 // -------------------------------------------------------------
 // Resolución de ruta
 // -------------------------------------------------------------

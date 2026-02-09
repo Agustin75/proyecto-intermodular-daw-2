@@ -14,13 +14,16 @@ class Adivinar
     {
 
         // 1. Verify the Pokémon isn't used in other games
-        $sqlCheck = " 
-            SELECT id_pokemon FROM j_adivinanza WHERE id_pokemon = :id
-            UNION
-            SELECT id_pokemon FROM j_trivia_enunciado WHERE id_pokemon = :id
-            UNION
-            SELECT id_pokemon FROM j_clasificar WHERE id_pokemon = :id
-        ";
+       $sqlCheck = "
+    SELECT id_pokemon FROM (
+        SELECT id_pokemon FROM j_adivinanza
+        UNION
+        SELECT id_pokemon FROM j_trivia_enunciado
+        UNION
+        SELECT id_pokemon FROM j_clasificar
+    ) AS t
+    WHERE id_pokemon = :id
+";
 
         $stmt = $this->conexion->prepare($sqlCheck);
         $stmt->bindParam(':id', $idPokemon);
