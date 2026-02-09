@@ -55,6 +55,8 @@ $map = [
     'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
     'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
     'editarTrivia'  => ['controller' => 'TriviaController', 'action' => 'editarTrivia',  'nivel' => USER_ADMIN],
+    'jugarTrivia' => ['controller' => 'TriviaController', 'action' => 'jugarTrivia', 'nivel' => USER_REGISTERED],
+
     'crearAdivinanza'    => ['controller' => 'AdminController',      'action' => 'vistaAdivinanza',    'nivel' => USER_ADMIN],
     
     // CLASIFICAR:

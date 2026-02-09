@@ -241,6 +241,82 @@ public function eliminarTrivia()
         $this->handleError($e);
     }
 }
+public function jugarTrivia()
+{
+    $params = [];
+    $params["gameState"] = GAME_STATE_PLAYING;
+    $params["gameFound"] = true;
+
+    $mTrivia = new Trivia();
+    $idUsuario = $this->session->getUserId();
+
+    // ============================
+    // PRIMERA VEZ → MOSTRAR TRIVIA ALEATORIA
+    // ============================
+    if (!isset($_POST["bEnviarTrivia"])) {
+
+        $lista = $mTrivia->obtenerJuegosSinCompletar($idUsuario);
+
+        if (empty($lista)) {
+            $params["gameFound"] = false;
+            $params["mensaje"] = "No hay trivias disponibles.";
+            require __DIR__ . '/../templates/jugarTrivia.php';
+            return;
+        }
+
+        // Elegir trivia aleatoria
+        $trivia = $lista[array_rand($lista)];
+
+        // Obtener trivia completa
+        $triviaCompleta = $mTrivia->obtenerTrivia($trivia["id"]);
+
+        $params["gameFound"] = true;
+        $params["trivia"] = $triviaCompleta;
+        $params["idTrivia"] = $trivia["id"];
+        $params["idPokemon"] = $trivia["id_pokemon"];
+
+        require __DIR__ . '/../templates/jugarTrivia.php';
+        return;
+    }
+
+    // ============================
+    // PROCESAR RESPUESTAS
+    // ============================
+
+    $idTrivia = intval($_POST["idTrivia"]);
+    $idPokemon = intval($_POST["idPokemon"]);
+    $respuestasUsuario = $_POST["opcion"] ?? [];
+
+    $trivia = $mTrivia->obtenerTrivia($idTrivia);
+
+    // Obtener respuestas correctas
+    $correctas = [];
+    foreach ($trivia["opciones"] as $i => $op) {
+        if ($op->correcta == 1) {
+            $correctas[] = $i;
+        }
+    }
+
+    sort($correctas);
+    sort($respuestasUsuario);
+
+    if ($correctas == $respuestasUsuario) {
+        // Ganó → dar Pokémon
+        $mPU = new PokemonUsuario();
+        $mPU->insertarRegistro($idUsuario, $idPokemon);
+
+        $params["gameState"] = GAME_STATE_WON;
+
+        $api = new PokeAPI();
+        $params["imagen_pokemon_recompensa"] = $api->getPokemonNormalSprite($idPokemon);
+        $params["nombre_pokemon_recompensa"] = $api->getPokemonName($idPokemon);
+
+    } else {
+        $params["gameState"] = GAME_STATE_LOST;
+    }
+
+    require __DIR__ . '/../templates/jugarTrivia.php';
+}
 
 
 }

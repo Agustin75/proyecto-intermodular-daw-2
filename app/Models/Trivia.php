@@ -372,7 +372,17 @@ public function actualizarTrivia($idTrivia, $idPokemon, $pregunta, $tiempo, $opc
     return true;
 }
 
-
+public function obtenerJuegosSinCompletar(int $idUsuario) : array
+    {
+        $sql = "SELECT * FROM j_trivia_enunciado
+                WHERE id_pokemon NOT IN (
+                    SELECT id_pokemon FROM pokemon_usuario WHERE id_usuario = :idUsuario
+                )";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
 }
 
