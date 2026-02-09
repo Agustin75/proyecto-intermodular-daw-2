@@ -163,7 +163,7 @@ class UsuarioController extends Controller
         $errores = [];
         $params = [
             'id' => '',
-            'id_pkmn'   => '',
+          
             'fav' => '',
         ];
         $Perm = [true => true, false => false];
@@ -263,4 +263,13 @@ public function mostrarTools(){
 
 }
 
+public function perfilPokemon(){
+    try{
+
+    } catch (Throwable $e) {
+
+    }
+
+    require __DIR__ . '/../templates/perfilPokemon.php';
+}
     }

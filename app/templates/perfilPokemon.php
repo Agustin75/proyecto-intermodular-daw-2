@@ -25,7 +25,7 @@
 	
 <?php 
 $m = new PokemonUsuario();
-$pokemons = $m->obtenerPokemonsUsuario($this->session->getUserId(), true);
+$pokemons = $m->obtenerPokemonUsuario($this->session->getUserId(), true);
 foreach ($pokemons as $pokemon) {
 	echo "<tr><td><a>" . $pokemon['nombre'] . "</a></td></tr>";
 }
@@ -36,13 +36,20 @@ foreach ($pokemons as $pokemon) {
 	<tr> Capturados </tr>
 <?php
 //NOTE: LINKS NOT ADDED YET
-$pokemons = $m->obtenerPokemonsUsuario($this->session->getUserId(), false);
+$pokemons = $m->obtenerPokemonUsuario($this->session->getUserId(), false);
 foreach ($pokemons as $pokemon) {
-	echo "<tr><td><a>" . $pokemon['nombre'] . "</a></td></tr>";
+	$m = new PokeAPI;
+
+	$yarp = $m->getPokemonById($pokemon['id_pokemon']);
+	$yerp = $m->getPokemonNormalSprite($pokemon['id_pokemon']);
+	echo "<tr><td><a>" . $yarp['name'] . "</a><input type='hidden' value=" . $pokemon['id_pokemon'] . "></input> <input type=checkbox></td></tr>";
+	echo "<td><img src=" . $yerp . "></td>";
+	
+
 }
 ?>
 </table>
 
 <?php $contenido = ob_get_clean() ?>
-
+<?php $script = "fav.js"; ?>
 <?php include 'layout.php' ?>
