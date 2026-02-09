@@ -69,19 +69,21 @@
             <input type="hidden" name="idPokemon" value="<?= $params["idPokemon"] ?>">
 
             <div class="container">
-                <?php foreach ($params["trivia"]["opciones"] as $i => $op): ?>
-                    <div class="form-check text-start">
-                        <input class="form-check-input" 
-                            type="checkbox" 
-                            name="opcion[]" 
-                            value="<?= $i ?>" 
-                            id="op<?= $i ?>">
+                <?php if (isset($params["trivia"]["opciones"]) && !empty($params["trivia"]["opciones"])): ?>
+                    <?php foreach ($params["trivia"]["opciones"] as $i => $op): ?>
+                        <div class="form-check text-start">
+                            <input class="form-check-input" 
+                                type="checkbox" 
+                                name="opcion[]" 
+                                value="<?= $i ?>" 
+                                id="op<?= $i ?>">
 
-                        <label class="form-check-label" for="op<?= $i ?>">
-                            <?= htmlspecialchars($op->texto) ?>
-                        </label>
-                    </div>
-                <?php endforeach; ?>
+                            <label class="form-check-label" for="op<?= $i ?>">
+                                <?= htmlspecialchars($op->texto) ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <br>

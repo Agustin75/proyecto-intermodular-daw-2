@@ -82,7 +82,7 @@
 <br><br>
 <label for="pokemonNameInput">Pokémon: </label>
 
-<input type="text" id="pokemonNameInput" name="pokemonNameInput" list="pokemonList">
+<input type="text" id="pokemonNameInput" name="pokemonNameInput" list="pokemonList" value="<?=htmlspecialchars($params["id_pkmn"]) ?>">
 <datalist id="pokemonList">
     <?php foreach ($params['pokemon_list'] as $pokemon): ?>
         <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->

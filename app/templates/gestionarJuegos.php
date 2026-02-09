@@ -5,7 +5,18 @@
 
 <div style="display:flex; gap:20px; justify-content:space-between;">
 
+   
+
     <!-- ============================
+         COLUMNA ADIVINANZA
+    ============================= -->
+    <div style="width:33%; border:1px solid #ccc; padding:15px;">
+        <h2>Adivinanza</h2>
+        <a href="index.php?ctl=vistaAdivinanza" class="btn btn-primary">Crear Adivinanza</a>
+        <br><br>
+        <p>No implementado aún</p>
+    </div>
+ <!-- ============================
          COLUMNA TRIVIA
     ============================= -->
     <div style="width:33%; border:1px solid #ccc; padding:15px;">
@@ -30,17 +41,6 @@
             </ul>
         <?php endif; ?>
     </div>
-
-    <!-- ============================
-         COLUMNA ADIVINANZA
-    ============================= -->
-    <div style="width:33%; border:1px solid #ccc; padding:15px;">
-        <h2>Adivinanza</h2>
-        <a href="index.php?ctl=crearAdivinanza" class="btn btn-primary">Crear Adivinanza</a>
-        <br><br>
-        <p>No implementado aún</p>
-    </div>
-
     <!-- ============================
          COLUMNA CLASIFICAR
     ============================= -->

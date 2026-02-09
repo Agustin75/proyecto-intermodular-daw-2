@@ -30,7 +30,7 @@ class AdminController extends Controller
             "clasificar" => $clasificar
         ];
 
-        require __DIR__ . '/../templates/crearJuegos.php';
+        require __DIR__ . '/../templates/gestionarJuegos.php';
     }
 
     public function mostrarTools()
@@ -38,33 +38,5 @@ class AdminController extends Controller
         require __DIR__ . '/../templates/DevTools.php';
     }
 
-    public function vistaAdivinanza()
-    {
 
-        $params = [
-            'modo'   => MODE_CREATE,
-            'id' => '',
-            'id_pkmn' => '',
-            'id_tipo' => '',
-            'pista1' => '',
-            'pista2' => '',
-            'pista3' => '',
-        ];
-
-        if ($params['modo'] !== MODE_CREATE) {
-            $id = recoge('id');
-            $params['id'] = $id;
-
-            $m = new Adivinar;
-            $all = $m->obtenerAdivinanza($id);
-            $params['id_pkmn'] = $all['id_pokemon'];
-            $params['id_tipo'] = $all['id_tipo'];
-            $params['pista1'] = $all['pista1'];
-            $params['pista2'] = $all['pista2'];
-            $params['pista3'] = $all['pista3'];
-
-        }
-
-        require __DIR__ . '/../templates/crearAdivinanza.php';
-    }
 }

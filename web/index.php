@@ -36,11 +36,12 @@ $map = [
 
     // Registered user functions
     'miPerfil'         => ['controller' => 'UsuarioController',    'action' => 'mostrarPerfil',   'nivel' => USER_REGISTERED],
+    'perfilPokemon'    => ['controller' => 'UsuarioController',    'action' => 'perfilPokemon',   'nivel' => USER_REGISTERED],
     'cambiarNombre'    => ['controller' => 'UsuarioController',    'action' => 'cambiarNombre',   'nivel' => USER_REGISTERED],
     'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
     'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
     'jugarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'jugarClasificar', 'nivel' => USER_REGISTERED],
-
+    'seleccionarFavorito' => ['controller' => 'APIUsuarioController', 'action' => 'seleccionarFavorito', 'nivel' => USER_REGISTERED],
     // Admin user functions
     'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
     'gestionarJuegos' => ['controller' => 'AdminController',  'action' => 'gestionarJuegos', 'nivel' => USER_ADMIN],
