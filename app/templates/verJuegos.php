@@ -4,7 +4,7 @@
     <h1>¡Comienza la PokeHunt!</h1>
     <p>Juega nuestros diferentes juegos para conseguir nuevos Pokemon para tu colección y para aumentar tu puntuación global.</p>
     <p>Cada Pokemon se puede conseguir de un juego específico. Juega distintos juegos y ¡hazte con todos!</p>
-    <p>Compite con otros entrenadores en el <a href="index.php?ctl=rankings">Ranking</a> global y conviértete en el Maestro Pokémon.</p>
+    <p>Compite con otros entrenadores en el <a href="index.php?ctl=mostrarRanking">Ranking</a> global y conviértete en el Maestro Pokémon.</p>
 </div>
 
 <div class="container">

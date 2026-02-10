@@ -34,7 +34,7 @@ class Ranking
         }
 
         // We obtain a list of users (excluding any admin users) with their amount of Pokemon owned
-        $sql = "SELECT usuario.id, usuario.nombre, COUNT(id_pokemon) AS num_pokemon
+        $sql = "SELECT usuario.id, usuario.nombre, imagen, COUNT(id_pokemon) AS num_pokemon
                  FROM pokemon_usuario
                  INNER JOIN usuario ON pokemon_usuario.id_usuario=usuario.id AND nivel!=:adminLevel
                  GROUP BY id_usuario

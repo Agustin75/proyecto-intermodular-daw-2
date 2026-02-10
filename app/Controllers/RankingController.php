@@ -41,15 +41,18 @@ class RankingController extends Controller
             $params["users"] = [];
             foreach ($users as $index => $user) {
                 // We save the user's information to be displayed in the ranking's page
+                $params["users"][$index]["id"] = $user["id"];
                 $params["users"][$index]["name"] = $user["nombre"];
+                $params["users"][$index]["image"] = $user["imagen"];
                 $params["users"][$index]["amount"] = $user["num_pokemon"];
                 $params["users"][$index]["favorites"] = [];
 
                 // We obtain the user's favorite Pokemon
                 $favorites = $mPokemonUsuario->obtenerPokemonUsuario($user["id"], true);
                 // We loop through all the favorites and add it to the array
-                foreach ($favorites as $favoritePokemon) {
-                    $params["users"][$index]["favorites"][] = $mPokeAPI->getPokemonNormalSprite($favoritePokemon["id_pokemon"]);
+                foreach ($favorites as $indexPokemon => $favoritePokemon) {
+                    $params["users"][$index]["favorites"][$indexPokemon]["name"] = $mPokeAPI->getPokemonName($favoritePokemon["id_pokemon"]);
+                    $params["users"][$index]["favorites"][$indexPokemon]["image"] = $mPokeAPI->getPokemonNormalSprite($favoritePokemon["id_pokemon"]);
                 }
             }
 
@@ -59,7 +62,6 @@ class RankingController extends Controller
         }
 
         // We load the Ranking view
-        echo("Página Rankings en proceso de creación.");
-        // require __DIR__ . '/../templates/ranking.php';
+        require __DIR__ . '/../templates/rankings.php';
     }
 }
