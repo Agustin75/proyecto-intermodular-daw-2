@@ -26,24 +26,19 @@ class Controller
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
-                ['Rankings', 'rankings'],
+                ['Rankings', 'mostrarRanking'],
             ],
             USER_REGISTERED => [
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
-                ['Rankings', 'rankings'],
-                ['Cambiar Nombre', 'cambiarNombre'],
-                ['Cambiar Imagen', 'cambiarImagen'],
-                ['Perfil Pokemon', 'perfilPokemon']
+                ['Rankings', 'mostrarRanking']
             ],
             USER_ADMIN => [
                 ['Inicio', 'inicio'],
                 ['Wiki', 'wiki'],
                 ['Juegos', 'juegos'],
-                ['Rankings', 'rankings'],
-                ['Dev Tools', 'mostrarTools'],
-                ['Perfil Pokemon', 'perfilPokemon']
+                ['Rankings', 'mostrarRanking']
             ]
         ];
 
@@ -91,11 +86,15 @@ class Controller
             ],
             USER_REGISTERED => [
                 ['Mi Perfil', 'miPerfil'],
+                ['Cambiar Nombre', 'cambiarNombre'],
+                ['Cambiar Imagen', 'cambiarImagen'],
+                ['Perfil Pokemon', 'perfilPokemon'],
                 ['Cerrar Sesión', 'cerrarSesion']
             ],
             USER_ADMIN => [
                 ['Dev Tools', 'mostrarTools'],
                 ['Mi Perfil', 'miPerfil'],
+                ['Perfil Pokemon', 'perfilPokemon'],
                 ['Cerrar Sesión', 'cerrarSesion']
             ]
         ];

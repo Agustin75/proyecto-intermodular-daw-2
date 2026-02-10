@@ -27,12 +27,13 @@ $session->checkSecurity();
 // -------------------------------------------------------------
 $map = [
     // General functions
-    'inicio'        => ['controller' => 'InicioController', 'action'  => 'inicio',           'nivel' => USER_GUEST],
-    'registro'      => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
-    'iniciarSesion' => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion',    'nivel' => USER_GUEST],
-    'wiki'          => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
-    'wikiPokemon'   => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
-    'juegos'        => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
+    'inicio'            => ['controller' => 'InicioController', 'action'  => 'inicio',           'nivel' => USER_GUEST],
+    'registro'          => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
+    'iniciarSesion'     => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion',    'nivel' => USER_GUEST],
+    'wiki'              => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
+    'wikiPokemon'       => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
+    'juegos'            => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
+    'mostrarRanking'    => ['controller' => 'RankingController', 'action' => 'mostrarRanking',   'nivel' => USER_GUEST],
 
     // Registered user functions
     'miPerfil'         => ['controller' => 'UsuarioController',    'action' => 'mostrarPerfil',   'nivel' => USER_REGISTERED],
