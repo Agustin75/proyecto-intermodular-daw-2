@@ -1,4 +1,57 @@
 
+body{
+    background-image: url(bckgrndproject.png);
+}
+*{
+    color: white;
+}
+
+#icon{
+    max-width: 35%;
+    max-height: 35%;
+    
+}
+#icon:hover {
+     transform: translateY(-50%);
+}
+.tooltip { 
+  position: relative; 
+  display: inline-block; /* or block */ 
+} 
+
+.tooltip:hover .tip, 
+.tooltip:focus-within .tip { 
+  visibility: visible; 
+  opacity: 1; 
+} 
+
+.tooltip .tip { 
+  visibility: hidden; 
+  opacity: 0; 
+  position: absolute; 
+  left: 50%; 
+  bottom: 110%; 
+  transform: translateX(-50%); 
+  background: rgba(0,0,0,0.8); 
+  color: #fff; 
+  padding: 6px 8px; 
+  border-radius: 4px; 
+  white-space: nowrap; 
+  transition: opacity 0.15s ease, visibility 0.15s; 
+  pointer-events: none; 
+  z-index: 10; 
+} 
+    #icon:hover .info-card {
+        opacity: 1;
+    }
+#center{
+
+    
+    display: block;
+    width: 250px;
+    margin: auto;
+    height: 400px;
+}
 /* BARRA MENU */
 .menu{
 	background-color: rgba(200, 119, 119, 1);

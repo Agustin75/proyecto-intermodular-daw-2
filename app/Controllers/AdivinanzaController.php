@@ -91,6 +91,8 @@ class AdivinanzaController extends Controller
 
     public function editarAdivinanza()
     {
+         $mPokeAPI = new PokeAPI();
+        $sAdivinanza = new Adivinar();
         // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui
 
         // Solo admin puede crear trivias
@@ -100,13 +102,8 @@ class AdivinanzaController extends Controller
         //}
 
         // We obtain the Trivia ID from the request
-        $idAdivinanza = (int) ($_GET['id'] ?? 0);
-
-        // If the ID is invalid, we redirect back to the games list
-        if ($idAdivinanza <= 0) {
-            header("Location: index.php?ctl=juegos");
-            exit;
-        }
+        $idAdivinanza = (int) ($_REQUEST['id'] ?? 0);
+       
 
         // Initial state of the form parameters
         $params = [
@@ -117,6 +114,9 @@ class AdivinanzaController extends Controller
             'pista1'    => '',
             'pista2'   => '',
             'pista3'      => '',
+             'pokemon_list' => $mPokeAPI->getAllPokemon(),
+            'tiposAdivinar' => $sAdivinanza->obtenerTiposAdivinar()
+
         ];
 
         // List that will hold all validation errors
@@ -128,27 +128,34 @@ class AdivinanzaController extends Controller
             /* ============================================================
            1. FIRST FORM LOAD (GET)
         ============================================================ */
-            if (!isset($_POST['bEditarAdivinar'])) {
+            if (!isset($_POST['bEditarAdivinanza'])) {
+                
+
+                // If the ID is invalid, we redirect back to the games list
+        if ($idAdivinanza <= 0) {
+            header("Location: index.php?ctl=juegos");
+           exit;
+        }
 
                 $ad = $m->obtenerAdivinanza($idAdivinanza);
 
                 if (!$ad) {
                     $params['mensaje'] = "La adivinanza no existe.";
-
+                    echo "adivinanza no existe";
                     return;
                 }
 
                 // We fill the form parameters with the existing data
 
-                $params['idPokemon']   = $ad['enunciado']['id_pokemon'];
-                $params['pista1']      = $ad['enunciado']['pista1'];
-                $params['pista2']      = $ad['enunciado']['pista2'];
-                $params['pista3']      = $ad['enunciado']['pista3'];
+                $params['idPokemon']   = $ad['id_pokemon'];
+                $params['pista1']      = $ad['pista1'];
+                $params['pista2']      = $ad['pista2'];
+                $params['pista3']      = $ad['pista3'];
 
-                $idPokemon = $ad['enunciado']['id_pokemon'];
-
-                return;
-            }
+                //$idPokemon = $ad['enunciado']['id_pokemon'];
+                echo $params['pista2'];
+                //return;
+            }else{
 
             /* ============================================================
            2. PROCESS FORM SUBMISSION (POST)
@@ -156,10 +163,11 @@ class AdivinanzaController extends Controller
 
             // We obtain the updated form data
             $pista1   = recoge('pista1');
-            $pista2 = (int) recoge('pista2');
-            $pista3   = (int) recoge('pista3');
-            $idPokemon = recoge('id_pkmn');
-
+            $pista2 =  recoge('pista2');
+            $pista3   =  recoge('pista3');
+            $idPokemon = recoge('id_pokemon');
+            $idAdivinanza = recoge('id');
+          
             // We store the updated values in $params to preserve the form state
             $params['pista1']   = $pista1;
             $params['pista2'] = $pista2;
@@ -171,7 +179,7 @@ class AdivinanzaController extends Controller
         ============================================================ */
 
 
-            if ($pista1 === '' || $pista2 === '' || $pista3 === '') {
+            if ($pista1 === '' || $pista2 === '' || $pista3 === ''){
                 $errores[] = "Las pistas no pueden estar vacias.";
             }
 
@@ -194,26 +202,29 @@ class AdivinanzaController extends Controller
         ============================================================ */
             if (!empty($errores)) {
                 $params['mensaje'] = implode("<br>", $errores);
+                
                 return;
             }
 
             /* ============================================================
            5. UPDATE TRIVIA IN THE MODEL
         ============================================================ */
-
+            
+      
             // We attempt to update the Trivia entry
             $ok = $m->editarAdivinanza($idPokemon, $idAdivinanza, $pista1, $pista2, $pista3);
-
+       
             // If the update failed, we show an error message
             if (!$ok) {
                 $params['mensaje'] = "No se ha podido actualizar la Adivinanza.";
-                // RUTA            require __DIR__ . '/../templates/triviaEditar.php';
+  
                 return;
             }
 
             // Success → redirect to the games list
             header("Location: index.php?ctl=juegos");
-            exit;
+            
+            }
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
             $this->handleError($e);

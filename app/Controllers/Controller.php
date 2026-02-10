@@ -23,27 +23,24 @@ class Controller
         // ---------------------------------------------------------
         $menusBase = [
             USER_GUEST => [
-                ['Inicio', 'inicio'],
-                ['Wiki', 'wiki'],
-                ['Juegos', 'juegos'],
-                ['Rankings', 'rankings'],
+                ['Inicio', 'inicio', 'home.png'],
+                ['Wiki', 'wiki', 'wiki.png'],
+                ['Juegos', 'juegos', 'games.png'],
+                ['Rankings', 'rankings', 'ranking.png'],
             ],
             USER_REGISTERED => [
-                ['Inicio', 'inicio'],
-                ['Wiki', 'wiki'],
-                ['Juegos', 'juegos'],
-                ['Rankings', 'rankings'],
-                ['Cambiar Nombre', 'cambiarNombre'],
-                ['Cambiar Imagen', 'cambiarImagen'],
-                ['Perfil Pokemon', 'perfilPokemon']
+                ['Inicio', 'inicio', 'home.png'],
+                ['Wiki', 'wiki', 'wiki.png'],
+                ['Juegos', 'juegos', 'games.png'],
+                ['Rankings', 'rankings', 'ranking.png'],
+                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png']
             ],
             USER_ADMIN => [
-                ['Inicio', 'inicio'],
-                ['Wiki', 'wiki'],
-                ['Juegos', 'juegos'],
-                ['Rankings', 'rankings'],
-                ['Dev Tools', 'mostrarTools'],
-                ['Perfil Pokemon', 'perfilPokemon']
+                ['Inicio', 'inicio', 'home.png'],
+                ['Wiki', 'wiki', 'wiki.png'],
+                ['Juegos', 'juegos', 'games.png'],
+                ['Rankings', 'rankings', 'ranking.png'],
+                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png']
             ]
         ];
 
@@ -86,17 +83,17 @@ class Controller
         // ---------------------------------------------------------
         $menusUsuarios = [
             USER_GUEST => [
-                ['Iniciar Sesión', 'iniciarSesion'],
-                ['Registro', 'registro']
+                ['Iniciar Sesión', 'iniciarSesion', 'login.png'],
+                ['Registro', 'registro', 'signup.png']
             ],
             USER_REGISTERED => [
-                ['Mi Perfil', 'miPerfil'],
-                ['Cerrar Sesión', 'cerrarSesion']
+                ['Mi Perfil', 'miPerfil', 'settings.png'],
+                ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ],
             USER_ADMIN => [
-                ['Dev Tools', 'mostrarTools'],
-                ['Mi Perfil', 'miPerfil'],
-                ['Cerrar Sesión', 'cerrarSesion']
+                ['Dev Tools', 'mostrarTools', 'devtools.png'],
+                ['Mi Perfil', 'miPerfil', 'settings.png'],
+                ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ]
         ];
 

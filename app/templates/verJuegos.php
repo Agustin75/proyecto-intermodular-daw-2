@@ -1,4 +1,5 @@
 <?php ob_start() ?>
+<head> <link rel=stylesheet href="../web/css/estilo.css" type="text/css"></head>
 
 <div class="container text-center">
     <h1>¡Comienza la PokeHunt!</h1>
@@ -11,7 +12,7 @@
     <div class="row d-flex justify-content-between">
         <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
             <h3>Adivina el Pokémon</h3>
-            <img src="images/adivinanza.png" alt="Imagen sobre el juego de adivinanzas">
+            <img src="images/adivinanza_cover.png" alt="Imagen sobre el juego de adivinanzas">
             <p>Adivina el Pokémon según su silueta, grito o descripción</p>
             <p>Tienes 4 intentos para adivinar el Pokémon</p>
             <p>Por cada intento fallido revelará una nueva pista</p>
@@ -32,7 +33,7 @@
         </div>
         <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
             <h3>Clasifica los Pokémon</h3>
-            <img src="images/clasificar.png" alt="Imagen sobre el juego de clasificar">
+            <img src="images/clasificar_cover.png" alt="Imagen sobre el juego de clasificar">
             <p>En este juego verás múltiples Pokémon. Para cada uno, deberás elegir cuál es su tipo o generación.</p>
             <p>Cuanto menos errores cometas, mayor será tu puntuación</p>
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
@@ -41,7 +42,7 @@
         </div>
     </div>
 </div>
-
+<img id=center src="../web/images/trainer_think.png">
 <?php if ($params["user_level"] == USER_GUEST): ?>
     <div class="container text-center pt-2">
         <h2>Empieza tu aventura</h2>

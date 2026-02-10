@@ -65,22 +65,8 @@ class Adivinar
 
         if (!$enunciado) return null;
 
-        // Get hints
-        $sqlOpciones = "
-            SELECT pista1, pista2, pista3
-            FROM j_adivinanza
-            WHERE id = :id
-        ";
-
-        $stmt = $this->conexion->prepare($sqlOpciones);
-        $stmt->bindParam(':id', $$idAdivinanza);
-        $stmt->execute();
-        $opciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return [
-            "enunciado" => $enunciado,
-            "opciones" => $opciones
-        ];
+    
+        return $enunciado;
     }
 
      
@@ -90,41 +76,43 @@ class Adivinar
             $this->conexion->beginTransaction();
 
             // 1) Verificar que el Pokémon no esté usado en otros juegos o en otra trivia distinta a esta
-            $sqlCheck = "
-                SELECT id_pokemon FROM j_adivinanza WHERE id_pokemon = :idPokemon
-                UNION
-                SELECT id_pokemon FROM j_trivia_enunciado WHERE id_pokemon = :idPokemon AND id != :idTrivia
-                UNION
-                SELECT id_pokemon FROM j_clasificar WHERE id_pokemon = :idPokemon
-            ";
+            $sqlCheck = "SELECT id_pokemon FROM (
+                        SELECT id_pokemon FROM j_adivinanza
+                        UNION
+                        SELECT id_pokemon FROM j_trivia_enunciado
+                        UNION
+                        SELECT id_pokemon FROM j_clasificar
+                    ) AS t
+                    WHERE id_pokemon = :id";
             $stmt = $this->conexion->prepare($sqlCheck);
-            $stmt->bindParam(':idPokemon', $idPokemon);
-            $stmt->bindParam(':idTrivia', $idAdivinanza);
+            $stmt->bindParam(':id', $idPokemon);
             $stmt->execute();
 
-            if ($stmt->rowCount() > 0) {
+           if ($stmt->rowCount() > 0) {
                 $this->conexion->rollBack();
                 return false; // Pokémon ya está en uso
             }
 
             // 2) Actualizar enunciado
             $sqlUpdate = "
-                UPDATE j_trivia_enunciado
+                UPDATE j_adivinanza
                 SET id_pokemon = :idPokemon, pista1 = :uno, pista2 = :dos, pista3 = :tres
-                WHERE id = :idTrivia
+                WHERE id = :idAdivinanza
             ";
             $stmt = $this->conexion->prepare($sqlUpdate);
             $stmt->bindParam(':idPokemon', $idPokemon);
             $stmt->bindParam(':uno', $pista1);
             $stmt->bindParam(':dos', $pista2);
             $stmt->bindParam(':tres', $pista3);
+            $stmt->bindParam(':idAdivinanza', $idAdivinanza);
             $stmt->execute();
-
+             $this->conexion->commit();
           
-
+            return true;
            
         } catch (Exception $e) {
             $this->conexion->rollBack();
+    
             return false;
         }
     }

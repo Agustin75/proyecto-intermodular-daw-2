@@ -14,7 +14,7 @@
 <?php endif; ?>
 <?php if ($params['modo'] === MODE_EDIT) ?>
 <form action="index.php?ctl=<?= ($params['modo'] === MODE_EDIT) ? 'editarAdivinanza' : 'crearAdivinanza' ?>" method="POST">
-<input type=hidden> <?php $params['id']?>
+<input type=hidden name="id" value="<?= $params['id']?>"> 
     <!-- ============================
          Pista 1
     ============================= -->
@@ -79,12 +79,12 @@
     <!-- ============================
          BOTONES
     ============================= -->
-    <button type="submit" name="<?= ($params['modo'] === 'editar') ? 'bEditarAdivinanza' : 'bCrearAdivinanza' ?>">
-        <?= ($params['modo'] === 'editar') ? 'Actualizar Adivinanza' : 'Guardar Adivinanza' ?>
+    <button type="submit" name="<?= ($params['modo'] === MODE_EDIT) ? 'bEditarAdivinanza' : 'bCrearAdivinanza' ?>">
+        <?= ($params['modo'] === MODE_EDIT) ? 'Actualizar Adivinanza' : 'Guardar Adivinanza' ?>
     </button>
 
-    <?php if ($params['modo'] === 'editar'): ?>
-        <button type="submit" name="bEliminarTrivia" formaction="index.php?ctl=eliminarAdivinanza">
+    <?php if ($params['modo'] === MODE_EDIT): ?>
+        <button type="submit" name="bEliminarAdivinanza" formaction="index.php?ctl=eliminarAdivinanza">
             Eliminar Trivia
         </button>
     <?php endif; ?>

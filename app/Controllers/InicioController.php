@@ -10,7 +10,7 @@ class InicioController extends Controller
                 "Compite con otros entrenadores en los Rankings. ¿Lograrás ser el mejor maestro Pokémon?"
             ],
             // TODO: Añadir imagen para el home aquí
-            "image" => ""
+            "image" => "../web/images/logo_proyect.png"
         );
 
         require __DIR__ . '/../templates/inicio.php';
