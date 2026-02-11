@@ -36,7 +36,10 @@ class UsuarioController extends Controller
 
                     $m = new Usuario();
                     $usuario = $m->buscarUsuario($nombre);
-                    if (comprobarhash($contrasenya, $usuario['contrasenya'])) {
+                    // We check that an user was found and that the user found is active before checking the password
+                    if (($usuario != false && count($usuario) > 0) &&
+                         $usuario["activo"] &&
+                         comprobarhash($contrasenya, $usuario['contrasenya'])) {
                         $this->session->login(
                             $usuario['id'],
                             $usuario['nombre'],
