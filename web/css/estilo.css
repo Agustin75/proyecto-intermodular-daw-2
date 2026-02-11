@@ -80,6 +80,15 @@ body{
 	color:rgba(200, 119, 119, 1);
 	font-size: 20px;
 }
+input{
+    color: black;
+}
+select{
+    color: black;
+}
+option{
+    color: black;
+}
 
 .tablaP:hover { /*Al pasar el raton por encima del menu cambia de color*/
     color: rgba(72, 32, 32, 1);

@@ -295,15 +295,37 @@ class AdivinanzaController extends Controller
 
             if ($numGamesLeft > 0) {
                 // Obtain a random game from the list
+                 $mPokeAPI = new PokeAPI();
                 $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
+                $params['id'] = $selectedGame['id'];
+                $params['correctPokemonId'] = $selectedGame["id_pokemon"];
+                $pkmn = $mPokeAPI->getPokemonById($params['correctPokemonId']);
+                $params['tipo'] = $selectedGame['id_tipo'];
+                switch ($params['tipo']){
+                        case 1:
+                        $params['tipo_object'] = $pkmn['shout']
+                }
+                
+                $params['pista1'] = $selectedGame["pista1"];
+                $params['pista2'] = $selectedGame["pista2"];
+                $params['pista3'] = $selectedGame["pista3"];
+                
+              
+            } 
+        }else {
+                $mPokeAPI = new PokeAPI();
+                $id = recoge('id');
+                $respuesta = recoge('respuesta');
+                $correct = recoge('correctPokemonId');
+                $correctcheck = strtolower($mPokeAPI->getPokemonName($correct));
+                $respuestacheck = strtolower($respuesta);
+                if( $correctcheck == $respuestacheck){
+                    $params['gameState'] = GAME_STATE_WON;
+                }else{
+                       $params["gameState"] = GAME_STATE_LOST;
+                }
 
-                $pista1 = $selectedGame["pista1"];
-                $pista2 = $selectedGame["pista2"];
-                $pista3 = $selectedGame["pista3"];
-                $correctPokemonId = $selectedGame["id_pokemon"];
-            } else {
             }
-        }
         require __DIR__ . '/../templates/jugarAdivinanza.php';
     }
 }
