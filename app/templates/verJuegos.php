@@ -22,7 +22,7 @@
         </div>
         <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
             <h3>Trivia</h3>
-            <img src="images/trivia.png" alt="Imagen sobre el juego de trivias">
+            <img src="images/trivia_cover.png" alt="Imagen sobre el juego de trivias">
             <p>Selecciona todas las respuestas correctas a la pregunta mostrada</p>
             <p>Tienes un límite de tiempo para responder a la pregunta</p>
             <p>Cuanto más opciones correctas selecciones, mayor será tu puntuación</p>
