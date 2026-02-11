@@ -289,6 +289,7 @@ class UsuarioController extends Controller
             $currPokemon = [];
             foreach ($favorites as $index => $favoritePokemon) {
                 $pokemonId = $favoritePokemon["id_pokemon"];
+                $currPokemon["id"] = $pokemonId;
                 $currPokemon["name"] = $mPokeApi->getPokemonName($pokemonId);
                 $currPokemon["image"] = $mPokeApi->getPokemonNormalSprite($pokemonId);
                 $params["favorites"][$index] = $currPokemon;

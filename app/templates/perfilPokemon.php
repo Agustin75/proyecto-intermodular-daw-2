@@ -27,10 +27,9 @@
     <?php endif; ?>
     <?php foreach ($params["favorites"] as $pokemon): ?>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <!-- TODO: Fix the links after merging -->
-            <a href="index.php?verPokemon"><img src="<?= $pokemon["image"] ?>" alt="Imagen de <?= $pokemon["name"] ?>"></a>
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><img src="<?= $pokemon["image"] ?>" alt="Imagen de <?= $pokemon["name"] ?>"></a>
             <br>
-            <a href="index.php?verPokemon"><?= $pokemon["name"] ?></a>
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><?= $pokemon["name"] ?></a>
         </div>
     <?php endforeach; ?>
 </div>
@@ -42,10 +41,9 @@
     <?php endif; ?>
     <?php foreach ($params["allPokemon"] as $pokemon): ?>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <!-- TODO: Fix the links after merging -->
-            <a href="index.php?verPokemon"><img src="<?= $pokemon["image"] ?>" alt="Imagen de <?= $pokemon["name"] ?>"></a>
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><img src="<?= $pokemon["image"] ?>" alt="Imagen de <?= $pokemon["name"] ?>"></a>
             <br>
-            <a href="index.php?verPokemon"><?= $pokemon["name"] ?></a>
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><?= $pokemon["name"] ?></a>
             <input type="hidden" value="<?= $pokemon["id"] ?>">
             <?php if ($params["editable"]): ?>
                 <input type="checkbox" <?= $pokemon["favorited"] ? "checked" : "" ?>>
