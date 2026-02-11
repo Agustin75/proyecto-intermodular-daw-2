@@ -7,6 +7,7 @@ class Usuario
     {
         $this->conexion = Database::getConnection();
     }
+
     public function crearUsuario($nombre, $contrasenya, $email, $imagen)
     {
         $sql = "INSERT INTO usuario (nombre, contrasenya, email, imagen)
@@ -17,7 +18,6 @@ class Usuario
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':img', $imagen);
         return $stmt->execute(); //run the request as well as return it
-
     }
 
     public function listarUsuarios()
@@ -28,11 +28,20 @@ class Usuario
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-     public function buscarUsuario($nombre)
+    public function buscarUsuario($nombre)
     {
         $sql = "SELECT * FROM usuario WHERE nombre = :nombre";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':nombre', $nombre);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerUsuario(int $id)
+    {
+        $sql = "SELECT * FROM usuario WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -61,9 +70,8 @@ class Usuario
     }
 
 
-    public function activarUsuario($id, $act) : bool
+    public function activarUsuario($id, $act): bool
     {
-         
         $sql = "UPDATE usuario
         SET activo = :act
         WHERE id = :id";
@@ -71,10 +79,9 @@ class Usuario
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':act', $act, PDO::PARAM_BOOL);
         return $stmt->execute();
-        
     }
 
-     public function cambiarNombre($new, $id) : bool
+    public function cambiarNombre($new, $id): bool
     {
         $sql = "UPDATE usuario
         SET nombre = :nombre

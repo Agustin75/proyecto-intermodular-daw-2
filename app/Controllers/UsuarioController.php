@@ -163,7 +163,7 @@ class UsuarioController extends Controller
         $errores = [];
         $params = [
             'id' => '',
-          
+
             'fav' => '',
         ];
         $Perm = [true => true, false => false];
@@ -229,7 +229,6 @@ class UsuarioController extends Controller
     {
         try {
 
- 
             $this->session->logout();
 
             header("Location: index.php?ctl=inicio");
@@ -242,34 +241,74 @@ class UsuarioController extends Controller
     public function mostrarPerfil()
     {
         try {
-
- 
-            
         } catch (Throwable $e) {
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/miPerfil.php';
     }
 
-public function mostrarTools(){
- try {
-
- 
-            
+    public function mostrarTools()
+    {
+        try {
         } catch (Throwable $e) {
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/DevTools.php';
-
-}
-
-public function perfilPokemon(){
-    try{
-
-    } catch (Throwable $e) {
-
     }
 
-    require __DIR__ . '/../templates/perfilPokemon.php';
-}
+    public function perfilPokemon()
+    {
+        $errores = [];
+        $params = [];
+        // Variable to know if user is looking at their own Profile and they can change their favorite Pokemon
+        $params["editable"] = false;
+
+        try {
+            $userId = recoge("id");
+
+            if (empty($userId)) {
+                $userId = $this->session->getUserId();
+                $params["editable"] = true;
+            } else {
+                cNum($userId, "id", $errores);
+            }
+
+            $mUsuario = new Usuario();
+            $usuario = $mUsuario->obtenerUsuario($userId);
+
+            $params["userId"] = $userId;
+            $params["userName"] = $usuario["nombre"];
+            $params["userImage"] = $usuario["imagen"];
+            $params["favorites"] = [];
+            $params["allPok"] = [];
+
+            $mPokemonUsuario = new PokemonUsuario();
+            $favorites = $mPokemonUsuario->obtenerPokemonUsuario($userId, true);
+
+            $mPokeApi = new PokeAPI();
+            $currPokemon = [];
+            foreach ($favorites as $index => $favoritePokemon) {
+                $pokemonId = $favoritePokemon["id_pokemon"];
+                $currPokemon["name"] = $mPokeApi->getPokemonName($pokemonId);
+                $currPokemon["image"] = $mPokeApi->getPokemonNormalSprite($pokemonId);
+                $params["favorites"][$index] = $currPokemon;
+            }
+
+            $allPokemon = $mPokemonUsuario->obtenerPokemonUsuario($userId, false);
+            foreach ($allPokemon as $index => $pokemon) {
+                $pokemonId = $pokemon["id_pokemon"];
+                $currPokemon["id"] = $pokemonId;
+                $currPokemon["name"] = $mPokeApi->getPokemonName($pokemonId);
+                $currPokemon["image"] = $mPokeApi->getPokemonNormalSprite($pokemonId);
+                $currPokemon["favorited"] = $pokemon["favorito"] == 1;
+                $params["allPokemon"][$index] = $currPokemon;
+            }
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+
+        // var_dump($params);
+
+        require __DIR__ . '/../templates/perfilPokemon.php';
     }
+}

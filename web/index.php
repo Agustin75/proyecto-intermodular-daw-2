@@ -34,10 +34,10 @@ $map = [
     'wikiPokemon'       => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
     'juegos'            => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
     'mostrarRanking'    => ['controller' => 'RankingController', 'action' => 'mostrarRanking',   'nivel' => USER_GUEST],
+    'perfilPokemon'     => ['controller' => 'UsuarioController', 'action' => 'perfilPokemon',    'nivel' => USER_GUEST],
 
     // Registered user functions
     'miPerfil'         => ['controller' => 'UsuarioController',    'action' => 'mostrarPerfil',   'nivel' => USER_REGISTERED],
-    'perfilPokemon'    => ['controller' => 'UsuarioController',    'action' => 'perfilPokemon',   'nivel' => USER_REGISTERED],
     'cambiarNombre'    => ['controller' => 'UsuarioController',    'action' => 'cambiarNombre',   'nivel' => USER_REGISTERED],
     'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
     'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
