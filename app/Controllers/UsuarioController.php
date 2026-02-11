@@ -108,9 +108,12 @@ class UsuarioController extends Controller
 
                         // We create a new unique token
                         $token = uniqid();
-                        // The token expires 10 minutes from now
+                        // TODO: These are a few methods to possibly generate the url, will need to figure out which one works once it's properly set up in a docker or with a domain name. Currently, it works with a hardocded path
+                        // $urlRoot = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
                         $bodyEmail = "Clickea el siguiente link para activar tu cuenta: ";
-                        $bodyEmail .= "index.php?ctl=confirmarCuenta&token=" . $token;
+                        // $bodyEmail .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        $bodyEmail .= "<a href=\"https://www.pokehunt.com\index.php?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        // The token expires 10 minutes from now
                         $expira = time() + 3600;
 
                         $mValidacion = new Validacion();

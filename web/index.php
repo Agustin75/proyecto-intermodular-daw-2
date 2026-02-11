@@ -72,7 +72,7 @@ $map = [
     'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
     'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN],
-    'confirmarCuenta'        => ['controller' => 'APIUsuarioController', 'action' => 'confirmarCuenta',    'nivel' => USER_ADMIN],
+    'confirmarCuenta'        => ['controller' => 'APIUsuarioController', 'action' => 'confirmarCuenta',    'nivel' => USER_GUEST],
     ];
 // -------------------------------------------------------------
 // Resolución de ruta
