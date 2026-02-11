@@ -303,7 +303,15 @@ class AdivinanzaController extends Controller
                 $params['tipo'] = $selectedGame['id_tipo'];
                 switch ($params['tipo']){
                         case 1:
-                        $params['tipo_object'] = $pkmn['shout']
+                        $params['tipo_object'] = $pkmn["cries"]["latest"];
+                        break;
+
+                        case 2:
+                            $params['tipo_object'] = $pkmn["sprites"]["front_default"];
+                        break;
+
+                        case 3:
+                            $params['tipo_object'] = $
                 }
                 
                 $params['pista1'] = $selectedGame["pista1"];

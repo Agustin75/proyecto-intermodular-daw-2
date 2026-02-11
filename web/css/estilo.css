@@ -76,6 +76,10 @@ body{
 	color: rgba(200, 119, 119, 1);
 }
 
+#silueta{
+    filter: brightness(0%);
+}
+
 .tablaP {
 	color:rgba(200, 119, 119, 1);
 	font-size: 20px;
