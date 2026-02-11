@@ -14,6 +14,7 @@ class APIWikiController extends Controller
                 if (empty($errors)) {
                     $mApi = new PokeAPI();
 
+                    ob_clean();
                     print_r(json_encode($mApi->getPokemonByType($type)));
                 }
             }
@@ -34,6 +35,7 @@ class APIWikiController extends Controller
                 if (empty($errors)) {
                     $mApi = new PokeAPI();
 
+                    ob_clean();
                     print_r(json_encode($mApi->getPokemonByGeneration($generation)));
                 }
             }

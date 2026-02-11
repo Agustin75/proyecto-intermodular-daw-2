@@ -1,11 +1,10 @@
 <?php ob_start() ?>
-<head> <link rel=stylesheet href="../web/css/estilo.css" type="text/css"></head>
 
 <div class="container text-center">
     <h1>¡Comienza la PokeHunt!</h1>
     <p>Juega nuestros diferentes juegos para conseguir nuevos Pokemon para tu colección y para aumentar tu puntuación global.</p>
     <p>Cada Pokemon se puede conseguir de un juego específico. Juega distintos juegos y ¡hazte con todos!</p>
-    <p>Compite con otros entrenadores en el <a href="index.php?ctl=rankings">Ranking</a> global y conviértete en el Maestro Pokémon.</p>
+    <p>Compite con otros entrenadores en el <a href="index.php?ctl=mostrarRanking">Ranking</a> global y conviértete en el Maestro Pokémon.</p>
 </div>
 
 <div class="container">
@@ -42,7 +41,7 @@
         </div>
     </div>
 </div>
-<img id=center src="../web/images/trainer_think.png">
+<img id="center" src="../web/images/trainer_think.png">
 <?php if ($params["user_level"] == USER_GUEST): ?>
     <div class="container text-center pt-2">
         <h2>Empieza tu aventura</h2>
