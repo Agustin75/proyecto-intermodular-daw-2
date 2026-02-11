@@ -1,6 +1,5 @@
 <?php
 
-
 class UsuarioController extends Controller
 {
 
@@ -71,9 +70,7 @@ class UsuarioController extends Controller
             'nombre' => '',
             'contrasenya' => '',
             'email' => '',
-
-            'nivel' => 2,
-
+            'nivel' => USER_REGISTERED,
         ];
 
         $errores = [];
@@ -86,36 +83,40 @@ class UsuarioController extends Controller
             $nivel       = $this->session->getUserLevel();
             $imagen      = recoge('imagen');
 
-            $nivelesPerm = [1 => 1, 2 => 2];
-
             $params = [
                 'nombre' => $nombre,
                 'email' => $email,
                 'contrasenya' => $contrasenya,
                 'nivel' => $nivel,
                 'imagen' => $imagen
-
             ];
 
             cTexto($nombre, "nombre", $errores);
             cEmail($email, "email", $errores);
             cUser($contrasenya, "contrasenya", $errores);
-            $nivel = 2;
             $imagen = "default";
             if (empty($errores)) {
-
                 try {
                     $m = new Usuario();
+                    $idUsuario = $m->crearUsuario($nombre, encriptar($contrasenya), $email, $imagen);
+                    if ($idUsuario != false) {
+                        // User registered, we send the email with the activation token
+                        $mailer = new Mailer();
 
-                    if ($m->crearUsuario(
-                        $nombre,
-                        encriptar($contrasenya),
-                        $email,
-                        $imagen
+                        // We create a new unique token
+                        $token = uniqid();
+                        // The token expires 10 minutes from now
+                        $bodyEmail = "Clickea el siguiente link para activar tu cuenta: ";
+                        $bodyEmail .= "index.php?ctl=confirmarCuenta&token=" . $token;
+                        $expira = time() + 3600;
 
-                    )) {
-                        header("Location: index.php?ctl=inicio");
-                        exit;
+                        $mValidacion = new Validacion();
+                        $mValidacion->guardarToken($idUsuario, $token, $expira);
+
+                        $mailer->enviar($email, "Activación de cuenta", $bodyEmail);
+
+                        // TODO: Mostrar sin usar params mensaje porque sale como un error. Limpiar los campos también
+                        $params["mensaje"] = "Para finalizar el registro tendrás que activar tu cuenta. Comprueba tu correo y clickea el enlace de activación.";
                     } else {
                         $params['mensaje'] = 'No se ha podido registrar el usuario.';
                     }
@@ -307,8 +308,6 @@ class UsuarioController extends Controller
         } catch (Throwable $e) {
             $this->handleError($e);
         }
-
-        // var_dump($params);
 
         require __DIR__ . '/../templates/perfilPokemon.php';
     }

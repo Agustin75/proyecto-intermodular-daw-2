@@ -28,10 +28,11 @@ $session->checkSecurity();
 $map = [
     // General functions
     'inicio'            => ['controller' => 'InicioController', 'action'  => 'inicio',           'nivel' => USER_GUEST],
+    'error'             => ['controller' => 'InicioController', 'action'  => 'error',            'nivel' => USER_GUEST],
     'registro'          => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
     'iniciarSesion'     => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion',    'nivel' => USER_GUEST],
     'wiki'              => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
-    'wikiPokemon'       => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
+    'verPokemon'        => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
     'juegos'            => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
     'mostrarRanking'    => ['controller' => 'RankingController', 'action' => 'mostrarRanking',   'nivel' => USER_GUEST],
     'perfilPokemon'     => ['controller' => 'UsuarioController', 'action' => 'perfilPokemon',    'nivel' => USER_GUEST],
@@ -71,10 +72,7 @@ $map = [
     'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
     'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN],
-
-    'verPokemon' => ['controller' => 'WikiController', 'action' => 'verPokemon', 'nivel' => USER_GUEST],
-
-
+    'confirmarCuenta'        => ['controller' => 'APIUsuarioController', 'action' => 'confirmarCuenta',    'nivel' => USER_ADMIN],
     ];
 // -------------------------------------------------------------
 // Resolución de ruta

@@ -8,7 +8,7 @@ class Usuario
         $this->conexion = Database::getConnection();
     }
 
-    public function crearUsuario($nombre, $contrasenya, $email, $imagen)
+    public function crearUsuario($nombre, $contrasenya, $email, $imagen) : int
     {
         $sql = "INSERT INTO usuario (nombre, contrasenya, email, imagen)
         VALUES (:nombre, :psswd, :email, :img)"; //we create the sql command
@@ -17,7 +17,9 @@ class Usuario
         $stmt->bindParam(':psswd', $contrasenya);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':img', $imagen);
-        return $stmt->execute(); //run the request as well as return it
+        $stmt->execute(); //run the request as well as return it
+
+        return $this->conexion->lastInsertId();
     }
 
     public function listarUsuarios()
