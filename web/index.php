@@ -70,7 +70,11 @@ $map = [
     // API functions
     'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
-    'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN]
+    'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN],
+
+    'verPokemon' => ['controller' => 'WikiController', 'action' => 'verPokemon', 'nivel' => USER_GUEST],
+
+
 ];
 // -------------------------------------------------------------
 // Resolución de ruta
