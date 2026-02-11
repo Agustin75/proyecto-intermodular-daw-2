@@ -14,47 +14,53 @@ class WikiController extends Controller
         require __DIR__ . '/../templates/verWiki.php';
     }
     
-    // TODO: A implementar con la vista Pokemon
-    // public function verPokemon()
-    // {
-    //     // $mApi = new PokeAPI();
+public function verPokemon()
+{
+    $mApi = new PokeAPI();
 
-    //     // $params = array(
-    //     //     "pokemon_list" => $mApi->getAllPokemon(),
-    //     //     "type_list" => $mApi->getTypesList(),
-    //     //     "num_generations" => $mApi->getNumGenerations(),
-    //     // );
+    // Recibir ID desde el script JS
+    $id = isset($_GET["pokemonId"]) ? intval($_GET["pokemonId"]) : 0;
 
-    //     // require __DIR__ . '/../templates/verPokemon.php';
-    // }
+    if ($id <= 0) {
+        echo "ID inválido";
+        exit;
+    }
 
-    // NOTE: No necesitamos esta función de momento gracias al datalist de html
-    // public function filterByName()
-    // {
-    //     $params = array(
-    //         "errors" => [],
-    //         "pokemon_list" => [],
-    //     );
+    // Obtener datos del Pokémon
+    $pokemon = $mApi->getPokemonById($id);
 
-    //     try {
-    //         // We check to see if the user has sent a Pokemon name to search for
-    //         // NOTE: DEBE TENER EL MISMO NOMBRE EN EL FORMULARIO
-    //         if (isset($_GET['pokemonName'])) {
-    //             // We get the Pokemon name from the form
-    //             $pokemonName = recoge('pokemonName');
-    //             cTexto($pokemonName, "pokemonName", $params["errors"], 20, 1, " -", true);
+    if (empty($pokemon)) {
+        echo "No se encontró el Pokémon";
+        exit;
+    }
 
-    //             if (empty($params["errors"])) {
-    //                 $mApi = new PokeAPI();
-    //                 $params["pokemon_list"] = $mApi->getPokemonByName($pokemonName);
-    //             }
-    //         } else {
-    //             $params['message'] = 'No existe ningún Pokemon que coincida con el nombre indicado.';
-    //         }
-    //     } catch (Throwable $e) {
-    //         $params['message'] = 'No existe ningún Pokemon que coincida con el nombre indicado.';
-    //     }
+    // Datos básicos
+    $nombre = ucfirst($pokemon["name"]);
+    $tipos = array_map(fn($t) => $t["type"]["name"], $pokemon["types"]);
+    $imagenNormal = $pokemon["sprites"]["front_default"] ?? "";
+    $imagenShiny = $pokemon["sprites"]["front_shiny"] ?? "";
+    $grito = $pokemon["cries"]["latest"] ?? "";
+    $generacion = $pokemon["generation"] ?? 0;
 
-    //     require __DIR__ . '/../templates/verWiki.php';
-    // }
+    // Descripción en español
+    $descripcion = $mApi->getPokemonDescriptionEs($id);
+
+    // Parámetros para la vista
+    $params = [
+        "id" => $id,
+        "nombre" => $nombre,
+        "tipos" => $tipos,
+        "imagenes" => [
+            "normal" => $imagenNormal,
+            "shiny" => $imagenShiny
+        ],
+        "grito" => $grito,
+        "descripcion" => $descripcion,
+        "generacion" => $generacion
+    ];
+
+    require __DIR__ . '/../templates/verPokemon.php';
+}
+
+
 }
