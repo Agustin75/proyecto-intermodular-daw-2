@@ -75,7 +75,7 @@ $map = [
     'verPokemon' => ['controller' => 'WikiController', 'action' => 'verPokemon', 'nivel' => USER_GUEST],
 
 
-];
+    ];
 // -------------------------------------------------------------
 // Resolución de ruta
 // -------------------------------------------------------------

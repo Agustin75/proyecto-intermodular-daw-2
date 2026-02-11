@@ -367,5 +367,24 @@ class PokeAPI {
         array_multisort(array_column($pokemonList, 'id'), SORT_ASC, $pokemonList);
         return $pokemonList;
     }
+
+    public function getPokemonDescriptionEs(int $id) : string
+{
+    $species = $this->makeRequest("pokemon-species/$id");
+
+    if (!$species || empty($species["flavor_text_entries"])) {
+        return "Descripción no disponible.";
+    }
+
+    foreach ($species["flavor_text_entries"] as $entry) {
+        if ($entry["language"]["name"] === "es") {
+            return str_replace(["\n", "\f"], " ", $entry["flavor_text"]);
+        }
+    }
+
+    return "Descripción no disponible en español.";
+}
+
+
 }
 ?>
