@@ -8,7 +8,7 @@ class AdivinanzaController extends Controller
     {
         $mPokeAPI = new PokeAPI();
         $sAdivinanza = new Adivinar();
-        // Initial state of the form parameters
+        // We create a PokeAPI and an Adivinar as well as set the parameters
         $params = [
             'modo'   => MODE_CREATE,
             'id_pkmn'   => '',
@@ -17,7 +17,7 @@ class AdivinanzaController extends Controller
             'pista1'    => '',
             'pista2'   => '',
             'pista3'      => '',
-            'pokemon_list' => $mPokeAPI->getAllPokemon(),
+            'pokemon_list' => $mPokeAPI->getAllPokemon(), //we get the list of pokemon and types of adivinanza
             'tiposAdivinar' => $sAdivinanza->obtenerTiposAdivinar()
 
         ];
@@ -57,19 +57,19 @@ class AdivinanzaController extends Controller
                     $errores[] = "Debes seleccionar un Pokémon válido.";
                 }
 
-                // 4. If there are no validation errors, we call the Trivia model
+                // 4. If there are no validation errors, we call the Adivinanza model
                 if (empty($errores)) {
                     $m = new Adivinar();
 
 
-                    // We attempt to create the Trivia entry
+                    // We attempt to create an entry
                     $idAdivinanza = $m->crearAdivinanza($id_pkmn, $tipo, $pista1, $pista2, $pista3);
 
                     // If the model returns false, something went wrong
                     if ($idAdivinanza === false) {
                         $params['mensaje'] = "No se ha podido crear la Adivinanza. El Pokémon ya está asignado a otro juego.";
                     } else {
-                        // Trivia created successfully → redirect to the games list
+                        // if created successfully → redirect to the games list
                         header("Location: index.php?ctl=juegos");
                         exit;
                     }
@@ -102,7 +102,7 @@ class AdivinanzaController extends Controller
         //    exit;
         //}
 
-        // We obtain the Trivia ID from the request
+        // We obtain the Adivinanza ID from the request
         $idAdivinanza = (int) ($_REQUEST['id'] ?? 0);
 
 
@@ -129,6 +129,7 @@ class AdivinanzaController extends Controller
             /* ============================================================
            1. FIRST FORM LOAD (GET)
         ============================================================ */
+        //if we clicked the link to edit one, instead of saving the one we are editing..
             if (!isset($_POST['bEditarAdivinanza'])) {
 
 
@@ -154,8 +155,8 @@ class AdivinanzaController extends Controller
                 $params['pista3']      = $ad['pista3'];
 
                 //$idPokemon = $ad['enunciado']['id_pokemon'];
-                echo $params['pista2'];
-                //return;
+                
+                return;
             } else {
 
                 /* ============================================================

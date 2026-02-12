@@ -10,10 +10,11 @@ body{
 #icon{
     max-width: 25%;
     max-height: 25%;
+     transition: all 1s;
     text-decoration: none;    
 }
 #icon:hover {
-     transform: translateY(-50%);
+     transform: translateY(-30%);
 }
 
 
