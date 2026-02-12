@@ -10,41 +10,25 @@ body{
 #icon{
     max-width: 25%;
     max-height: 25%;
-    
+    text-decoration: none;    
 }
 #icon:hover {
      transform: translateY(-50%);
 }
-.tooltip { 
-  position: relative; 
-  display: inline-block; /* or block */ 
-} 
 
-.tooltip:hover .tip, 
-.tooltip:focus-within .tip { 
-  visibility: visible; 
-  opacity: 1; 
-} 
 
-.tooltip .tip { 
-  visibility: hidden; 
-  opacity: 0; 
-  position: absolute; 
-  left: 50%; 
-  bottom: 110%; 
-  transform: translateX(-50%); 
-  background: rgba(0,0,0,0.8); 
-  color: #fff; 
-  padding: 6px 8px; 
-  border-radius: 4px; 
-  white-space: nowrap; 
-  transition: opacity 0.15s ease, visibility 0.15s; 
-  pointer-events: none; 
-  z-index: 10; 
-} 
-    #icon:hover .info-card {
-        opacity: 1;
-    }
+#icon:hover .text {
+  opacity: 1;
+}
+
+.text {
+    opacity: 0;
+  color: white;
+    text-decoration: none;
+
+}
+
+ 
 #center{
 
     
@@ -97,6 +81,9 @@ option{
 .tablaP:hover { /*Al pasar el raton por encima del menu cambia de color*/
     color: rgba(72, 32, 32, 1);
     transition: all .3s;
+}
+textarea{
+    color: black;
 }
 
 

@@ -6,7 +6,7 @@ class AdivinanzaController extends Controller
 {
     public function crearAdivinanza()
     {
-         $mPokeAPI = new PokeAPI();
+        $mPokeAPI = new PokeAPI();
         $sAdivinanza = new Adivinar();
         // Initial state of the form parameters
         $params = [
@@ -60,27 +60,28 @@ class AdivinanzaController extends Controller
                 // 4. If there are no validation errors, we call the Trivia model
                 if (empty($errores)) {
                     $m = new Adivinar();
-               
 
-                // We attempt to create the Trivia entry
-                $idAdivinanza = $m->crearAdivinanza($id_pkmn, $tipo, $pista1, $pista2, $pista3);
 
-                // If the model returns false, something went wrong
-                if ($idAdivinanza === false) {
-                    $params['mensaje'] = "No se ha podido crear la Adivinanza. El Pokémon ya está asignado a otro juego.";
-                } else {
-                    // Trivia created successfully → redirect to the games list
-                    header("Location: index.php?ctl=juegos");
-                    exit;
-                }}
+                    // We attempt to create the Trivia entry
+                    $idAdivinanza = $m->crearAdivinanza($id_pkmn, $tipo, $pista1, $pista2, $pista3);
+
+                    // If the model returns false, something went wrong
+                    if ($idAdivinanza === false) {
+                        $params['mensaje'] = "No se ha podido crear la Adivinanza. El Pokémon ya está asignado a otro juego.";
+                    } else {
+                        // Trivia created successfully → redirect to the games list
+                        header("Location: index.php?ctl=juegos");
+                        exit;
+                    }
+                }
             } else {
                 // If there were validation errors, we show them in the view
                 $params['mensaje'] = implode('<br>', $errores);
             }
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
-          $this->handleError($e);
-          //var_dump($params);
+            $this->handleError($e);
+            //var_dump($params);
         }
 
 
@@ -91,7 +92,7 @@ class AdivinanzaController extends Controller
 
     public function editarAdivinanza()
     {
-         $mPokeAPI = new PokeAPI();
+        $mPokeAPI = new PokeAPI();
         $sAdivinanza = new Adivinar();
         // Tal vez no necesario ya que si no eres admin no puedes llegar a aqui
 
@@ -103,7 +104,7 @@ class AdivinanzaController extends Controller
 
         // We obtain the Trivia ID from the request
         $idAdivinanza = (int) ($_REQUEST['id'] ?? 0);
-       
+
 
         // Initial state of the form parameters
         $params = [
@@ -114,7 +115,7 @@ class AdivinanzaController extends Controller
             'pista1'    => '',
             'pista2'   => '',
             'pista3'      => '',
-             'pokemon_list' => $mPokeAPI->getAllPokemon(),
+            'pokemon_list' => $mPokeAPI->getAllPokemon(),
             'tiposAdivinar' => $sAdivinanza->obtenerTiposAdivinar()
 
         ];
@@ -129,13 +130,13 @@ class AdivinanzaController extends Controller
            1. FIRST FORM LOAD (GET)
         ============================================================ */
             if (!isset($_POST['bEditarAdivinanza'])) {
-                
+
 
                 // If the ID is invalid, we redirect back to the games list
-        if ($idAdivinanza <= 0) {
-            header("Location: index.php?ctl=juegos");
-           exit;
-        }
+                if ($idAdivinanza <= 0) {
+                    header("Location: index.php?ctl=juegos");
+                    exit;
+                }
 
                 $ad = $m->obtenerAdivinanza($idAdivinanza);
 
@@ -155,75 +156,74 @@ class AdivinanzaController extends Controller
                 //$idPokemon = $ad['enunciado']['id_pokemon'];
                 echo $params['pista2'];
                 //return;
-            }else{
+            } else {
 
-            /* ============================================================
+                /* ============================================================
            2. PROCESS FORM SUBMISSION (POST)
         ============================================================ */
 
-            // We obtain the updated form data
-            $pista1   = recoge('pista1');
-            $pista2 =  recoge('pista2');
-            $pista3   =  recoge('pista3');
-            $idPokemon = recoge('id_pokemon');
-            $idAdivinanza = recoge('id');
-          
-            // We store the updated values in $params to preserve the form state
-            $params['pista1']   = $pista1;
-            $params['pista2'] = $pista2;
-            $params['pista3']   = $pista3;
+                // We obtain the updated form data
+                $pista1   = recoge('pista1');
+                $pista2 =  recoge('pista2');
+                $pista3   =  recoge('pista3');
+                $idPokemon = recoge('id_pokemon');
+                $idAdivinanza = recoge('id');
+
+                // We store the updated values in $params to preserve the form state
+                $params['pista1']   = $pista1;
+                $params['pista2'] = $pista2;
+                $params['pista3']   = $pista3;
 
 
-            /* ============================================================
+                /* ============================================================
            3. VALIDATION
         ============================================================ */
 
 
-            if ($pista1 === '' || $pista2 === '' || $pista3 === ''){
-                $errores[] = "Las pistas no pueden estar vacias.";
-            }
+                if ($pista1 === '' || $pista2 === '' || $pista3 === '') {
+                    $errores[] = "Las pistas no pueden estar vacias.";
+                }
 
 
-            // We validate the Pokémon ID
-            if ($idPokemon <= 0) {
-                $errores[] = "Debes seleccionar un Pokémon válido.";
-            }
+                // We validate the Pokémon ID
+                if ($idPokemon <= 0) {
+                    $errores[] = "Debes seleccionar un Pokémon válido.";
+                }
 
 
 
 
-            // We check if the Pokémon is available for this Trivia
-            /*  FALTA SABER DISPONIBILIDAD      if (!$m->pokemonDisponibleParaTrivia($idPokemon, $idTrivia)) {
+                // We check if the Pokémon is available for this Trivia
+                /*  FALTA SABER DISPONIBILIDAD      if (!$m->pokemonDisponibleParaTrivia($idPokemon, $idTrivia)) {
  *          $errores[] = "Este Pokémon ya está asignado a otro juego.";
         }
 
         /* ============================================================
            4. IF THERE ARE ERRORS → RETURN TO THE VIEW
         ============================================================ */
-            if (!empty($errores)) {
-                $params['mensaje'] = implode("<br>", $errores);
-                
-                return;
-            }
+                if (!empty($errores)) {
+                    $params['mensaje'] = implode("<br>", $errores);
 
-            /* ============================================================
+                    return;
+                }
+
+                /* ============================================================
            5. UPDATE TRIVIA IN THE MODEL
         ============================================================ */
-            
-      
-            // We attempt to update the Trivia entry
-            $ok = $m->editarAdivinanza($idPokemon, $idAdivinanza, $pista1, $pista2, $pista3);
-       
-            // If the update failed, we show an error message
-            if (!$ok) {
-                $params['mensaje'] = "No se ha podido actualizar la Adivinanza.";
-  
-                return;
-            }
 
-            // Success → redirect to the games list
-            header("Location: index.php?ctl=juegos");
-            
+
+                // We attempt to update the Trivia entry
+                $ok = $m->editarAdivinanza($idPokemon, $idAdivinanza, $pista1, $pista2, $pista3);
+
+                // If the update failed, we show an error message
+                if (!$ok) {
+                    $params['mensaje'] = "No se ha podido actualizar la Adivinanza.";
+
+                    return;
+                }
+
+                // Success → redirect to the games list
+                header("Location: index.php?ctl=juegos");
             }
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
@@ -280,60 +280,76 @@ class AdivinanzaController extends Controller
 
     public function jugarAdivinanza()
     {
+        $errores = [];
+
         $params = [];
         $params["gameState"] = GAME_STATE_PLAYING;
+        $mAdivinanza = new Adivinar();
+
+        // Obtain the list of games the player hasn't completed (A game where he hasn't obtained the Pokémon yet)
+        $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
+        $numGamesLeft = count($gamesList);
+        $params["gameFound"] = $numGamesLeft > 0;
 
 
         if (!isset($_POST["bEnviar"])) {
 
-            $mAdivinanza = new Adivinar();
-
-            // Obtain the list of games the player hasn't completed (A game where he hasn't obtained the Pokémon yet)
-            $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
-            $numGamesLeft = count($gamesList);
-            $params["gameFound"] = $numGamesLeft > 0;
 
             if ($numGamesLeft > 0) {
                 // Obtain a random game from the list
-                 $mPokeAPI = new PokeAPI();
+                $mPokeAPI = new PokeAPI();
                 $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
                 $params['id'] = $selectedGame['id'];
                 $params['correctPokemonId'] = $selectedGame["id_pokemon"];
                 $pkmn = $mPokeAPI->getPokemonById($params['correctPokemonId']);
+                $descripcion = $mPokeAPI->getPokemonDescriptionEs($params['correctPokemonId']);
                 $params['tipo'] = $selectedGame['id_tipo'];
-                switch ($params['tipo']){
-                        case 1:
+                switch ($params['tipo']) {
+                    case 1:
                         $params['tipo_object'] = $pkmn["cries"]["latest"];
                         break;
 
-                        case 2:
-                            $params['tipo_object'] = $pkmn["sprites"]["front_default"];
+                    case 2:
+                        $params['tipo_object'] = $pkmn["sprites"]["front_default"];
                         break;
 
-                        case 3:
-                            $params['tipo_object'] = $
+                    case 3:
+                        $params['tipo_object'] = $descripcion;
+                        break;
                 }
-                
+
                 $params['pista1'] = $selectedGame["pista1"];
                 $params['pista2'] = $selectedGame["pista2"];
                 $params['pista3'] = $selectedGame["pista3"];
-                
-              
-            } 
-        }else {
-                $mPokeAPI = new PokeAPI();
-                $id = recoge('id');
-                $respuesta = recoge('respuesta');
-                $correct = recoge('correctPokemonId');
-                $correctcheck = strtolower($mPokeAPI->getPokemonName($correct));
-                $respuestacheck = strtolower($respuesta);
-                if( $correctcheck == $respuestacheck){
-                    $params['gameState'] = GAME_STATE_WON;
-                }else{
-                       $params["gameState"] = GAME_STATE_LOST;
-                }
-
             }
+        } else {
+            $mPokeAPI = new PokeAPI();
+            $id = recoge('id');
+            $respuesta = recoge('respuesta');
+            $correct = recoge('correctPokemonId');
+
+            cTexto($respuesta, "respuesta", $errores);
+
+            $correct = intval($correct);
+            $correct2 = $mPokeAPI->getPokemonName($correct);
+            $correctcheck = strtolower($correct2);
+            $respuestacheck = strtolower($respuesta);
+            if ($correctcheck == $respuestacheck) {
+                $params['gameState'] = GAME_STATE_WON;
+                $params['imagen_pokemon_recompensa'] = $mPokeAPI->getPokemonNormalSprite($correct);
+                $params['nombre_pokemon_recompensa'] = $correct2;
+                
+            } else {
+                $params["gameState"] = GAME_STATE_LOST;
+
+                
+            }
+        }
+        if (!empty($errores)) {
+            $params['mensaje'] = implode("<br>", $errores);
+
+            return;
+        }
         require __DIR__ . '/../templates/jugarAdivinanza.php';
     }
 }

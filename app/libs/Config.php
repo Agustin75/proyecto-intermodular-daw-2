@@ -19,6 +19,9 @@ define("GAME_STATE_LOST", 3);
 define("CLASIFICAR_TIPO", 1);
 define("CLASIFICAR_GENERACION", 2);
 
+define("ADIVINANZA_GRITO", 1);
+define("ADIVINANZA_SILUETA", 2);
+define("ADIVINANZA_DESCRIPCION", 3);
 $mvc_vis_css = "estilo.css";
 
 ?>

@@ -57,8 +57,24 @@
          ESTADO: JUGANDO
     ============================= -->
     <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
+ <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
+            <h4 class="text-center">Grito de pokemon:</h4>
+           <audio controls>
 
-        
+             <source src="<?= $params['tipo_object'] ?>" type="audio/ogg">
+           </audio>
+ <?php endif; ?>
+
+ <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
+            <h4 class="text-center">Silueta de pokemon:</h4>
+            <img id="silueta" src=" <?=  $params['tipo_object'] ?>">
+ <?php endif; ?>
+ 
+ <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
+            <h4 class="text-center">Grito de pokemon:</h4>
+            <?=  $params['tipo_object'] ?>
+ <?php endif; ?>
+ 
         <br>
 
         <form action="index.php?ctl=jugarAdivinanza" method="POST" class="text-center">
@@ -67,16 +83,16 @@
         <p> <?=  $params['pista3'] ?> </p><br>
 
             <input type="hidden" name="id" value="<?= $params["id"] ?>">
-            <input type="hidden" name="id_pkmn" value="<?= $params["id_pkmn"] ?>">
+            <input type="hidden" name="correctPokemonId" value="<?= $params["correctPokemonId"] ?>">
 
             <div class="container">
-            <textarea>
+            <input name="respuesta">
                 
-            </textarea>
+            </input>
         </div>
 
             <br>
-            <button class="btn btn-success" type="submit" name="bEnviarTrivia">
+            <button class="btn btn-success" type="submit" name="bEnviar">
                 Confirmar
             </button>
         </form>
