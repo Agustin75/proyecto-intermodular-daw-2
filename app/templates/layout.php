@@ -62,7 +62,7 @@
                 <?php endforeach; ?>
                 <?php
                 if ($this->session->getUserName() != "")
-                    echo "Logged as: " .  $this->session->getUserName(); ?>
+                    echo "User: " .  $this->session->getUserName(); ?>
             </div>
         </div>
         <?php
