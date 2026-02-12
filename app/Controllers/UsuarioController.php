@@ -1,6 +1,5 @@
 <?php
 
-
 class UsuarioController extends Controller
 {
 
@@ -37,7 +36,10 @@ class UsuarioController extends Controller
 
                     $m = new Usuario();
                     $usuario = $m->buscarUsuario($nombre);
-                    if (comprobarhash($contrasenya, $usuario['contrasenya'])) {
+                    // We check that an user was found and that the user found is active before checking the password
+                    if (($usuario != false && count($usuario) > 0) &&
+                         $usuario["activo"] &&
+                         comprobarhash($contrasenya, $usuario['contrasenya'])) {
                         $this->session->login(
                             $usuario['id'],
                             $usuario['nombre'],
@@ -71,9 +73,7 @@ class UsuarioController extends Controller
             'nombre' => '',
             'contrasenya' => '',
             'email' => '',
-
-            'nivel' => 2,
-
+            'nivel' => USER_REGISTERED,
         ];
 
         $errores = [];
@@ -86,36 +86,43 @@ class UsuarioController extends Controller
             $nivel       = $this->session->getUserLevel();
             $imagen      = recoge('imagen');
 
-            $nivelesPerm = [1 => 1, 2 => 2];
-
             $params = [
                 'nombre' => $nombre,
                 'email' => $email,
                 'contrasenya' => $contrasenya,
                 'nivel' => $nivel,
                 'imagen' => $imagen
-
             ];
 
             cTexto($nombre, "nombre", $errores);
             cEmail($email, "email", $errores);
             cUser($contrasenya, "contrasenya", $errores);
-            $nivel = 2;
             $imagen = "default";
             if (empty($errores)) {
-
                 try {
                     $m = new Usuario();
+                    $idUsuario = $m->crearUsuario($nombre, encriptar($contrasenya), $email, $imagen);
+                    if ($idUsuario != false) {
+                        // User registered, we send the email with the activation token
+                        $mailer = new Mailer();
 
-                    if ($m->crearUsuario(
-                        $nombre,
-                        encriptar($contrasenya),
-                        $email,
-                        $imagen
+                        // We create a new unique token
+                        $token = uniqid();
+                        // TODO: These are a few methods to possibly generate the url, will need to figure out which one works once it's properly set up in a docker or with a domain name. Currently, it works with a hardocded path
+                        // $urlRoot = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+                        $bodyEmail = "Clickea el siguiente link para activar tu cuenta: ";
+                        // $bodyEmail .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        $bodyEmail .= "<a href=\"https://www.pokehunt.com\index.php?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        // The token expires 10 minutes from now
+                        $expira = time() + 3600;
 
-                    )) {
-                        header("Location: index.php?ctl=inicio");
-                        exit;
+                        $mValidacion = new Validacion();
+                        $mValidacion->guardarToken($idUsuario, $token, $expira);
+
+                        $mailer->enviar($email, "Activación de cuenta", $bodyEmail);
+
+                        // TODO: Mostrar sin usar params mensaje porque sale como un error. Limpiar los campos también
+                        $params["mensaje"] = "Para finalizar el registro tendrás que activar tu cuenta. Comprueba tu correo y clickea el enlace de activación.";
                     } else {
                         $params['mensaje'] = 'No se ha podido registrar el usuario.';
                     }
@@ -163,7 +170,7 @@ class UsuarioController extends Controller
         $errores = [];
         $params = [
             'id' => '',
-          
+
             'fav' => '',
         ];
         $Perm = [true => true, false => false];
@@ -229,7 +236,6 @@ class UsuarioController extends Controller
     {
         try {
 
- 
             $this->session->logout();
 
             header("Location: index.php?ctl=inicio");
@@ -242,34 +248,73 @@ class UsuarioController extends Controller
     public function mostrarPerfil()
     {
         try {
-
- 
-            
         } catch (Throwable $e) {
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/miPerfil.php';
     }
 
-public function mostrarTools(){
- try {
-
- 
-            
+    public function mostrarTools()
+    {
+        try {
         } catch (Throwable $e) {
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/DevTools.php';
-
-}
-
-public function perfilPokemon(){
-    try{
-
-    } catch (Throwable $e) {
-
     }
 
-    require __DIR__ . '/../templates/perfilPokemon.php';
-}
+    public function perfilPokemon()
+    {
+        $errores = [];
+        $params = [];
+        // Variable to know if user is looking at their own Profile and they can change their favorite Pokemon
+        $params["editable"] = false;
+
+        try {
+            $userId = recoge("id");
+
+            if (empty($userId)) {
+                $userId = $this->session->getUserId();
+                $params["editable"] = true;
+            } else {
+                cNum($userId, "id", $errores);
+            }
+
+            $mUsuario = new Usuario();
+            $usuario = $mUsuario->obtenerUsuario($userId);
+
+            $params["userId"] = $userId;
+            $params["userName"] = $usuario["nombre"];
+            $params["userImage"] = $usuario["imagen"];
+            $params["favorites"] = [];
+            $params["allPok"] = [];
+
+            $mPokemonUsuario = new PokemonUsuario();
+            $favorites = $mPokemonUsuario->obtenerPokemonUsuario($userId, true);
+
+            $mPokeApi = new PokeAPI();
+            $currPokemon = [];
+            foreach ($favorites as $index => $favoritePokemon) {
+                $pokemonId = $favoritePokemon["id_pokemon"];
+                $currPokemon["id"] = $pokemonId;
+                $currPokemon["name"] = $mPokeApi->getPokemonName($pokemonId);
+                $currPokemon["image"] = $mPokeApi->getPokemonNormalSprite($pokemonId);
+                $params["favorites"][$index] = $currPokemon;
+            }
+
+            $allPokemon = $mPokemonUsuario->obtenerPokemonUsuario($userId, false);
+            foreach ($allPokemon as $index => $pokemon) {
+                $pokemonId = $pokemon["id_pokemon"];
+                $currPokemon["id"] = $pokemonId;
+                $currPokemon["name"] = $mPokeApi->getPokemonName($pokemonId);
+                $currPokemon["image"] = $mPokeApi->getPokemonNormalSprite($pokemonId);
+                $currPokemon["favorited"] = $pokemon["favorito"] == 1;
+                $params["allPokemon"][$index] = $currPokemon;
+            }
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+
+        require __DIR__ . '/../templates/perfilPokemon.php';
     }
+}

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // this.value = this.value.slice(0, 1);
 
             // NOTE: This could be coded better, but it works as it is
-            window.location.replace(`index.php?ctl=wikiPokemon&pokemonId=` + document.querySelector(`#pokemonList option[value='${this.value}']`).dataset.id);
+            window.location.replace(`index.php?ctl=verPokemon&pokemonId=` + document.querySelector(`#pokemonList option[value='${this.value}']`).dataset.id);
         }
     });
 

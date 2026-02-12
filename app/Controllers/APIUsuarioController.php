@@ -3,12 +3,8 @@ class APIUsuarioController extends Controller
 {
     public function activarUser()
     {
-
-
-
         $errors = [];
         try {
-
             if (isset($_GET['id'])) {
 
                 $id = recoge('id');
@@ -21,6 +17,31 @@ class APIUsuarioController extends Controller
                 }
             }
         } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+    }
+
+    public function confirmarCuenta()
+    {
+        try {
+            $token = recoge("token");
+
+            $mValidacion = new Validacion();
+            $register = $mValidacion->confirmarToken($token);
+
+            if ($register != false && count($register) > 0) {
+                // We check if the token is still valid
+                if ($register["valido_hasta"] > time()) {
+                    // We activate the user's account
+                    $mUsuario = new Usuario();
+                    $mUsuario->activarUsuario($register["id_user"], true);
+                }
+
+                // We remove the token from the database regardless of whether the activation was successful
+                $mValidacion->eliminarToken($token);
+            }
+        } catch (Exception $e) {
+            $this->handleError($e);
         }
     }
 

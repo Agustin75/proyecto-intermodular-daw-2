@@ -1,54 +1,56 @@
 <?php ob_start() ?>
-	
-	<div class="container text-center p-4">
-		<div class="col-md-12" id="cabecera">
-			<h1 class="h1Inicio">POKEHUNT</h1>
-		</div>
-	</div>
 
-	<div class="container text-center py-2">
-		<div class="col-md-12">
-			<?php if(isset($params['mensaje'])) :?>
-				<b><span style="color: rgba(200, 119, 119, 1);"><?php echo $params['mensaje'] ?></span></b>
-			<?php endif; ?>
-		</div>
-	</div>
-	<img src="imagen">  
-    <div>
+<div class="container text-center p-4">
+    <div class="col-md-12" id="cabecera">
+        <h1 class="h1Inicio">POKEHUNT</h1>
+    </div>
+</div>
 
-<?php
-    echo "<h1> Pokemons de " . $this->session->getUserName() . "</h1>";
-?>
-	</div>
-<table>
-	<tr> Favoritos </tr>
-	
-<?php 
-$m = new PokemonUsuario();
-$pokemons = $m->obtenerPokemonUsuario($this->session->getUserId(), true);
-foreach ($pokemons as $pokemon) {
-	echo "<tr><td><a>" . $pokemon['nombre'] . "</a></td></tr>";
-}
-?>
-			</table>
+<div class="container text-center py-2">
+    <div class="col-md-12">
+        <?php if (isset($params['mensaje'])) : ?>
+            <b><span style="color: rgba(200, 119, 119, 1);"><?php echo $params['mensaje'] ?></span></b>
+        <?php endif; ?>
+    </div>
+</div>
+<div class="text-center">
+    <img src="images/avatars/<?= $params["userImage"] ?>.png">
 
-<table>
-	<tr> Capturados </tr>
-<?php
-//NOTE: LINKS NOT ADDED YET
-$pokemons = $m->obtenerPokemonUsuario($this->session->getUserId(), false);
-foreach ($pokemons as $pokemon) {
-	$m = new PokeAPI;
+    <?php
+    echo "<h1> Pokemons de " . $params["userName"] . "</h1>";
+    ?>
+</div>
+<h3> Favoritos </h3>
+<div class="row">
+    <?php if (count($params["favorites"]) === 0): ?>
+        <p>No se ha elegido ningún Pokémon favorito.</p>
+    <?php endif; ?>
+    <?php foreach ($params["favorites"] as $pokemon): ?>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><img src="<?= $pokemon["image"] ?>" alt="Imagen de <?= $pokemon["name"] ?>"></a>
+            <br>
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><?= $pokemon["name"] ?></a>
+        </div>
+    <?php endforeach; ?>
+</div>
 
-	$yarp = $m->getPokemonById($pokemon['id_pokemon']);
-	$yerp = $m->getPokemonNormalSprite($pokemon['id_pokemon']);
-	echo "<tr><td><a>" . $yarp['name'] . "</a><input type='hidden' value=" . $pokemon['id_pokemon'] . "></input> <input type=checkbox></td></tr>";
-	echo "<td><img src=" . $yerp . "></td>";
-	
-
-}
-?>
-</table>
+<h3> Capturados </h3>
+<div class="row">
+    <?php if (count($params["allPokemon"]) === 0): ?>
+        <p>No ha capturado ningún Pokémon.</p>
+    <?php endif; ?>
+    <?php foreach ($params["allPokemon"] as $pokemon): ?>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><img src="<?= $pokemon["image"] ?>" alt="Imagen de <?= $pokemon["name"] ?>"></a>
+            <br>
+            <a href="index.php?ctl=verPokemon&pokemonId=<?= $pokemon["id"] ?>"><?= $pokemon["name"] ?></a>
+            <input type="hidden" value="<?= $pokemon["id"] ?>">
+            <?php if ($params["editable"]): ?>
+                <input type="checkbox" <?= $pokemon["favorited"] ? "checked" : "" ?>>
+            <?php endif; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 <?php $contenido = ob_get_clean() ?>
 <?php $script = "fav.js"; ?>

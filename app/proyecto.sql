@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-02-2026 a las 18:56:42
+-- Tiempo de generación: 11-02-2026 a las 20:37:38
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,6 +51,14 @@ CREATE TABLE `j_clasificar` (
   `num_requerido` int(11) NOT NULL COMMENT 'El número de Pokémon que el usuario debe clasificar correctamente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `j_clasificar`
+--
+
+INSERT INTO `j_clasificar` (`id`, `id_pokemon`, `id_tipo`, `num_pokemon`, `num_opciones`, `num_requerido`) VALUES
+(20, 1, 2, 11, 11, 1),
+(21, 5, 1, 2, 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +102,15 @@ CREATE TABLE `j_trivia_enunciado` (
   `tiempo` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `j_trivia_enunciado`
+--
+
+INSERT INTO `j_trivia_enunciado` (`id`, `id_pokemon`, `pregunta`, `tiempo`) VALUES
+(15, 4, 'Pregunta 1', 3),
+(16, 24, 'asd', 2),
+(17, 282, 'ajsdakjsd', 12);
+
 -- --------------------------------------------------------
 
 --
@@ -104,6 +121,17 @@ CREATE TABLE `j_trivia_opcion` (
   `id` int(11) NOT NULL,
   `opcion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `j_trivia_opcion`
+--
+
+INSERT INTO `j_trivia_opcion` (`id`, `opcion`) VALUES
+(20, '1'),
+(21, '2'),
+(22, '22'),
+(23, 'aa'),
+(24, 'ss');
 
 -- --------------------------------------------------------
 
@@ -117,6 +145,18 @@ CREATE TABLE `j_trivia_respuesta` (
   `esCorrecta` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `j_trivia_respuesta`
+--
+
+INSERT INTO `j_trivia_respuesta` (`id_pregunta`, `id_opcion`, `esCorrecta`) VALUES
+(15, 20, 1),
+(15, 21, 0),
+(16, 21, 0),
+(16, 22, 1),
+(17, 23, 1),
+(17, 24, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -127,6 +167,37 @@ CREATE TABLE `pokemon_usuario` (
   `id_pokemon` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `favorito` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pokemon_usuario`
+--
+
+INSERT INTO `pokemon_usuario` (`id_pokemon`, `id_usuario`, `favorito`) VALUES
+(1, 7, 0),
+(1, 8, 1),
+(4, 7, 0),
+(4, 8, 0),
+(4, 11, 0),
+(5, 7, 1),
+(5, 8, 1),
+(24, 7, 0),
+(24, 8, 1),
+(24, 11, 0),
+(282, 7, 0),
+(282, 8, 0),
+(282, 11, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `token_validacion`
+--
+
+CREATE TABLE `token_validacion` (
+  `id_user` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `valido_hasta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -157,7 +228,10 @@ INSERT INTO `usuario` (`id`, `nombre`, `contrasenya`, `email`, `activo`, `imagen
 (4, 'usuario', '$2y$10$RyKIwVkr62c3saPB7zhtiu6q9i7eIXt2A', 'a@gmail.com', 0, 'default', 0, 3),
 (5, 'z', '$2y$10$pg9LiO/X1wNSz6uZ/.TK2e8yyGLvSyTHw', 'z@gmail.com', 0, 'default', 0, 2),
 (6, 'a', '$2y$10$0mYf6P.0ExHv6R.pxcfK6.g31bKyT9Y4/qp7fzyz9yoVDfBDTDoFq', 'a@gmail.com', 0, 'default', 0, 2),
-(7, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 0, 'default', 0, 3);
+(7, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 1, 'default', 0, 3),
+(8, 'Ash', '$2y$10$xtZuuYs3Vcp2JBpvdk3qb.RdgmPkSV7YWo4JzJR6HhJXBFdxOk4za', 'ash@paleta.com', 0, 'imagen2', 0, 2),
+(9, 'p', '$2y$10$AtpBNhS2j.jDDW6vlRYxeOxpFRZTGfAoh/MFOFQ/bH0.cYU1kNQZ2', 'p@email.com', 0, 'default', 0, 2),
+(11, 'x', '$2y$10$qZslcad6O4GxTf1znJHesecQ3vvhb.QslwVKnOHIdG8BImGGFXANG', 'x@email.com', 0, 'default', 0, 2);
 
 --
 -- Índices para tablas volcadas
@@ -216,6 +290,12 @@ ALTER TABLE `pokemon_usuario`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
+-- Indices de la tabla `token_validacion`
+--
+ALTER TABLE `token_validacion`
+  ADD PRIMARY KEY (`token`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -236,7 +316,7 @@ ALTER TABLE `j_adivinanza`
 -- AUTO_INCREMENT de la tabla `j_clasificar`
 --
 ALTER TABLE `j_clasificar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `j_tipo_clasificar`
@@ -248,19 +328,19 @@ ALTER TABLE `j_tipo_clasificar`
 -- AUTO_INCREMENT de la tabla `j_trivia_enunciado`
 --
 ALTER TABLE `j_trivia_enunciado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `j_trivia_opcion`
 --
 ALTER TABLE `j_trivia_opcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Restricciones para tablas volcadas
@@ -284,8 +364,8 @@ ALTER TABLE `j_clasificar`
 ALTER TABLE `j_trivia_respuesta`
   ADD CONSTRAINT `j_trivia_respuesta_ibfk_1` FOREIGN KEY (`id_opcion`) REFERENCES `j_trivia_opcion` (`id`),
   ADD CONSTRAINT `j_trivia_respuesta_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `j_trivia_enunciado` (`id`);
+COMMIT;
 
---
--- Filtros para la tabla `pokemon_usuario`
---
-ALTER TABLE `pokemon_usuario`
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
