@@ -26,21 +26,19 @@ class Controller
                 ['Inicio', 'inicio', 'home.png'],
                 ['Wiki', 'wiki', 'wiki.png'],
                 ['Juegos', 'juegos', 'games.png'],
-                ['Rankings', 'rankings', 'ranking.png'],
+                ['Rankings', 'mostrarRanking', 'ranking.png'],
             ],
             USER_REGISTERED => [
                 ['Inicio', 'inicio', 'home.png'],
                 ['Wiki', 'wiki', 'wiki.png'],
                 ['Juegos', 'juegos', 'games.png'],
-                ['Rankings', 'rankings', 'ranking.png'],
-                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png']
+                ['Rankings', 'mostrarRanking', 'ranking.png'],
             ],
             USER_ADMIN => [
                 ['Inicio', 'inicio', 'home.png'],
                 ['Wiki', 'wiki', 'wiki.png'],
                 ['Juegos', 'juegos', 'games.png'],
-                ['Rankings', 'rankings', 'ranking.png'],
-                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png']
+                ['Rankings', 'mostrarRanking', 'ranking.png'],
             ]
         ];
 
@@ -88,11 +86,13 @@ class Controller
             ],
             USER_REGISTERED => [
                 ['Mi Perfil', 'miPerfil', 'settings.png'],
+                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ],
             USER_ADMIN => [
                 ['Dev Tools', 'mostrarTools', 'devtools.png'],
                 ['Mi Perfil', 'miPerfil', 'settings.png'],
+                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ]
         ];

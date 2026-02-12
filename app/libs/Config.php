@@ -77,6 +77,5 @@ define("CLASIFICAR_GENERACION", 2);
 define("ADIVINANZA_GRITO", 1);
 define("ADIVINANZA_SILUETA", 2);
 define("ADIVINANZA_DESCRIPCION", 3);
-$mvc_vis_css = "estilo.css";
 
 ?>
