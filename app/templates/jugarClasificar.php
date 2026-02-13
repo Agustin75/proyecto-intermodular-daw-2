@@ -32,25 +32,25 @@
 
 <?php if ($params["gameState"] === GAME_STATE_WON): ?>
     <div class="alert alert-success text-center">
-        <h2>¡Bien hecho!</h2>
+        <h2 class="text-dark">¡Bien hecho!</h2>
         <img src="<?= $params["imagen_pokemon_recompensa"] ?>" alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
-        <p>¡Capturaste un <?= $params["nombre_pokemon_recompensa"] ?>!</p>
+        <p class="text-dark">¡Capturaste un <?= $params["nombre_pokemon_recompensa"] ?>!</p>
     </div>
     <div class="container text-center">
         <a class="btn btn-success" href="index.php?ctl=juegos">Volver</a>
     </div>
 <?php elseif ($params["gameState"] === GAME_STATE_LOST): ?>
     <div class="alert alert-danger text-center">
-        <h2>Buen intento</h2>
+        <h2 class="text-dark">Buen intento</h2>
         <img src="" alt="Imagen de derrota">
-        <p>No te rindas, ¡hazte con todos!</p>
+        <p class="text-dark">No te rindas, ¡hazte con todos!</p>
     </div>
     <div class="container text-center">
         <a class="btn btn-success" href="index.php?ctl=juegos">Volver</a>
     </div>
 <?php endif; ?>
 <?php if (isset($params["game"])): ?>
-    <form action="index.php?ctl=jugarClasificar" method="POST" name="formJuegoClasificar">
+    <form class="game" action="index.php?ctl=jugarClasificar" method="POST" name="formJuegoClasificar">
         <div class="row g-2 justify-content-center">
             <input type="hidden" name="gameId" value="<?= $params["gameId"] ?>">
             <?php foreach ($params["game"] as $index => $question): ?>

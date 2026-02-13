@@ -79,8 +79,8 @@
     <!-- ============================
          BOTONES
     ============================= -->
-    <button type="submit" name="<?= ($params['modo'] === MODE_EDIT) ? 'bEditarAdivinanza' : 'bCrearAdivinanza' ?>">
-        <?= ($params['modo'] === MODE_EDIT) ? 'Actualizar Adivinanza' : 'Guardar Adivinanza' ?>
+    <button class="btn btn-primary" type="submit" name="<?= ($params['modo'] === MODE_EDIT) ? 'bEditarAdivinanza' : 'bCrearAdivinanza' ?>">
+        <?= ($params['modo'] === MODE_EDIT) ? 'Actualizar Adivinanza' : 'Crear Adivinanza' ?>
     </button>
 
     <?php if ($params['modo'] === MODE_EDIT): ?>

@@ -4,10 +4,7 @@
 
 <head>
     <title>POKEHUNT</title>
-
-    <head>
-        <link rel=stylesheet href="../web/css/estilo.css" type="text/css">
-    </head>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
@@ -21,14 +18,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1 class="text-center"><b>POKEHUNT</b></h1>
+                    <div class="text-center">
+    <img class="logo" src="images/logo_proyect.png" alt="Imagen de bienvenida">
+</div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="row menu-container">
             <div class="col-6 text-start">
 
                 <?php
@@ -36,17 +35,9 @@
 
 
                 foreach ($menu as [$texto, $ruta, $img]): ?>
-
-
-                    <a id="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" id="icon" src="../web/images/<?= $img ?>">
+                    <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
                        <span class="text"><?= $texto ?></span>
                     </a>
-
-
-
-
-
-
                 <?php endforeach; ?>
 
             </div>
@@ -55,14 +46,14 @@
                 <?php
                 $userMenu = $this->userMenu();
                 foreach ($userMenu as [$texto, $ruta, $img]): ?>
-  <a id="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" id="icon" src="../web/images/<?= $img ?>">
+  <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
                        <span class="text"><?= $texto ?></span>
                     </a>
 
                 <?php endforeach; ?>
                 <?php
                 if ($this->session->getUserName() != "")
-                    echo "Logged as: " .  $this->session->getUserName(); ?>
+                    echo "User: " .  $this->session->getUserName(); ?>
             </div>
         </div>
         <?php
@@ -71,14 +62,16 @@
             <div class="row">
                 <div class="text-start">
                     <?php
-                    foreach ($adminMenu as [$texto, $ruta]): ?>
-                        <a href="index.php?ctl=<?= $ruta ?>"><?= $texto ?></a>
+                    foreach ($adminMenu as [$texto, $ruta, $img]): ?>
+                       <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
+                       <span class="text"><?= $texto ?></span>
+                    </a>
                     <?php endforeach; ?>
                 </div>
             </div>
         <?php endif; ?>
     </div>
-    <hr>
+    
 
     <div class="container-fluid">
         <div class="container">

@@ -1,4 +1,8 @@
 
+* {
+    font-family: "Pixelify Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
 body{
     background-image: url(bckgrndproject.png);
 }
@@ -7,18 +11,18 @@ body{
     color: white;
 }
 
-#icon{
-    max-width: 25%;
+.icon{
+    max-width: 12%;
     max-height: 25%;
      transition: all 1s;
     text-decoration: none;    
 }
-#icon:hover {
+.icon:hover {
      transform: translateY(-30%);
 }
 
 
-#icon:hover .text {
+.icon:hover .text {
   opacity: 1;
 }
 
@@ -27,6 +31,20 @@ body{
   color: white;
     text-decoration: none;
 
+}
+
+.game{
+    background-image: url(battlebg.png);
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    margin: 0  auto;
+    color: black;
+    text-shadow: 20px;
+    display: block;
+    background-position: center;
+    
 }
 
  
@@ -60,11 +78,42 @@ body{
 .h1Inicio {
 	color: rgba(200, 119, 119, 1);
 }
-
+#sileutadiv{
+    margin: auto;
+    width: 20%;
+    border: 10px gray inset;
+    background-color: white;
+}
 #silueta{
     filter: brightness(0%);
+     display: block;
+    margin: auto;
+    min-height: 70%;
+    min-width: 70%;
+    
 }
-
+#audio{
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+#descripcion{
+    font-size: 20px;
+    margin: auto;
+    color: white;
+    text-align: center;
+    width: auto;
+    background-color: rgb(61, 60, 60);
+    border: 10px solid rgb(145, 45, 45);
+}
+#pista{
+    text-decoration: dotted;
+    text-decoration-color: black;
+    text-decoration-thickness: 2px;
+    color: black;
+    font-size: 20px;
+    
+}
 .tablaP {
 	color:rgba(200, 119, 119, 1);
 	font-size: 20px;
@@ -99,3 +148,22 @@ textarea{
 .borde {
     border: 2px solid rgba(58, 56, 56, 0.918);
 }
+
+
+
+.menu-container {
+    max-height: 15vh; 
+    /* ocupa un % de la altura de la pantalla */
+    flex-direction: column;
+    justify-content: center;   /* centra verticalmente el contenido */
+}
+
+.menu-container .row {
+    width: 100%;
+}
+
+.logo {
+    max-width: 35%;
+    max-height: 35%;
+}
+

@@ -3,7 +3,7 @@
 <h1 class="text-center">Rankings</h1>
 <h2>Pokémon Capturados</h2>
 <table class="table table-bordered text-center align-middle">
-    <thead class="bg-warning">
+    <thead>
         <tr>
             <th>Usuario</th>
             <th>Capturados</th>

@@ -44,9 +44,9 @@
             <label for="numRequerido">Número de clasificaciones correctas: </label>
             <input type="number" id="numRequerido" name="numRequerido" value="<?= htmlspecialchars($params['numRequerido']) ?>"><br>
             <?php if ($params["modo"] === MODE_CREATE): ?>
-                <input TYPE="submit" name="bCrearClasificar" VALUE="Crear"><br>
+                <input class="btn btn-primary" TYPE="submit" name="bCrearClasificar" VALUE="Crear"><br>
             <?php else: ?>
-                <input TYPE="submit" name="bGuardarClasificar" VALUE="Guardar"><br>
+                <input class="btn btn-primary" TYPE="submit" name="bGuardarClasificar" VALUE="Guardar"><br>
             <?php endif; ?>
         </form>
     </div>

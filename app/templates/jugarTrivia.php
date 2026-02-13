@@ -44,8 +44,8 @@
     <?php elseif ($params["gameState"] === GAME_STATE_LOST): ?>
 
         <div class="alert alert-danger text-center">
-            <h2>Buen intento</h2>
-            <p>No te rindas, ¡hazte con todos!</p>
+            <h2 class="text-dark">Buen intento</h2>
+            <p class="text-dark">No te rindas, ¡hazte con todos!</p>
         </div>
 
         <div class="container text-center">
@@ -63,7 +63,7 @@
 
         <br>
 
-        <form action="index.php?ctl=jugarTrivia" method="POST" class="text-center">
+        <form class="game" action="index.php?ctl=jugarTrivia" method="POST" class="text-center">
 
             <input type="hidden" name="idTrivia" value="<?= $params["idTrivia"] ?>">
             <input type="hidden" name="idPokemon" value="<?= $params["idPokemon"] ?>">
