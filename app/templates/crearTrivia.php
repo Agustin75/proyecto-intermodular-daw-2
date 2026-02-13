@@ -36,7 +36,7 @@
     <label for="numOpciones">Número de opciones:</label>
     <input type="number" id="numOpciones" name="numOpciones" min="2" max="10"
            value="<?= !empty($params['opciones']) ? count($params['opciones']) : 2 ?>">
-    <button type="button" id="generarOpciones">Generar</button>
+    <button type="button" id="generarOpciones" class="btn btn-primary">Generar</button>
     <label for="info">(Marca el checkbox si esa opcion es correcta)</label>
     <br><br>
 
@@ -94,8 +94,8 @@
     <!-- ============================
          BOTONES
     ============================= -->
-    <button type="submit" name="<?= ($params['modo'] === 'editar') ? 'bEditarTrivia' : 'bCrearTrivia' ?>">
-        <?= ($params['modo'] === 'editar') ? 'Actualizar Trivia' : 'Guardar Trivia' ?>
+    <button class="btn btn-primary" type="submit" name="<?= ($params['modo'] === 'editar') ? 'bEditarTrivia' : 'bCrearTrivia' ?>">
+        <?= ($params['modo'] === 'editar') ? 'Actualizar Trivia' : 'Crear Trivia' ?>
     </button>
 
     
