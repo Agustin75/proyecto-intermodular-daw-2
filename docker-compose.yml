@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  apache:
+    build: .
+    container_name: apache_web
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: proyecto
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./app/proyecto.sql:/docker-entrypoint-initdb.d/proyecto.sql
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mysql_data:
