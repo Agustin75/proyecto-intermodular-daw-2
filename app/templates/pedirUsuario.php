@@ -12,7 +12,7 @@
 			<b><span style="color: rgba(200, 119, 119, 1);"><?php echo $params['mensaje'] ?></span></b>
 		<?php elseif (isset($params["info"])): ?>
 			<!-- We tell the user the email has been sent -->
-			<b><span class="alert alert-warning"><?php echo $params['info'] ?></span></b>
+			<div class="alert alert-warning"><?php echo $params['info'] ?></div>
 		<?php endif; ?>
 	</div>
 </div>

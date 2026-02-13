@@ -17,7 +17,7 @@
 <?php if (isset($params["success"])): ?>
 	<div class="container text-center py-2">
 		<div class="col-md-12">
-			<b><span class="alert alert-success"><?php echo $params['success'] ?></span></b>
+			<div class="alert alert-success"><?php echo $params['success'] ?></div>
 		</div>
 	</div>
 <?php else: ?>

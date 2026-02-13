@@ -13,9 +13,9 @@
 					<?php echo $params['mensaje'] ?>
 				</span></b>
 		<?php elseif (isset($params['info'])) : ?>
-			<b><span class="alert alert-warning">
-					<?php echo $params['info'] ?>
-				</span></b>
+			<div class="alert alert-warning">
+				<?php echo $params['info'] ?>
+			</div>
 		<?php endif; ?>
 	</div>
 
