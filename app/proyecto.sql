@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-02-2026 a las 20:37:38
+-- Tiempo de generación: 13-02-2026 a las 15:36:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -69,6 +69,15 @@ CREATE TABLE `j_tipo_adivinanza` (
   `id` int(11) NOT NULL,
   `tipo_adivinanza` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `j_tipo_adivinanza`
+--
+
+INSERT INTO `j_tipo_adivinanza` (`id`, `tipo_adivinanza`) VALUES
+(1, 'Grito'),
+(2, 'Silueta'),
+(3, 'Descripción');
 
 -- --------------------------------------------------------
 
@@ -191,18 +200,6 @@ INSERT INTO `pokemon_usuario` (`id_pokemon`, `id_usuario`, `favorito`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `token_validacion`
---
-
-CREATE TABLE `token_validacion` (
-  `id_user` int(11) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `valido_hasta` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -288,12 +285,6 @@ ALTER TABLE `j_trivia_respuesta`
 ALTER TABLE `pokemon_usuario`
   ADD PRIMARY KEY (`id_pokemon`,`id_usuario`),
   ADD KEY `id_usuario` (`id_usuario`);
-
---
--- Indices de la tabla `token_validacion`
---
-ALTER TABLE `token_validacion`
-  ADD PRIMARY KEY (`token`);
 
 --
 -- Indices de la tabla `usuario`
