@@ -291,7 +291,11 @@ class AdivinanzaController extends Controller
         $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
         $numGamesLeft = count($gamesList);
         $params["gameFound"] = $numGamesLeft > 0;
+        if(!$params["gameFound"]){
+             $params['mensaje'] = "No se han encontrado juegos de Adivinanza";
 
+         
+        }
 
         if (!isset($_POST["bEnviar"])) {
 
