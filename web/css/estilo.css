@@ -33,6 +33,20 @@ body{
 
 }
 
+.game{
+    background-image: url(battlebg.png);
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    margin: 0  auto;
+    color: black;
+    text-shadow: 20px;
+    display: block;
+    background-position: center;
+    
+}
+
  
 #center{
 
@@ -64,11 +78,42 @@ body{
 .h1Inicio {
 	color: rgba(200, 119, 119, 1);
 }
-
+#sileutadiv{
+    margin: auto;
+    width: 20%;
+    border: 10px gray inset;
+    background-color: white;
+}
 #silueta{
     filter: brightness(0%);
+     display: block;
+    margin: auto;
+    min-height: 70%;
+    min-width: 70%;
+    
 }
-
+#audio{
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+#descripcion{
+    font-size: 20px;
+    margin: auto;
+    color: white;
+    text-align: center;
+    width: auto;
+    background-color: rgb(61, 60, 60);
+    border: 10px solid rgb(145, 45, 45);
+}
+#pista{
+    text-decoration: dotted;
+    text-decoration-color: black;
+    text-decoration-thickness: 2px;
+    color: black;
+    font-size: 20px;
+    
+}
 .tablaP {
 	color:rgba(200, 119, 119, 1);
 	font-size: 20px;

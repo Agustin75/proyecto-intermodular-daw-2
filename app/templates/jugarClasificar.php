@@ -50,7 +50,7 @@
     </div>
 <?php endif; ?>
 <?php if (isset($params["game"])): ?>
-    <form action="index.php?ctl=jugarClasificar" method="POST" name="formJuegoClasificar">
+    <form class="game" action="index.php?ctl=jugarClasificar" method="POST" name="formJuegoClasificar">
         <div class="row g-2 justify-content-center">
             <input type="hidden" name="gameId" value="<?= $params["gameId"] ?>">
             <?php foreach ($params["game"] as $index => $question): ?>

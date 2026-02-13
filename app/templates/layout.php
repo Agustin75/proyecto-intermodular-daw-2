@@ -62,8 +62,10 @@
             <div class="row">
                 <div class="text-start">
                     <?php
-                    foreach ($adminMenu as [$texto, $ruta]): ?>
-                        <a href="index.php?ctl=<?= $ruta ?>"><?= $texto ?></a>
+                    foreach ($adminMenu as [$texto, $ruta, $img]): ?>
+                       <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
+                       <span class="text"><?= $texto ?></span>
+                    </a>
                     <?php endforeach; ?>
                 </div>
             </div>

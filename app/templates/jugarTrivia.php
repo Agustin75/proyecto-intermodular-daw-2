@@ -63,7 +63,7 @@
 
         <br>
 
-        <form action="index.php?ctl=jugarTrivia" method="POST" class="text-center">
+        <form class="game" action="index.php?ctl=jugarTrivia" method="POST" class="text-center">
 
             <input type="hidden" name="idTrivia" value="<?= $params["idTrivia"] ?>">
             <input type="hidden" name="idPokemon" value="<?= $params["idPokemon"] ?>">
