@@ -28,11 +28,11 @@
     ============================= -->
     <?php if ($params["gameState"] === GAME_STATE_WON): ?>
 
-        <div class="alert alert-success text-center">
-            <h2>¡Bien hecho!</h2>
+        <div class="alert alert-success text-center ">
+            <h2 class="text-dark">¡Bien hecho!</h2>
             <img src="<?= $params["imagen_pokemon_recompensa"] ?>" 
                 alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
-            <p>¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
+            <p class="text-dark">¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
         </div>
 
         <div class="container text-center">
@@ -44,9 +44,9 @@
     ============================= -->
     <?php elseif ($params["gameState"] === GAME_STATE_LOST): ?>
 
-        <div class="alert alert-danger text-center">
-            <h2>Buen intento</h2>
-            <p>No te rindas, ¡hazte con todos!</p>
+        <div class="alert alert-danger text-center text-dark">
+            <h2 class="text-dark">Buen intento</h2>
+            <p class="text-dark">No te rindas, ¡hazte con todos!</p>
         </div>
 
         <div class="container text-center">
