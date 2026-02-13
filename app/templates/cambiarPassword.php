@@ -13,14 +13,23 @@
 		<?php endif; ?>
 	</div>
 </div>
-<div class="container text-center p-4">
-	<form ACTION="index.php?ctl=cambiarNombre" METHOD="post" NAME="formCambiarNombre">
-		<h5><b>Cambiar Contraseña</b></h5>
-		<p><input TYPE="text" NAME="newPassword" PLACEHOLDER="Nueva contraseña"><br></p>
-		<input TYPE="submit" NAME="bCambiarPassword" VALUE="Cambiar"><br>
-	</form>
-</div>
 
+<?php if (isset($params["success"])): ?>
+	<div class="container text-center py-2">
+		<div class="col-md-12">
+			<b><span class="alert alert-success"><?php echo $params['success'] ?></span></b>
+		</div>
+	</div>
+<?php else: ?>
+	<div class="container text-center p-4">
+		<form ACTION="index.php?ctl=cambiarPassword" METHOD="post" NAME="formCambiarPassword">
+			<h5><b>Cambiar Contraseña</b></h5>
+			<p><input TYPE="hidden" NAME="userId" value="<?= $params["userId"] ?>"><br></p>
+			<p><input TYPE="password" NAME="newPassword" PLACEHOLDER="Nueva contraseña"><br></p>
+			<input TYPE="submit" NAME="bCambiarPassword" VALUE="Cambiar"><br>
+		</form>
+	</div>
+<?php endif; ?>
 <?php $contenido = ob_get_clean() ?>
 
 <?php include 'layout.php' ?>

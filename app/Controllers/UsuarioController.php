@@ -109,11 +109,9 @@ class UsuarioController extends Controller
 
                         // We create a new unique token
                         $token = uniqid();
-                        // TODO: These are a few methods to possibly generate the url, will need to figure out which one works once it's properly set up in a docker or with a domain name. Currently, it works with a hardocded path
-                        // $urlRoot = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
-                        $bodyEmail = "Clickea el siguiente link para activar tu cuenta: ";
-                        // $bodyEmail .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
-                        $bodyEmail .= "<a href=\"https://localhost/index.php?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        $bodyEmail = "<p>Clickea el siguiente link para activar tu cuenta: ";
+                        $bodyEmail .= "<a href=\"https://localhost/index.php?ctl=confirmarCuenta&token=" . $token . "\">Activar</a></p>";
+                        $bodyEmail .= "<p>El enlace expira pasados 10 minutos.</p>";
                         // The token expires 10 minutes from now
                         $expira = time() + 3600;
 
@@ -123,7 +121,7 @@ class UsuarioController extends Controller
                         $mailer->enviar($email, "Activación de cuenta", $bodyEmail);
 
                         // TODO: Mostrar sin usar params mensaje porque sale como un error. Limpiar los campos también
-                        $params["mensaje"] = "Para finalizar el registro tendrás que activar tu cuenta. Comprueba tu correo y clickea el enlace de activación.";
+                        $params["info"] = "Para finalizar el registro tendrás que activar tu cuenta. Comprueba tu correo y clickea el enlace de activación.";
                     } else {
                         $params['mensaje'] = 'No se ha podido registrar el usuario.';
                     }
@@ -247,7 +245,7 @@ class UsuarioController extends Controller
                     $datosUsuario = $m->buscarUsuario($usuario);
 
                     $params["info"] = "Recibirás un correo con un enlace para cambiar tu contraseña. Si no lo recibes, verifica que no esté en tu buzón de spam o que el nombre de usuario sea correcto.";
-                    
+
                     if ($datosUsuario !== false) {
                         $email = $datosUsuario["email"];
                         $idUsuario = $datosUsuario["id"];
@@ -257,9 +255,9 @@ class UsuarioController extends Controller
 
                         // We create a new unique token
                         $token = uniqid();
-                        $bodyEmail = "Clickea el siguiente link para resetear tu contraseña: ";
-                        // $bodyEmail .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
-                        $bodyEmail .= "<a href=\"https://localhost/index.php?ctl=cambiarPassword&token=" . $token . "\">Activar</a>";
+                        $bodyEmail = "<p>Clickea el siguiente link para resetear tu contraseña: ";
+                        $bodyEmail .= "<a href=\"https://localhost/index.php?ctl=cambiarPassword&token=" . $token . "\">Activar</a></p>";
+                        $bodyEmail .= "<p>El enlace expira pasados 10 minutos.</p>";
                         // The token expires 10 minutes from now
                         $expira = time() + 3600;
 
@@ -279,26 +277,67 @@ class UsuarioController extends Controller
         require __DIR__ . '/../templates/pedirUsuario.php';
     }
 
+    /**
+     * Handles showing the screen to change the password using the token and actually changing the password
+     */
     public function cambiarPassword()
     {
         $errores = [];
 
-        $newPassword = recoge('newPassword');
-
-        $id = $this->session->getUserId();
         try {
+            // If we arrived here through the form to change the password
             if (isset($_POST['bCambiarPassword'])) {
-                $m = new Usuario();
+                // We obtain the new password
+                $newPassword = recoge('newPassword');
 
-                if (cTexto($newPassword, "newPassword", $errores, 30, 1, "!@#%^&*()_+-=")) {
-                    $m->cambiarPassword(encriptar($newPassword), $id);
-                    header("Location: index.php?ctl=miPerfil");
+                // If the password is valid
+                if (cTexto($newPassword, "newPassword", $errores, 30, 1, "0123456789!@#%^&*()_+-=")) {
+                    // We obtain and validate the user id
+                    $userId = recoge("userId");
+                    if (cNum($userId, "userId", $errores)) {
+                        $userId = intval($userId);
+
+                        $m = new Usuario();
+                        // We try changing the user's password to the new password
+                        if ($m->cambiarPassword(encriptar($newPassword), $userId)) {
+                            $params["success"] = "La contraseña se ha actualizado correctamente.";
+                        } else {
+                            $params["mensaje"] = "No se pudo cambiar la contraseña.";
+                            // If it didn't succeed, we save the user id in params to send it again later
+                            $params["userId"] = $userId;
+                        }
+                    }
+                }
+                // We came here through the link in the email
+            } else {
+                // We obtain the token
+                $token = recoge("token");
+
+                // We obtain the register assigned to said token
+                $mValidacion = new Validacion();
+                $register = $mValidacion->confirmarToken($token);
+
+                // We check if the token exists in the table
+                if ($register != false && count($register) > 0) {
+                    // We check if the token is still valid
+                    if ($register["valido_hasta"] > time()) {
+                        // If it is, we save the id to use in the form
+                        $params["userId"] = $register["id_user"];
+                    }
+
+                    // We remove the token from the database regardless of whether the password change was successful
+                    $mValidacion->eliminarToken($token);
+                // The user did not enter this page with a valid token, return them to the home screen
+                } else {
+                    // The token doesn't exist in the table, so the user is using an expired or already used link, redirect them to home
+                    header("Location: index.php?ctl=inicio");
                     exit;
                 }
             }
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             $this->handleError($e);
         }
+
         require __DIR__ . '/../templates/cambiarPassword.php';
     }
 
