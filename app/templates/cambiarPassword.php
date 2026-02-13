@@ -2,7 +2,7 @@
 
 <div class="container text-center p-4">
 	<div class="col-md-12" id="cabecera">
-		<h1 class="h1Inicio">INICIAR SESIÓN</h1>
+		<h1 class="h1Inicio">CAMBIAR CONTRASEÑA</h1>
 	</div>
 </div>
 
@@ -13,13 +13,11 @@
 		<?php endif; ?>
 	</div>
 </div>
-
 <div class="container text-center p-4">
-	<form ACTION="index.php?ctl=iniciarSesion" METHOD="post" NAME="formIniciarSesion">
-		<p><input TYPE="text" NAME="nombre" PLACEHOLDER="Nombre de usuario"><br></p>
-		<p><input TYPE="password" NAME="contrasenya" PLACEHOLDER="Contraseña"><br></p>
-		<p><a href="index.php?ctl=pedirUsuario">Olvidé mi contraseña</a></p>
-		<input TYPE="submit" NAME="bIniciarSesion" VALUE="Aceptar"><br>
+	<form ACTION="index.php?ctl=cambiarNombre" METHOD="post" NAME="formCambiarNombre">
+		<h5><b>Cambiar Contraseña</b></h5>
+		<p><input TYPE="text" NAME="newPassword" PLACEHOLDER="Nueva contraseña"><br></p>
+		<input TYPE="submit" NAME="bCambiarPassword" VALUE="Cambiar"><br>
 	</form>
 </div>
 

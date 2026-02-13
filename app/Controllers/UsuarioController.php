@@ -38,8 +38,9 @@ class UsuarioController extends Controller
                     $usuario = $m->buscarUsuario($nombre);
                     // We check that an user was found and that the user found is active before checking the password
                     if (($usuario != false && count($usuario) > 0) &&
-                         $usuario["activo"] &&
-                         comprobarhash($contrasenya, $usuario['contrasenya'])) {
+                        $usuario["activo"] &&
+                        comprobarhash($contrasenya, $usuario['contrasenya'])
+                    ) {
                         $this->session->login(
                             $usuario['id'],
                             $usuario['nombre'],
@@ -102,7 +103,7 @@ class UsuarioController extends Controller
                 try {
                     $m = new Usuario();
                     $idUsuario = $m->crearUsuario($nombre, encriptar($contrasenya), $email, $imagen);
-                    if ($idUsuario != false) {
+                    if ($idUsuario !== false) {
                         // User registered, we send the email with the activation token
                         $mailer = new Mailer();
 
@@ -112,7 +113,7 @@ class UsuarioController extends Controller
                         // $urlRoot = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
                         $bodyEmail = "Clickea el siguiente link para activar tu cuenta: ";
                         // $bodyEmail .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
-                        $bodyEmail .= "<a href=\"https://www.pokehunt.com\index.php?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        $bodyEmail .= "<a href=\"https://localhost/index.php?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
                         // The token expires 10 minutes from now
                         $expira = time() + 3600;
 
@@ -230,6 +231,75 @@ class UsuarioController extends Controller
             $this->handleError($e);
         }
         require __DIR__ . '/../templates/cambioNombre.php';
+    }
+
+    public function pedirUsuario()
+    {
+        $errores = [];
+
+        $usuario = recoge('nombreUsuario');
+
+        try {
+            if (isset($_POST['bEnviar'])) {
+                $m = new Usuario();
+
+                if (cTexto($usuario, "nombreUsuario", $errores)) {
+                    $datosUsuario = $m->buscarUsuario($usuario);
+
+                    $params["info"] = "Recibirás un correo con un enlace para cambiar tu contraseña. Si no lo recibes, verifica que no esté en tu buzón de spam o que el nombre de usuario sea correcto.";
+                    
+                    if ($datosUsuario !== false) {
+                        $email = $datosUsuario["email"];
+                        $idUsuario = $datosUsuario["id"];
+
+                        // User registered, we send the email with the activation token
+                        $mailer = new Mailer();
+
+                        // We create a new unique token
+                        $token = uniqid();
+                        $bodyEmail = "Clickea el siguiente link para resetear tu contraseña: ";
+                        // $bodyEmail .= "<a href=\"" . $_SERVER["PHP_SELF"] . "?ctl=confirmarCuenta&token=" . $token . "\">Activar</a>";
+                        $bodyEmail .= "<a href=\"https://localhost/index.php?ctl=cambiarPassword&token=" . $token . "\">Activar</a>";
+                        // The token expires 10 minutes from now
+                        $expira = time() + 3600;
+
+                        $mValidacion = new Validacion();
+                        $mValidacion->guardarToken($idUsuario, $token, $expira);
+
+                        $mailer->enviar($email, "Cambio de contraseña", $bodyEmail);
+                    }
+
+                    // We stay in the same page
+                }
+            }
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+
+        require __DIR__ . '/../templates/pedirUsuario.php';
+    }
+
+    public function cambiarPassword()
+    {
+        $errores = [];
+
+        $newPassword = recoge('newPassword');
+
+        $id = $this->session->getUserId();
+        try {
+            if (isset($_POST['bCambiarPassword'])) {
+                $m = new Usuario();
+
+                if (cTexto($newPassword, "newPassword", $errores, 30, 1, "!@#%^&*()_+-=")) {
+                    $m->cambiarPassword(encriptar($newPassword), $id);
+                    header("Location: index.php?ctl=miPerfil");
+                    exit;
+                }
+            }
+        } catch (Throwable $e) {
+            $this->handleError($e);
+        }
+        require __DIR__ . '/../templates/cambiarPassword.php';
     }
 
     public function Salir()
