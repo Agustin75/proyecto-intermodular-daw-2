@@ -41,7 +41,7 @@
         </div>
     </div>
 </div>
-<img id="center" src="../web/images/trainer_think.png">
+<img id="center" src="images/trainer_think.png">
 <?php if ($params["user_level"] == USER_GUEST): ?>
     <div class="container text-center pt-2">
         <h2>Empieza tu aventura</h2>

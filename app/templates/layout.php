@@ -38,7 +38,7 @@
                 foreach ($menu as [$texto, $ruta, $img]): ?>
 
 
-                    <a id="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" id="icon" src="../web/images/<?= $img ?>">
+                    <a id="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" id="icon" src="images/<?= $img ?>">
                        <span class="text"><?= $texto ?></span>
                     </a>
 
@@ -55,7 +55,7 @@
                 <?php
                 $userMenu = $this->userMenu();
                 foreach ($userMenu as [$texto, $ruta, $img]): ?>
-  <a id="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" id="icon" src="../web/images/<?= $img ?>">
+  <a id="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" id="icon" src="images/<?= $img ?>">
                        <span class="text"><?= $texto ?></span>
                     </a>
 
