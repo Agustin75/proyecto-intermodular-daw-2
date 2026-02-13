@@ -7,18 +7,18 @@ body{
     color: white;
 }
 
-#icon{
-    max-width: 25%;
+.icon{
+    max-width: 12%;
     max-height: 25%;
      transition: all 1s;
     text-decoration: none;    
 }
-#icon:hover {
+.icon:hover {
      transform: translateY(-30%);
 }
 
 
-#icon:hover .text {
+.icon:hover .text {
   opacity: 1;
 }
 
@@ -99,3 +99,22 @@ textarea{
 .borde {
     border: 2px solid rgba(58, 56, 56, 0.918);
 }
+
+
+
+.menu-container {
+    max-height: 15vh; 
+    /* ocupa un % de la altura de la pantalla */
+    flex-direction: column;
+    justify-content: center;   /* centra verticalmente el contenido */
+}
+
+.menu-container .row {
+    width: 100%;
+}
+
+.logo {
+    max-width: 35%;
+    max-height: 35%;
+}
+
