@@ -35,6 +35,7 @@
         <h2 class="text-dark">¡Bien hecho!</h2>
         <img src="<?= $params["imagen_pokemon_recompensa"] ?>" alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
         <p class="text-dark">¡Capturaste un <?= $params["nombre_pokemon_recompensa"] ?>!</p>
+        <img src="images/win.gif">
     </div>
     <div class="container text-center">
         <a class="btn btn-success" href="index.php?ctl=juegos">Volver</a>
