@@ -35,12 +35,12 @@ $map = [
     'verPokemon'        => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
     'juegos'            => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
     'mostrarRanking'    => ['controller' => 'RankingController', 'action' => 'mostrarRanking',   'nivel' => USER_GUEST],
-    'perfilPokemon'     => ['controller' => 'UsuarioController', 'action' => 'perfilPokemon',    'nivel' => USER_GUEST],
+    'miPerfil'          => ['controller' => 'UsuarioController', 'action' => 'miPerfil',         'nivel' => USER_GUEST],
     'pedirUsuario'      => ['controller' => 'UsuarioController', 'action' => 'pedirUsuario',     'nivel' => USER_GUEST],
     'cambiarPassword'   => ['controller' => 'UsuarioController', 'action' => 'cambiarPassword',  'nivel' => USER_GUEST],
 
     // Registered user functions
-    'miPerfil'         => ['controller' => 'UsuarioController',    'action' => 'mostrarPerfil',   'nivel' => USER_REGISTERED],
+    'opciones'         => ['controller' => 'UsuarioController',    'action' => 'mostrarOpciones', 'nivel' => USER_REGISTERED],
     'cambiarNombre'    => ['controller' => 'UsuarioController',    'action' => 'cambiarNombre',   'nivel' => USER_REGISTERED],
     'cambiarImagen'    => ['controller' => 'UsuarioController',    'action' => 'cambiarImagen',   'nivel' => USER_REGISTERED],
     'cerrarSesion'     => ['controller' => 'UsuarioController',    'action' => 'salir',           'nivel' => USER_REGISTERED],
@@ -49,20 +49,18 @@ $map = [
     // Admin user functions
     'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
     'gestionarJuegos' => ['controller' => 'AdminController',  'action' => 'gestionarJuegos', 'nivel' => USER_ADMIN],
-    // 'editarJuego'  => ['controller' => 'UsuarioController', 'action' => 'editarJuego', 'nivel' => USER_ADMIN],
     
     //ADIVINANZA:
     'jugarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'jugarAdivinanza', 'nivel' => USER_REGISTERED],
     'crearAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'crearAdivinanza', 'nivel' => USER_ADMIN],
     'editarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'editarAdivinanza', 'nivel' => USER_ADMIN],
     'eliminarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'eliminarAdivinanza', 'nivel' => USER_ADMIN],
-    // 'vistaTrivia'  => ['controller' => 'AdminController',   'action' => 'vistaTrivia',  'nivel' => USER_ADMIN],
+
     //TRIVIA:
     'crearTrivia'     => ['controller' => 'TriviaController', 'action' => 'crearTrivia',     'nivel' => USER_ADMIN],
     'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
     'editarTrivia'  => ['controller' => 'TriviaController', 'action' => 'editarTrivia',  'nivel' => USER_ADMIN],
     'jugarTrivia' => ['controller' => 'TriviaController', 'action' => 'jugarTrivia', 'nivel' => USER_REGISTERED],
-
     
     // CLASIFICAR:
     'crearClasificar'    => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',    'nivel' => USER_ADMIN],

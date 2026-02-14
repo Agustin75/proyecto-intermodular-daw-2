@@ -2,7 +2,7 @@
 
 <div class="container text-center p-4">
 	<div class="col-md-12" id="cabecera">
-		<h1 class="h1Inicio">INICIAR SESIÓN</h1>
+		<h1>INICIAR SESIÓN</h1>
 	</div>
 </div>
 

@@ -3,7 +3,7 @@
 
 	<div class="container text-center p-4">
 		<div class="col-md-12" id="cabecera">
-			<h1 class="h1Inicio">Dev Tools</h1>
+			<h1>DEV TOOLS</h1>
 		</div>
 	</div>
 

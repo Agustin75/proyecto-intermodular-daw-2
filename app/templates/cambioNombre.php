@@ -2,7 +2,7 @@
 	
 	<div class="container text-center p-4">
 		<div class="col-md-12" id="cabecera">
-			<h1 class="h1Inicio">BIBLIOTECA VIRTUAL</h1>
+			<h1>CAMBIAR NOMBRE</h1>
 		</div>
 	</div>
 

@@ -85,14 +85,14 @@ class Controller
                 ['Registro', 'registro', 'signup.png']
             ],
             USER_REGISTERED => [
-                ['Mi Perfil', 'miPerfil', 'settings.png'],
-                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png'],
+                ['Opciones', 'opciones', 'settings.png'],
+                ['Mi Perfil', 'miPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ],
             USER_ADMIN => [
                 ['Dev Tools', 'mostrarTools', 'devtools.png'],
-                ['Mi Perfil', 'miPerfil', 'settings.png'],
-                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png'],
+                ['Opciones', 'opciones', 'settings.png'],
+                ['Mi Perfil', 'miPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ]
         ];

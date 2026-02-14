@@ -98,7 +98,7 @@ class UsuarioController extends Controller
             cTexto($nombre, "nombre", $errores);
             cEmail($email, "email", $errores);
             cUser($contrasenya, "contrasenya", $errores);
-            $imagen = "default";
+            $imagen = DEFAULT_AVATAR;
             if (empty($errores)) {
                 try {
                     $m = new Usuario();
@@ -135,27 +135,26 @@ class UsuarioController extends Controller
 
     public function cambiarImagen()
     {
-        $errores = [];
+        $m = new Usuario();
+        $id = $this->session->getUserId();
+
         $params = [
-            'id' => '',
-            'imagen'   => ''
+            'currImage' => $m->obtenerUsuario($id)["imagen"]
         ];
 
         try {
-
-
             if (isset($_POST['bCambiarImagen'])) {
+                $imagen = recoge('newImage');
 
-                $imagen = recoge('imagen');
-                $id   = $this->session->getUserId();
-
-                $params['imagen'] = $imagen;
-                $params['id'] = $id;
-
-
-
-                $m = new Usuario();
-                $usuario = $m->cambiarImagen($imagen, $id);
+                if(!file_exists("images/avatars/" . $imagen . ".png") || !$m->cambiarImagen($imagen, $id)) {
+                    $params["mensaje"] = "No se pudo cambiar la imagen.";
+                } else {
+                    // We send the player back to their profile so they can see the image they selected
+                    // TODO: Remove this and uncomment the following line if the images are shown in "Cambiar Imagen"
+                    // $params["currImage"] = $imagen;
+                    header("Location: index.php?ctl=miPerfil");
+                    exit;
+                }
             }
         } catch (Throwable $e) {
             $this->handleError($e);
@@ -198,6 +197,7 @@ class UsuarioController extends Controller
         }
         require __DIR__ . '/../templates/cartaPkmn.php';
     }
+
     public function cambiarNombre()
     {
         $errores = [];
@@ -354,12 +354,26 @@ class UsuarioController extends Controller
         }
     }
 
-    public function mostrarPerfil()
+    public function mostrarOpciones()
     {
+        $params = [
+            "userName" => $this->session->getUserName()
+        ];
+
         try {
+            $mUsuario = new Usuario();
+            $usuario = $mUsuario->obtenerUsuario($this->session->getUserId());
+
+            if ($mUsuario !== false) {
+                $params["userImage"] = $usuario["imagen"];
+            } else {
+                header("Location: index.php?ctl=inicio");
+                exit;
+            }
         } catch (Throwable $e) {
             $this->handleError($e);
         }
+
         require __DIR__ . '/../templates/miPerfil.php';
     }
 
@@ -372,7 +386,7 @@ class UsuarioController extends Controller
         require __DIR__ . '/../templates/DevTools.php';
     }
 
-    public function perfilPokemon()
+    public function miPerfil()
     {
         $errores = [];
         $params = [];

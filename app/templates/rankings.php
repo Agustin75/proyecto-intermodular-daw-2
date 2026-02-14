@@ -14,7 +14,7 @@
         <?php foreach($params["users"] as $user): ?>
             <tr>
                 <td>
-                    <img src="images/avatars/<?= $user["image"] ?>.png" width="50px" alt="Imagen de perfil de <?= $user["name"] ?>"><br>
+                    <img src="images/avatars/<?= $user["image"] ?>.png" alt="Imagen de perfil de <?= $user["name"] ?>"><br>
                     <a href="index.php?ctl=perfilPokemon&id=<?= $user["id"] ?>"><?= $user["name"] ?></a>
                 </td>
                 <td><?= $user["amount"] ?></td>

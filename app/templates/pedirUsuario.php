@@ -2,7 +2,7 @@
 
 <div class="container text-center p-4">
 	<div class="col-md-12" id="cabecera">
-		<h1 class="h1Inicio">CAMBIO DE CONTRASEÑA</h1>
+		<h1>CAMBIO DE CONTRASEÑA</h1>
 	</div>
 </div>
 

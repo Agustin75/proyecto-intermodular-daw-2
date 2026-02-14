@@ -2,7 +2,7 @@
 
 <div class="container text-center p-4">
     <div class="col-md-12" id="cabecera">
-        <h1 class="h1Inicio">POKEHUNT</h1>
+        <h1>PERFIL DE <?= strtoupper($params["userName"]) ?></h1>
     </div>
 </div>
 
@@ -15,10 +15,6 @@
 </div>
 <div class="text-center">
     <img src="images/avatars/<?= $params["userImage"] ?>.png">
-
-    <?php
-    echo "<h1> Pokemons de " . $params["userName"] . "</h1>";
-    ?>
 </div>
 <h3> Favoritos </h3>
 <div class="row">
