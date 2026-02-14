@@ -50,33 +50,35 @@
     </div>
 <?php endif; ?>
 <?php if (isset($params["game"])): ?>
-    <form class="game" action="index.php?ctl=jugarClasificar" method="POST" name="formJuegoClasificar">
-        <div class="row g-2 justify-content-center">
-            <input type="hidden" name="gameId" value="<?= $params["gameId"] ?>">
-            <?php foreach ($params["game"] as $index => $question): ?>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <!-- TODO: Add a specific class for Pokemon cards to design it better, since bootstrap is limited? -->
-                    <div class="border border-success alert alert-success p-0 text-center">
-                        <img src="<?= $question["pokemon_image"] ?>" alt="Imagen de <?= $question["pokemon_name"] ?>"><br>
-                        <input type="hidden" name="pokemon_ids[]" value="<?= $question["pokemon_id"] ?>">
-                        <input type="hidden" name="pokemon_names[]" value="<?= $question["pokemon_name"] ?>">
-                        <input type="hidden" name="pokemon_images[]" value="<?= $question["pokemon_image"] ?>">
-                        <!-- We send the options for each Pokemon in case the player fails to fill them all up -->
-                        <div class="row justify-content-center m-0">
-                            <?php foreach ($question["options"] as $number => $value): ?>
-                                <input type="hidden" name="options[<?= $index ?>][]" value="<?= $value ?>">
-                                <!-- name=question0 id=option-0-0 value=fire -->
-                                <label class="col-6 border border-success text-center py-2 py-md-0">
-                                    <input type="radio" name="question<?= $index ?>" value="<?= $value ?>" <?php if (isset($params["question" . $index]) && $params["question" . $index] == $value): ?>checked<?php endif; ?>> <?= ucfirst($value) ?>
-                                </label>
-                            <?php endforeach; ?>
+    <div class="container game">
+        <form action="index.php?ctl=jugarClasificar" method="POST" name="formJuegoClasificar">
+            <div class="row g-2 justify-content-center">
+                <input type="hidden" name="gameId" value="<?= $params["gameId"] ?>">
+                <?php foreach ($params["game"] as $index => $question): ?>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <!-- TODO: Add a specific class for Pokemon cards to design it better, since bootstrap is limited? -->
+                        <div class="border border-success alert alert-success p-0 text-center">
+                            <img src="<?= $question["pokemon_image"] ?>" alt="Imagen de <?= $question["pokemon_name"] ?>"><br>
+                            <input type="hidden" name="pokemon_ids[]" value="<?= $question["pokemon_id"] ?>">
+                            <input type="hidden" name="pokemon_names[]" value="<?= $question["pokemon_name"] ?>">
+                            <input type="hidden" name="pokemon_images[]" value="<?= $question["pokemon_image"] ?>">
+                            <!-- We send the options for each Pokemon in case the player fails to fill them all up -->
+                            <div class="row justify-content-center m-0">
+                                <?php foreach ($question["options"] as $number => $value): ?>
+                                    <input type="hidden" name="options[<?= $index ?>][]" value="<?= $value ?>">
+                                    <!-- name=question0 id=option-0-0 value=fire -->
+                                    <label class="col-6 border border-success text-center text-dark py-2 py-md-0">
+                                        <input type="radio" name="question<?= $index ?>" value="<?= $value ?>" <?php if (isset($params["question" . $index]) && $params["question" . $index] == $value): ?>checked<?php endif; ?>> <?= ucfirst($value) ?>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-            <input class="btn btn-success" TYPE="submit" name="bEnviar" VALUE="Enviar"><br>
-        </div>
-    </form>
+                <?php endforeach; ?>
+                <input class="btn btn-success" TYPE="submit" name="bEnviar" VALUE="Enviar"><br>
+            </div>
+        </form>
+    </div>
 <?php endif; ?>
 
 <br>

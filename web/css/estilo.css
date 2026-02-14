@@ -1,21 +1,18 @@
 
 * {
     font-family: "Pixelify Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: white;
 }
 
 body{
-    background-image: url(bckgrndproject.png);
-}
-
-*{
-    color: white;
+    background-image: url(../images/bckgrndproject.png);
 }
 
 .icon{
     max-width: 12%;
     max-height: 25%;
      transition: all 1s;
-    text-decoration: none;    
+    text-decoration: none;
 }
 .icon:hover {
      transform: translateY(-30%);
@@ -34,8 +31,9 @@ body{
 }
 
 .game{
-    background-image: url(battlebg.png);
+    background-image: url(../images/battlebg.png);
     background-repeat: no-repeat;
+    background-size: 100%;
     justify-content: center;
     align-items: center;
     justify-self: center;
@@ -47,7 +45,6 @@ body{
     
 }
 
- 
 #center{
 
     

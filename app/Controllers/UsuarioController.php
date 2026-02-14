@@ -396,7 +396,7 @@ class UsuarioController extends Controller
             $params["userName"] = $usuario["nombre"];
             $params["userImage"] = $usuario["imagen"];
             $params["favorites"] = [];
-            $params["allPok"] = [];
+            $params["allPokemon"] = [];
 
             $mPokemonUsuario = new PokemonUsuario();
             $favorites = $mPokemonUsuario->obtenerPokemonUsuario($userId, true);

@@ -151,7 +151,7 @@ class Adivinar
     }
 
     public function obtenerTodasAdivinanzas(){
-        $sql = "SELECT * FROM j_adivinanza";
+        $sql = "SELECT * FROM j_adivinanza ORDER BY id_pokemon";
         $stmt = $this->conexion->prepare($sql);
          $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

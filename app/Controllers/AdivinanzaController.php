@@ -344,6 +344,9 @@ class AdivinanzaController extends Controller
                 $params['imagen_pokemon_recompensa'] = $mPokeAPI->getPokemonNormalSprite($correct);
                 $params['nombre_pokemon_recompensa'] = $correct2;
                 
+                $mPokemonUsuario = new PokemonUsuario();
+                $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $correct);
+                
             } else {
                 $params["gameState"] = GAME_STATE_LOST;
 
