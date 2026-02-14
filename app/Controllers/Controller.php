@@ -86,14 +86,14 @@ class Controller
             ],
             USER_REGISTERED => [
                 ['Opciones', 'opciones', 'settings.png'],
-                ['Mi Perfil', 'miPerfil', 'pkmn.png'],
+                ['Mi Perfil', 'mostrarPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ],
             USER_ADMIN => [
                 ['Dev Tools', 'mostrarTools', 'devtools.png'],
                 ['Gestionar Juegos', 'gestionarJuegos', 'gestionarjuego.png'],
                 ['Opciones', 'opciones', 'settings.png'],
-                ['Mi Perfil', 'miPerfil', 'pkmn.png'],
+                ['Mi Perfil', 'mostrarPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ]
         ];

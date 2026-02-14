@@ -35,7 +35,7 @@ $map = [
     'verPokemon'        => ['controller' => 'WikiController',    'action' => 'verPokemon',       'nivel' => USER_GUEST],
     'juegos'            => ['controller' => 'JuegosController',  'action' => 'verJuegos',        'nivel' => USER_GUEST],
     'mostrarRanking'    => ['controller' => 'RankingController', 'action' => 'mostrarRanking',   'nivel' => USER_GUEST],
-    'miPerfil'          => ['controller' => 'UsuarioController', 'action' => 'miPerfil',         'nivel' => USER_GUEST],
+    'mostrarPerfil'     => ['controller' => 'UsuarioController', 'action' => 'mostrarPerfil',    'nivel' => USER_GUEST],
     'pedirUsuario'      => ['controller' => 'UsuarioController', 'action' => 'pedirUsuario',     'nivel' => USER_GUEST],
     'cambiarPassword'   => ['controller' => 'UsuarioController', 'action' => 'cambiarPassword',  'nivel' => USER_GUEST],
 

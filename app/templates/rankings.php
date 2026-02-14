@@ -15,7 +15,7 @@
             <tr>
                 <td>
                     <img src="images/avatars/<?= $user["image"] ?>.png" alt="Imagen de perfil de <?= $user["name"] ?>"><br>
-                    <a href="index.php?ctl=perfilPokemon&id=<?= $user["id"] ?>"><?= $user["name"] ?></a>
+                    <a href="index.php?ctl=mostrarPerfil&id=<?= $user["id"] ?>"><?= $user["name"] ?></a>
                 </td>
                 <td><?= $user["amount"] ?></td>
                 <td>

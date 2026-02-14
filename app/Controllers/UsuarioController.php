@@ -152,7 +152,7 @@ class UsuarioController extends Controller
                     // We send the player back to their profile so they can see the image they selected
                     // TODO: Remove this and uncomment the following line if the images are shown in "Cambiar Imagen"
                     // $params["currImage"] = $imagen;
-                    header("Location: index.php?ctl=miPerfil");
+                    header("Location: index.php?ctl=mostrarPerfil");
                     exit;
                 }
             }
@@ -387,7 +387,7 @@ class UsuarioController extends Controller
         require __DIR__ . '/../templates/DevTools.php';
     }
 
-    public function miPerfil()
+    public function mostrarPerfil()
     {
         $errores = [];
         $params = [];
