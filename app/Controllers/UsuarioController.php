@@ -218,6 +218,7 @@ class UsuarioController extends Controller
                 if ($m->buscarUsuario($new) == "") {
                     if (cTexto($new, "nombre", $errores) == true) {
                         $m->cambiarNombre($new, $id);
+                        $this->session->setUserName($new);
                         header("Location: index.php?ctl=inicio");
                         exit;
                     }
@@ -374,7 +375,7 @@ class UsuarioController extends Controller
             $this->handleError($e);
         }
 
-        require __DIR__ . '/../templates/miPerfil.php';
+        require __DIR__ . '/../templates/opciones.php';
     }
 
     public function mostrarTools()

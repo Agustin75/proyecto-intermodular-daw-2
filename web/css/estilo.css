@@ -1,6 +1,10 @@
-
+@font-face {
+    font-family: "truthAndIdeals";
+    src: url(../fonts/Truth\ And\ Ideals-Normal.ttf);
+}
 * {
-    font-family: "Pixelify Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "truthAndIdeals";
+    /* font-family: "Pixelify Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; */
     color: white;
 }
 
@@ -21,9 +25,12 @@ body{
 
 .icon:hover .text {
   opacity: 1;
+    font-size: large;
 }
 
 .text {
+    transition: all 0.3s ease-in-out;
+    font-size: 0;
     opacity: 0;
   color: white;
     text-decoration: none;

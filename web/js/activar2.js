@@ -24,8 +24,8 @@ console.log(petition);
     try {
         let info = await fetch(petition);
         if (info.ok) {
-            let data = await info.json();
-
+            // We update the visual feedback for the admin
+            event.target.closest("tr").classList = event.target.checked ? "activo" : "inactivo";
         } else {
             console.log(info.status);
         }

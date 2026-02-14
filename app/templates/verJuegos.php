@@ -9,7 +9,7 @@
 
 <div class="container">
     <div class="row d-flex justify-content-between">
-        <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
+        <div class="col-12 col-sm-6 col-md-4 border border-dark d-flex flex-column p-2 text-center">
             <h3>Adivina el Pokémon</h3>
             <img src="images/adivinanza_cover.png" alt="Imagen sobre el juego de adivinanzas">
             <p>Adivina el Pokémon según su silueta, grito o descripción.</p>
@@ -22,7 +22,7 @@
                 <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarAdivinanza">Jugar</a>
             <?php endif; ?>
         </div>
-        <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
+        <div class="col-12 col-sm-6 col-md-4 border border-dark d-flex flex-column p-2 text-center">
             <h3>Trivia</h3>
             <img src="images/trivia_cover.png" alt="Imagen sobre el juego de trivias">
             <p>Selecciona todas las respuestas correctas a la pregunta mostrada</p>
@@ -32,7 +32,7 @@
                 <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarTrivia">Jugar</a>
             <?php endif; ?>
         </div>
-        <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
+        <div class="col-12 col-sm-6 col-md-4 border border-dark d-flex flex-column p-2 text-center">
             <h3>Clasifica los Pokémon</h3>
             <img src="images/clasificar_cover.png" alt="Imagen sobre el juego de clasificar">
             <p>En este juego verás múltiples Pokémon. Para cada uno, deberás elegir cuál es su tipo o generación.</p>

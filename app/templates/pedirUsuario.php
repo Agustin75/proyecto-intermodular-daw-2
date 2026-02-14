@@ -1,7 +1,7 @@
 <?php ob_start() ?>
 
 <div class="container text-center p-4">
-	<div class="col-md-12" id="cabecera">
+	<div class="col-md-12">
 		<h1>CAMBIO DE CONTRASEÑA</h1>
 	</div>
 </div>

@@ -28,10 +28,11 @@
     <?php if ($params["gameState"] === GAME_STATE_WON): ?>
 
         <div class="alert alert-success text-center">
-            <h2>¡Bien hecho!</h2>
+            <h2 class="text-dark">¡Bien hecho!</h2>
             <img src="<?= $params["imagen_pokemon_recompensa"] ?>" 
                 alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
-            <p>¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
+            <p class="text-dark">¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
+            <img src="images/win.gif" alt="Animación de victoria">
         </div>
 
         <div class="container text-center">

@@ -4,7 +4,7 @@
 
 <head>
     <title>POKEHUNT</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
@@ -19,17 +19,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-    <img class="logo" src="images/logo_proyect.png" alt="Imagen de bienvenida">
-</div>
+                        <img class="logo" src="images/logo_proyect.png" alt="Imagen de bienvenida">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-                <?php if ($this->session->getUserName() != ""): ?>
-                    <div class="container text-end">
-                        <p>User: <?= $this->session->getUserName() ?></p>
-                    </div>
-                <?php endif; ?>
+    <?php if ($this->session->getUserName() != ""): ?>
+        <div class="container text-end">
+            <p>User: <?= $this->session->getUserName() ?></p>
+        </div>
+    <?php endif; ?>
 
     <div class="container">
         <div class="row menu-container">
@@ -40,8 +40,9 @@
 
 
                 foreach ($menu as [$texto, $ruta, $img]): ?>
-                    <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
-                       <span class="text"><?= $texto ?></span>
+                    <a class="icon" href="index.php?ctl=<?= $ruta ?>">
+                        <span class="text"><?= $texto ?></span>
+                        <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
                     </a>
                 <?php endforeach; ?>
 
@@ -51,29 +52,15 @@
                 <?php
                 $userMenu = $this->userMenu();
                 foreach ($userMenu as [$texto, $ruta, $img]): ?>
-  <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
-                       <span class="text"><?= $texto ?></span>
+                    <a class="icon" href="index.php?ctl=<?= $ruta ?>">
+                        <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
+                        <span class="text"><?= $texto ?></span>
                     </a>
 
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php
-        $adminMenu = $this->adminMenu();
-        if (!empty($adminMenu)): ?>
-            <div class="row">
-                <div class="text-start">
-                    <?php
-                    foreach ($adminMenu as [$texto, $ruta, $img]): ?>
-                       <a class="icon" href="index.php?ctl=<?= $ruta ?>"> <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
-                       <span class="text"><?= $texto ?></span>
-                    </a>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        <?php endif; ?>
     </div>
-    
 
     <div class="container-fluid">
         <div class="container">
@@ -89,7 +76,6 @@
         </div>
     </div>
 
-
     <?php if (isset($script)): ?>
         <?php if (is_array($script)): ?>
             <?php foreach ($script as $s): ?>
@@ -99,7 +85,5 @@
             <script type="text/javascript" src="js/<?= $script ?>"></script>
         <?php endif; ?>
     <?php endif; ?>
-
 </body>
-
 </html>

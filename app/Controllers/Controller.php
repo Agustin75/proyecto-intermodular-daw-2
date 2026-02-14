@@ -91,6 +91,7 @@ class Controller
             ],
             USER_ADMIN => [
                 ['Dev Tools', 'mostrarTools', 'devtools.png'],
+                ['Gestionar Juegos', 'gestionarJuegos', 'gestionarjuego.png'],
                 ['Opciones', 'opciones', 'settings.png'],
                 ['Mi Perfil', 'miPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
@@ -99,36 +100,6 @@ class Controller
 
         // Seleccionar menú base
         $menu = $menusUsuarios[$nivel];
-
-        // ---------------------------------------------------------
-        // 2. Marcar elemento activo
-        // ---------------------------------------------------------
-        foreach ($menu as &$item) {
-            $item['active'] = ($item[1] === $ruta);
-        }
-
-        return $menu;
-    }
-
-    // Returns the admin-related menus based on current page
-    protected function adminMenu(): array
-    {
-        if ($this->session->getUserLevel() != USER_ADMIN) {
-            return [];
-        }
-
-        $ruta  = $this->currentRoute;
-
-        // ---------------------------------------------------------
-        // 1. Menús a agregar según ruta
-        // ---------------------------------------------------------
-        $menusAdmin = [
-            "juegos" => [
-                ['Gestionar Juegos', 'gestionarJuegos', 'gestionarjuego.png']
-            ],
-        ];
-
-        $menu = $menusAdmin[$ruta] ?? [];
 
         // ---------------------------------------------------------
         // 2. Marcar elemento activo

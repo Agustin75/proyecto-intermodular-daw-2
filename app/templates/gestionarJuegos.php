@@ -3,17 +3,18 @@
 <h1 class="text-center">Gestión de Juegos</h1>
 <br>
 
-<div style="display:flex; gap:20px; justify-content:space-between;">
-
+<div class="row justify-content-around">
 
 
     <!-- ============================
          COLUMNA ADIVINANZA
     ============================= -->
-    <div style="width:33%; border:1px solid #ccc; padding:15px;">
-        <h2>Adivinanza</h2>
-        <a href="index.php?ctl=crearAdivinanza" class="btn btn-primary">Crear Adivinanza</a>
-        <br><br>
+    <div class="col-12 col-lg-5 col-xxl-3 border p-2 m-2">
+        <div class="text-center">
+            <h2>Adivinanza</h2>
+            <a href="index.php?ctl=crearAdivinanza" class="btn btn-primary">Crear Adivinanza</a>
+        </div>
+        <br>
         <?php if (empty($params["adivinar"])): ?>
             <p>No hay trivias creadas todavía.</p>
         <?php else: ?>
@@ -36,11 +37,12 @@
     <!-- ============================
          COLUMNA TRIVIA
     ============================= -->
-    <div style="width:33%; border:1px solid #ccc; padding:15px;">
-        <h2>Trivia</h2>
-
-        <a href="index.php?ctl=crearTrivia" class="btn btn-primary">Crear Trivia</a>
-        <br><br>
+    <div class="col-12 col-lg-5 col-xxl-3 border p-2 m-2">
+        <div class="text-center">
+            <h2>Trivia</h2>
+            <a href="index.php?ctl=crearTrivia" class="btn btn-primary">Crear Trivia</a>
+        </div>
+        <br>
 
         <?php if (empty($params["trivias"])): ?>
             <p>No hay trivias creadas todavía.</p>
@@ -64,10 +66,12 @@
     <!-- ============================
          COLUMNA CLASIFICAR
     ============================= -->
-    <div style="width:33%; border:1px solid #ccc; padding:15px;">
-        <h2>Clasificar</h2>
-        <a href="index.php?ctl=crearClasificar" class="btn btn-primary">Crear Clasificar</a>
-        <br><br>
+    <div class="col-12 col-lg-5 col-xxl-3 border p-2 m-2">
+        <div class="text-center">
+            <h2>Clasificar</h2>
+            <a href="index.php?ctl=crearClasificar" class="btn btn-primary">Crear Clasificar</a>
+        </div>
+        <br>
         <?php if (empty($params["clasificar"])): ?>
             <p>No hay juegos de clasificar creados todavía.</p>
         <?php else: ?>

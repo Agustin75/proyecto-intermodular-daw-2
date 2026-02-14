@@ -190,6 +190,12 @@ class SessionManager
     {
         return $_SESSION[$index] ?? null;       
     }
+    /** * Actualiza el nombre del usuario actual. 
+     * @return string Nombre del usuario o cadena vacía si no está logueado. */
+    public function setUserName(string $newName): string
+    {
+        return $_SESSION['usuarioNombre'] = $newName;
+    }
 
     // -------------------------------------------------------------
     // ESTADO Y RBAC
