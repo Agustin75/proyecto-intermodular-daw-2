@@ -16,7 +16,8 @@
 	</div>
 	  
     <div>
-
+<table>
+	<tr>
 <?php 
 $m = new Usuario;
 $all = $m->listarUsuarios();
@@ -25,12 +26,21 @@ if($all != false){
 
 foreach($all as $i){
 	$id = $i['id'];
-echo "<p> Nombre: " . $i['nombre']  ;
-echo "<p>Email: " . $i['email'] . "</p>  " . "</p> <input type='hidden' value=" . $id . "></input><input type=checkbox></input>";
+	if($i['activo'] == 1){
+		$class = "activo";
+		$checked = "checked";
+	}else{
+		$class = "inactivo";
+		$checked = "";
+	}
+echo "<td class=" . $class . "> Nombre: " . $i['nombre']  ;
+echo "<td>Email: " . $i['email'] . "</td>  " . "</td> <td><input type='hidden' value=" . $id . "></input><input type=checkbox" . $checked ."></input></td>";
 }
 }
 
 ?>
+	</tr>
+</table>
 	</div>
 
 	
