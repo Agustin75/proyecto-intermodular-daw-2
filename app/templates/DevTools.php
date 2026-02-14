@@ -17,29 +17,38 @@
 	  
     <div>
 <table>
-	<tr>
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Email</th>
+			<th>Estado</th>
+		</tr>
+	</thead>
+	<tbody>
 <?php 
 $m = new Usuario;
 $all = $m->listarUsuarios();
 
 if($all != false){
-
-foreach($all as $i){
-	$id = $i['id'];
-	if($i['activo'] == 1){
-		$class = "activo";
-		$checked = "checked";
-	}else{
-		$class = "inactivo";
-		$checked = "";
+	foreach($all as $i){
+		$id = $i['id'];
+		if($i['activo'] == 1){
+			$class = "activo";
+			$checked = "checked";
+		}else{
+			$class = "inactivo";
+			$checked = "";
+		}
+		echo "<tr class='" . $class . "'>";
+		echo "<td>" . $i['nombre'] . "</td>";
+		echo "<td>" . $i['email'] . "</td>";
+		echo "<td><input type='hidden' value='" . $id . "'><input type='checkbox' " . $checked . "></td>";
+		echo "</tr>";
 	}
-echo "<td class=" . $class . "> Nombre: " . $i['nombre']  ;
-echo "<td>Email: " . $i['email'] . "</td>  " . "</td> <td><input type='hidden' value=" . $id . "></input><input type=checkbox" . $checked ."></input></td>";
-}
 }
 
 ?>
-	</tr>
+	</tbody>
 </table>
 	</div>
 

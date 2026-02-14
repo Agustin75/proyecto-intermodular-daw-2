@@ -32,6 +32,7 @@
             <img src="<?= $params["imagen_pokemon_recompensa"] ?>" 
                 alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
             <p class="text-dark">¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
+            <img src="images/win.gif">
         </div>
 
         <div class="container text-center">
