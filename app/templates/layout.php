@@ -13,13 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <div class="container-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <img class="logo" src="images/logo_proyect.png" alt="Imagen de bienvenida">
+                        <img class="logo" src="images/logo_proyect.png" alt="Logo de PokeHunt">
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid my-2">
         <div class="container">
             <div id="contenido">
                 <?= $contenido ?>
@@ -70,9 +70,9 @@
         </div>
     </div>
 
-    <div class="container-fluid pie p-2 my-5">
+    <div class="pie mt-auto p-2">
         <div class="container">
-            <h5 class="text-center"> FOOTER VA AQUÍ </h5>
+            <h5 class="text-center"> contact@pokehunt.com </h5>
         </div>
     </div>
 
