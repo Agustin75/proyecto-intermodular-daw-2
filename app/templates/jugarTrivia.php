@@ -29,10 +29,10 @@
 
         <div class="alert alert-success text-center">
             <h2 class="text-dark">¡Bien hecho!</h2>
-            <img src="<?= $params["imagen_pokemon_recompensa"] ?>" 
+            <img src="<?= $params["imagen_pokemon_recompensa"] ?>"
                 alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
             <p class="text-dark">¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
-            <img src="images/win.gif" alt="Animación de victoria">
+            <img class="win-image" src="images/win.gif" alt="Animación de victoria">
         </div>
 
         <div class="container text-center">
@@ -46,6 +46,7 @@
 
         <div class="alert alert-danger text-center">
             <h2 class="text-dark">Buen intento</h2>
+            <img class="loss-image" src="images/loss.png" alt="Imagen de derrota">
             <p class="text-dark">No te rindas, ¡hazte con todos!</p>
         </div>
 
@@ -73,10 +74,10 @@
                 <?php if (isset($params["trivia"]["opciones"]) && !empty($params["trivia"]["opciones"])): ?>
                     <?php foreach ($params["trivia"]["opciones"] as $i => $op): ?>
                         <div class="form-check text-start">
-                            <input class="form-check-input" 
-                                type="checkbox" 
-                                name="opcion[]" 
-                                value="<?= $i ?>" 
+                            <input class="form-check-input"
+                                type="checkbox"
+                                name="opcion[]"
+                                value="<?= $i ?>"
                                 id="op<?= $i ?>">
 
                             <label class="form-check-label" for="op<?= $i ?>">

@@ -2,34 +2,38 @@
     font-family: "truthAndIdeals";
     src: url(../fonts/Truth\ And\ Ideals-Normal.ttf);
 }
+
 * {
     font-family: "truthAndIdeals";
     /* font-family: "Pixelify Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; */
     color: white;
 }
 
-body{
+body {
     background-image: url(../images/bckgrndproject.png);
 }
 
-.icon{
+.icon {
     max-width: 12%;
     max-height: 25%;
-     transition: all 1s;
+    transition: all 1s;
     text-decoration: none;
 }
+
 .icon:hover {
-     transform: translateY(-30%);
+    transform: translateY(-30%);
 }
 
-.activo{
+.activo {
     background-color: rgba(0, 255, 0, 0.5);
 }
-.inactivo{
+
+.inactivo {
     background-color: rgba(255, 0, 0, 0.5);
 }
+
 .icon:hover .text {
-  opacity: 1;
+    opacity: 1;
     font-size: large;
 }
 
@@ -37,76 +41,93 @@ body{
     transition: all 0.3s ease-in-out;
     font-size: 0;
     opacity: 0;
-  color: white;
+    color: white;
     text-decoration: none;
 
 }
 
-.game{
+.game {
     background-image: url(../images/battlebg.png);
     background-repeat: no-repeat;
     background-size: 100%;
     justify-content: center;
     align-items: center;
     justify-self: center;
-    margin: 0  auto;
+    margin: 0 auto;
     color: black;
     text-shadow: 20px;
     display: block;
     background-position: center;
-    
+
 }
 
-#center{
+#center {
 
-    
+
     display: block;
     width: 250px;
     margin: auto;
     height: 400px;
 }
+
 /* BARRA MENU */
-.menu{
-	background-color: rgba(200, 119, 119, 1);
-    box-shadow: 2px 2px 5px rgba(8, 8, 8, 0.767); /*Sombreado*/
+.menu {
+    background-color: rgba(200, 119, 119, 1);
+    box-shadow: 2px 2px 5px rgba(8, 8, 8, 0.767);
+    /*Sombreado*/
 }
 
 .menu a {
-	color: white;
+    color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-decoration: none;
 }
 
-.menu a:hover { /*Al pasar el raton por encima del menu cambia de color*/
-    color:lightsalmon;
+.menu a:hover {
+    /*Al pasar el raton por encima del menu cambia de color*/
+    color: lightsalmon;
     transition: all .3s;
 }
 
-/* */ 
+.win-image {
+    width: 40%;
+    max-width: 400px;
+}
+
+.loss-image {
+    width: 20%;
+    max-width: 200px;
+}
+
+/* */
 
 h1 {
-	color: rgba(200, 119, 119, 1);
+    color: rgba(200, 119, 119, 1);
 }
-#sileutadiv{
+
+#sileutadiv {
     margin: auto;
     width: 20%;
     border: 10px gray inset;
     background-color: white;
 }
-#silueta{
+
+#silueta {
     filter: brightness(0%);
-     display: block;
+    display: block;
     margin: auto;
     min-height: 70%;
     min-width: 70%;
-    
+
 }
-#audio{
+
+#audio {
     margin: auto;
     justify-content: center;
     align-items: center;
 }
-#descripcion{
+
+#descripcion {
     font-size: 20px;
     margin: auto;
     color: white;
@@ -115,42 +136,50 @@ h1 {
     background-color: rgb(61, 60, 60);
     border: 10px solid rgb(145, 45, 45);
 }
-#pista{
+
+#pista {
     text-decoration: dotted;
     text-decoration-color: black;
     text-decoration-thickness: 2px;
     color: black;
     font-size: 20px;
-    
+
 }
+
 .tablaP {
-	color:rgba(200, 119, 119, 1);
-	font-size: 20px;
+    color: rgba(200, 119, 119, 1);
+    font-size: 20px;
 }
-input{
-    color: black;
-}
-select{
-    color: black;
-}
-option{
+
+input {
     color: black;
 }
 
-.tablaP:hover { /*Al pasar el raton por encima del menu cambia de color*/
+select {
+    color: black;
+}
+
+option {
+    color: black;
+}
+
+.tablaP:hover {
+    /*Al pasar el raton por encima del menu cambia de color*/
     color: rgba(72, 32, 32, 1);
     transition: all .3s;
 }
-textarea{
+
+textarea {
     color: black;
 }
 
 
 /* FOOTER */
 .pie {
-	background-color: rgba(200, 119, 119, 1);
-	color: white;
-	box-shadow: 2px 2px 5px rgba(8, 8, 8, 0.767); /*Sombreado*/	
+    background-color: rgba(200, 119, 119, 1);
+    color: white;
+    box-shadow: 2px 2px 5px rgba(8, 8, 8, 0.767);
+    /*Sombreado*/
 }
 
 
@@ -161,10 +190,11 @@ textarea{
 
 
 .menu-container {
-    max-height: 15vh; 
+    max-height: 15vh;
     /* ocupa un % de la altura de la pantalla */
     flex-direction: column;
-    justify-content: center;   /* centra verticalmente el contenido */
+    justify-content: center;
+    /* centra verticalmente el contenido */
 }
 
 .menu-container .row {
@@ -175,4 +205,3 @@ textarea{
     max-width: 35%;
     max-height: 35%;
 }
-

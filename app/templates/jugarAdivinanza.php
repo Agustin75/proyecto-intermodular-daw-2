@@ -29,10 +29,10 @@
 
         <div class="alert alert-success text-center ">
             <h2 class="text-dark">¡Bien hecho!</h2>
-            <img src="<?= $params["imagen_pokemon_recompensa"] ?>" 
+            <img src="<?= $params["imagen_pokemon_recompensa"] ?>"
                 alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
             <p class="text-dark">¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
-            <img src="images/win.gif">
+            <img class="win-image" src="images/win.gif">
         </div>
 
         <div class="container text-center">
@@ -46,6 +46,7 @@
 
         <div class="alert alert-danger text-center text-dark">
             <h2 class="text-dark">Buen intento</h2>
+            <img class="loss-image" src="images/loss.png" alt="Imagen de derrota">
             <p class="text-dark">No te rindas, ¡hazte con todos!</p>
         </div>
 
@@ -57,41 +58,41 @@
          ESTADO: JUGANDO
     ============================= -->
     <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
- <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
+        <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
             <h4 class="text-center">Grito de pokemon:</h4>
-           <audio id="audio" controls>
+            <audio id="audio" controls>
 
-             <source id="audio" src="<?= $params['tipo_object'] ?>" type="audio/ogg">
-           </audio>
- <?php endif; ?>
+                <source id="audio" src="<?= $params['tipo_object'] ?>" type="audio/ogg">
+            </audio>
+        <?php endif; ?>
 
- <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
+        <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
             <h4 class="text-center">Silueta de pokemon:</h4>
             <div id="sileutadiv">
-            <img id="silueta" src=" <?=  $params['tipo_object'] ?>">
+                <img id="silueta" src=" <?= $params['tipo_object'] ?>">
             </div>
- <?php endif; ?>
- 
- <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
+        <?php endif; ?>
+
+        <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
             <h4 class="text-center">Descripción de pokemon:</h4>
-           <p id="descripcion"> <?=  $params['tipo_object'] ?> </p>
- <?php endif; ?>
- 
+            <p id="descripcion"> <?= $params['tipo_object'] ?> </p>
+        <?php endif; ?>
+
         <br>
 
-        <form  action="index.php?ctl=jugarAdivinanza" method="POST" class=" game text-center">
-            <p id="pista"> <?=  $params['pista1'] ?> </p><br>
-        <p id="pista"> <?=  $params['pista2'] ?> </p><br>
-        <p id="pista"> <?=  $params['pista3'] ?> </p><br>
+        <form action="index.php?ctl=jugarAdivinanza" method="POST" class=" game text-center">
+            <p id="pista"> <?= $params['pista1'] ?> </p><br>
+            <p id="pista"> <?= $params['pista2'] ?> </p><br>
+            <p id="pista"> <?= $params['pista3'] ?> </p><br>
 
             <input type="hidden" name="id" value="<?= $params["id"] ?>">
             <input type="hidden" name="correctPokemonId" value="<?= $params["correctPokemonId"] ?>">
 
             <div class="container">
-            <input name="respuesta">
-                
-            </input>
-        </div>
+                <input name="respuesta">
+
+                </input>
+            </div>
 
             <br>
             <button class="btn btn-success" type="submit" name="bEnviar">

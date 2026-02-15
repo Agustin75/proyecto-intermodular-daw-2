@@ -35,7 +35,7 @@
         <h2 class="text-dark">¡Bien hecho!</h2>
         <img src="<?= $params["imagen_pokemon_recompensa"] ?>" alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
         <p class="text-dark">¡Capturaste un <?= $params["nombre_pokemon_recompensa"] ?>!</p>
-        <img src="images/win.gif">
+        <img class="win-image" src="images/win.gif">
     </div>
     <div class="container text-center">
         <a class="btn btn-success" href="index.php?ctl=juegos">Volver</a>
@@ -43,7 +43,7 @@
 <?php elseif ($params["gameState"] === GAME_STATE_LOST): ?>
     <div class="alert alert-danger text-center">
         <h2 class="text-dark">Buen intento</h2>
-        <img src="" alt="Imagen de derrota">
+        <img class="loss-image" src="images/loss.png" alt="Imagen de derrota">
         <p class="text-dark">No te rindas, ¡hazte con todos!</p>
     </div>
     <div class="container text-center">
