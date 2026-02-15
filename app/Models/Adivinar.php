@@ -70,14 +70,14 @@ class Adivinar
     }
 
      
-    public function editarAdivinanza($idPokemon, $idAdivinanza,  $pista1, $pista2, $pista3)
+    public function editarAdivinanza($idPokemon, $idAdivinanza, $idTipo, $pista1, $pista2, $pista3)
     {
         try {
             $this->conexion->beginTransaction();
 
             // 1) Verificar que el Pokémon no esté usado en otros juegos o en otra trivia distinta a esta
             $sqlCheck = "SELECT id_pokemon FROM (
-                        SELECT id_pokemon FROM j_adivinanza
+                        SELECT id_pokemon FROM j_adivinanza WHERE id != :idAdivinanza
                         UNION
                         SELECT id_pokemon FROM j_trivia_enunciado
                         UNION
@@ -85,6 +85,7 @@ class Adivinar
                     ) AS t
                     WHERE id_pokemon = :id";
             $stmt = $this->conexion->prepare($sqlCheck);
+            $stmt->bindParam(':idAdivinanza', $idAdivinanza);
             $stmt->bindParam(':id', $idPokemon);
             $stmt->execute();
 
@@ -96,7 +97,7 @@ class Adivinar
             // 2) Actualizar enunciado
             $sqlUpdate = "
                 UPDATE j_adivinanza
-                SET id_pokemon = :idPokemon, pista1 = :uno, pista2 = :dos, pista3 = :tres
+                SET id_pokemon = :idPokemon, pista1 = :uno, pista2 = :dos, pista3 = :tres, id_tipo = :idTipo
                 WHERE id = :idAdivinanza
             ";
             $stmt = $this->conexion->prepare($sqlUpdate);
@@ -104,6 +105,7 @@ class Adivinar
             $stmt->bindParam(':uno', $pista1);
             $stmt->bindParam(':dos', $pista2);
             $stmt->bindParam(':tres', $pista3);
+            $stmt->bindParam(':idTipo', $idTipo);
             $stmt->bindParam(':idAdivinanza', $idAdivinanza);
             $stmt->execute();
              $this->conexion->commit();

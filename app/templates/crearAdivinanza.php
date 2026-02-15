@@ -43,7 +43,7 @@
             <select name="tipo" id="selectTipoAdivinar">
                 <option value="-1">-- Selecciona un tipo de juego --</option>
                 <?php foreach ($params["tiposAdivinar"] as $tipo): ?>
-                    <option value="<?= $tipo["id"] ?>"> <?= $tipo["tipo_adivinanza"] ?></option>
+                    <option value="<?= $tipo["id"] ?>" <?= ($params["tipo"] == $tipo["id"] ? "selected" : "") ?>> <?= $tipo["tipo_adivinanza"] ?></option>
                 <?php endforeach; ?>
             </select><br>
     <!-- ============================
@@ -68,7 +68,7 @@
 <br><br>
 <label for="pokemonNameInput">Pokémon: </label>
 
-<input type="text" id="pokemonNameInput" name="id_pokemon" list="pokemonList">
+<input type="text" id="pokemonNameInput" name="id_pokemon" list="pokemonList" value="<?= $params["id_pkmn"] ?? "" ?>">
 <datalist id="pokemonList"> 
     <?php foreach ($params['pokemon_list'] as $pokemon): ?>
         <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->
@@ -80,12 +80,12 @@
          BOTONES
     ============================= -->
     <button class="btn btn-primary" type="submit" name="<?= ($params['modo'] === MODE_EDIT) ? 'bEditarAdivinanza' : 'bCrearAdivinanza' ?>">
-        <?= ($params['modo'] === MODE_EDIT) ? 'Actualizar Adivinanza' : 'Crear Adivinanza' ?>
+        <?= ($params['modo'] === MODE_EDIT) ? 'Actualizar' : 'Crear' ?>
     </button>
 
     <?php if ($params['modo'] === MODE_EDIT): ?>
-        <button type="submit" name="bEliminarAdivinanza" formaction="index.php?ctl=eliminarAdivinanza">
-            Eliminar Trivia
+        <button class="btn btn-danger" type="submit" name="bEliminarAdivinanza" formaction="index.php?ctl=eliminarAdivinanza&id=<?= htmlspecialchars($params['id']) ?>">
+            Eliminar
         </button>
     <?php endif; ?>
 

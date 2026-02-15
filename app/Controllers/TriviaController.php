@@ -236,7 +236,7 @@ public function editarTrivia()
             ];
         }
 
-        $ok = $m->actualizarTrivia($id, $idPokemon, $pregunta, $tiempo, $opcionesModelo);
+        $ok = $m->editarTrivia($id, $idPokemon, $pregunta, $tiempo, $opcionesModelo);
 
         if ($ok) {
             header("Location: index.php?ctl=gestionarJuegos");

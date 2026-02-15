@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2026 a las 15:36:46
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Feb 15, 2026 at 06:14 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `proyecto`
+-- Database: `pokehunt_db`
 --
+CREATE DATABASE IF NOT EXISTS pokehunt_db;
+USE pokehunt_db;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_adivinanza`
+-- Table structure for table `j_adivinanza`
 --
 
 CREATE TABLE `j_adivinanza` (
@@ -36,10 +38,19 @@ CREATE TABLE `j_adivinanza` (
   `pista3` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `j_adivinanza`
+--
+
+INSERT INTO `j_adivinanza` (`id`, `id_pokemon`, `id_tipo`, `pista1`, `pista2`, `pista3`) VALUES
+(1, 25, 2, 'Es un roedor.', 'Puedes encontrarlo en el Bosque Verde.', 'Es la mascota de Pokémon.'),
+(2, 282, 1, 'Fue introducido en la tercera generación.', 'No se puede encontrar salvaje en Hoenn.', 'Uno de sus tipos es el Psíquico.'),
+(3, 773, 3, 'Es de tipo normal.', 'Fue introducido en la generación 7.', 'Fue creado en base a un Pokémon legendario.');
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_clasificar`
+-- Table structure for table `j_clasificar`
 --
 
 CREATE TABLE `j_clasificar` (
@@ -52,17 +63,17 @@ CREATE TABLE `j_clasificar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `j_clasificar`
+-- Dumping data for table `j_clasificar`
 --
 
 INSERT INTO `j_clasificar` (`id`, `id_pokemon`, `id_tipo`, `num_pokemon`, `num_opciones`, `num_requerido`) VALUES
-(20, 1, 2, 11, 11, 1),
-(21, 5, 1, 2, 2, 2);
+(22, 493, 1, 4, 4, 3),
+(23, 1, 2, 2, 3, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_tipo_adivinanza`
+-- Table structure for table `j_tipo_adivinanza`
 --
 
 CREATE TABLE `j_tipo_adivinanza` (
@@ -71,7 +82,7 @@ CREATE TABLE `j_tipo_adivinanza` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `j_tipo_adivinanza`
+-- Dumping data for table `j_tipo_adivinanza`
 --
 
 INSERT INTO `j_tipo_adivinanza` (`id`, `tipo_adivinanza`) VALUES
@@ -82,7 +93,7 @@ INSERT INTO `j_tipo_adivinanza` (`id`, `tipo_adivinanza`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_tipo_clasificar`
+-- Table structure for table `j_tipo_clasificar`
 --
 
 CREATE TABLE `j_tipo_clasificar` (
@@ -91,7 +102,7 @@ CREATE TABLE `j_tipo_clasificar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `j_tipo_clasificar`
+-- Dumping data for table `j_tipo_clasificar`
 --
 
 INSERT INTO `j_tipo_clasificar` (`id`, `tipo_clasificar`) VALUES
@@ -101,7 +112,7 @@ INSERT INTO `j_tipo_clasificar` (`id`, `tipo_clasificar`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_trivia_enunciado`
+-- Table structure for table `j_trivia_enunciado`
 --
 
 CREATE TABLE `j_trivia_enunciado` (
@@ -112,18 +123,16 @@ CREATE TABLE `j_trivia_enunciado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `j_trivia_enunciado`
+-- Dumping data for table `j_trivia_enunciado`
 --
 
 INSERT INTO `j_trivia_enunciado` (`id`, `id_pokemon`, `pregunta`, `tiempo`) VALUES
-(15, 4, 'Pregunta 1', 3),
-(16, 24, 'asd', 2),
-(17, 282, 'ajsdakjsd', 12);
+(18, 6, '¿Cuántos Pokémon existen en la primera generación de Pokémon?', 20);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_trivia_opcion`
+-- Table structure for table `j_trivia_opcion`
 --
 
 CREATE TABLE `j_trivia_opcion` (
@@ -132,20 +141,17 @@ CREATE TABLE `j_trivia_opcion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `j_trivia_opcion`
+-- Dumping data for table `j_trivia_opcion`
 --
 
 INSERT INTO `j_trivia_opcion` (`id`, `opcion`) VALUES
-(20, '1'),
-(21, '2'),
-(22, '22'),
-(23, 'aa'),
-(24, 'ss');
+(25, '150'),
+(26, '151');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `j_trivia_respuesta`
+-- Table structure for table `j_trivia_respuesta`
 --
 
 CREATE TABLE `j_trivia_respuesta` (
@@ -155,21 +161,17 @@ CREATE TABLE `j_trivia_respuesta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `j_trivia_respuesta`
+-- Dumping data for table `j_trivia_respuesta`
 --
 
 INSERT INTO `j_trivia_respuesta` (`id_pregunta`, `id_opcion`, `esCorrecta`) VALUES
-(15, 20, 1),
-(15, 21, 0),
-(16, 21, 0),
-(16, 22, 1),
-(17, 23, 1),
-(17, 24, 0);
+(18, 25, 0),
+(18, 26, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `pokemon_usuario`
+-- Table structure for table `pokemon_usuario`
 --
 
 CREATE TABLE `pokemon_usuario` (
@@ -179,28 +181,16 @@ CREATE TABLE `pokemon_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `pokemon_usuario`
+-- Dumping data for table `pokemon_usuario`
 --
 
 INSERT INTO `pokemon_usuario` (`id_pokemon`, `id_usuario`, `favorito`) VALUES
-(1, 7, 0),
-(1, 8, 1),
-(4, 7, 0),
-(4, 8, 0),
-(4, 11, 0),
-(5, 7, 1),
-(5, 8, 1),
-(24, 7, 0),
-(24, 8, 1),
-(24, 11, 0),
-(282, 7, 0),
-(282, 8, 0),
-(282, 11, 0);
+(25, 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -215,142 +205,134 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `contrasenya`, `email`, `activo`, `imagen`, `puntuacion`, `nivel`) VALUES
-(1, 'admin', 'admin', 'cooladmin@pokehunt.net', 0, 'default', 0, 3),
-(2, 'ffffff', '$2y$10$WxsKF4qMD47MpurUztDxOuf1fvmrNy3h1', 'f@gmail.com', 0, 'default', 0, 0),
-(3, 'wedfs', '$2y$10$feri9CimuPPFPlsP8j.SzuRtSuvDTNjhP', 'addfs@gmail.com', 0, 'default', 0, 2),
-(4, 'usuario', '$2y$10$RyKIwVkr62c3saPB7zhtiu6q9i7eIXt2A', 'a@gmail.com', 0, 'default', 0, 3),
-(5, 'z', '$2y$10$pg9LiO/X1wNSz6uZ/.TK2e8yyGLvSyTHw', 'z@gmail.com', 0, 'default', 0, 2),
-(6, 'a', '$2y$10$0mYf6P.0ExHv6R.pxcfK6.g31bKyT9Y4/qp7fzyz9yoVDfBDTDoFq', 'a@gmail.com', 0, 'default', 0, 2),
-(7, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 1, 'default', 0, 3),
-(8, 'Ash', '$2y$10$xtZuuYs3Vcp2JBpvdk3qb.RdgmPkSV7YWo4JzJR6HhJXBFdxOk4za', 'ash@paleta.com', 0, 'imagen2', 0, 2),
-(9, 'p', '$2y$10$AtpBNhS2j.jDDW6vlRYxeOxpFRZTGfAoh/MFOFQ/bH0.cYU1kNQZ2', 'p@email.com', 0, 'default', 0, 2),
-(11, 'x', '$2y$10$qZslcad6O4GxTf1znJHesecQ3vvhb.QslwVKnOHIdG8BImGGFXANG', 'x@email.com', 0, 'default', 0, 2);
+(1, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 1, 'avatar00', 0, 3),
+(2, 'Ash', '$2y$10$xtZuuYs3Vcp2JBpvdk3qb.RdgmPkSV7YWo4JzJR6HhJXBFdxOk4za', 'ash@paleta.com', 1, 'avatar00', 0, 2);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `j_adivinanza`
+-- Indexes for table `j_adivinanza`
 --
 ALTER TABLE `j_adivinanza`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_tipo` (`id_tipo`);
 
 --
--- Indices de la tabla `j_clasificar`
+-- Indexes for table `j_clasificar`
 --
 ALTER TABLE `j_clasificar`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_tipo` (`id_tipo`);
 
 --
--- Indices de la tabla `j_tipo_adivinanza`
+-- Indexes for table `j_tipo_adivinanza`
 --
 ALTER TABLE `j_tipo_adivinanza`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `j_tipo_clasificar`
+-- Indexes for table `j_tipo_clasificar`
 --
 ALTER TABLE `j_tipo_clasificar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `j_trivia_enunciado`
+-- Indexes for table `j_trivia_enunciado`
 --
 ALTER TABLE `j_trivia_enunciado`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `j_trivia_opcion`
+-- Indexes for table `j_trivia_opcion`
 --
 ALTER TABLE `j_trivia_opcion`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `j_trivia_respuesta`
+-- Indexes for table `j_trivia_respuesta`
 --
 ALTER TABLE `j_trivia_respuesta`
   ADD PRIMARY KEY (`id_pregunta`,`id_opcion`),
   ADD KEY `id_opcion` (`id_opcion`);
 
 --
--- Indices de la tabla `pokemon_usuario`
+-- Indexes for table `pokemon_usuario`
 --
 ALTER TABLE `pokemon_usuario`
   ADD PRIMARY KEY (`id_pokemon`,`id_usuario`),
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
--- Indices de la tabla `usuario`
+-- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nombre` (`nombre`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `j_adivinanza`
+-- AUTO_INCREMENT for table `j_adivinanza`
 --
 ALTER TABLE `j_adivinanza`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `j_clasificar`
+-- AUTO_INCREMENT for table `j_clasificar`
 --
 ALTER TABLE `j_clasificar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT de la tabla `j_tipo_clasificar`
+-- AUTO_INCREMENT for table `j_tipo_clasificar`
 --
 ALTER TABLE `j_tipo_clasificar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `j_trivia_enunciado`
+-- AUTO_INCREMENT for table `j_trivia_enunciado`
 --
 ALTER TABLE `j_trivia_enunciado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT de la tabla `j_trivia_opcion`
+-- AUTO_INCREMENT for table `j_trivia_opcion`
 --
 ALTER TABLE `j_trivia_opcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `j_adivinanza`
+-- Constraints for table `j_adivinanza`
 --
 ALTER TABLE `j_adivinanza`
   ADD CONSTRAINT `j_adivinanza_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `j_tipo_adivinanza` (`id`);
 
 --
--- Filtros para la tabla `j_clasificar`
+-- Constraints for table `j_clasificar`
 --
 ALTER TABLE `j_clasificar`
   ADD CONSTRAINT `j_clasificar_ibfk_1` FOREIGN KEY (`id_tipo`) REFERENCES `j_tipo_clasificar` (`id`);
 
 --
--- Filtros para la tabla `j_trivia_respuesta`
+-- Constraints for table `j_trivia_respuesta`
 --
 ALTER TABLE `j_trivia_respuesta`
   ADD CONSTRAINT `j_trivia_respuesta_ibfk_1` FOREIGN KEY (`id_opcion`) REFERENCES `j_trivia_opcion` (`id`),

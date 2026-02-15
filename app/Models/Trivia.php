@@ -183,13 +183,14 @@ class Trivia
             $sqlCheck = "SELECT id_pokemon FROM (
                             SELECT id_pokemon FROM j_adivinanza
                             UNION
-                            SELECT id_pokemon FROM j_trivia_enunciado
+                            SELECT id_pokemon FROM j_trivia_enunciado WHERE id != :idTrivia
                             UNION
                             SELECT id_pokemon FROM j_clasificar
                         ) AS t
                         WHERE id_pokemon = :id";
 
             $stmt = $this->conexion->prepare($sqlCheck);
+            $stmt->bindParam(':idTrivia', $idTrivia);
             $stmt->bindParam(':id', $idPokemon);
             $stmt->execute();
 
@@ -304,59 +305,6 @@ class Trivia
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function actualizarTrivia($idTrivia, $idPokemon, $pregunta, $tiempo, $opciones)
-    {
-        // 1. Actualizar enunciado
-        $sql = "UPDATE j_trivia_enunciado
-            SET id_pokemon = :pkmn, pregunta = :pregunta, tiempo = :tiempo
-            WHERE id = :id";
-
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':pkmn', $idPokemon);
-        $stmt->bindParam(':pregunta', $pregunta);
-        $stmt->bindParam(':tiempo', $tiempo);
-        $stmt->bindParam(':id', $idTrivia);
-        $stmt->execute();
-
-        // 2. Borrar respuestas anteriores
-        $sql = "DELETE FROM j_trivia_respuesta WHERE id_pregunta = :id";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindParam(':id', $idTrivia);
-        $stmt->execute();
-
-        // 3. Insertar nuevas opciones
-        foreach ($opciones as $op) {
-
-            // Insertar opción si no existe
-            $sqlCheck = "SELECT id FROM j_trivia_opcion WHERE opcion = :txt";
-            $stmt = $this->conexion->prepare($sqlCheck);
-            $stmt->bindParam(':txt', $op['texto']);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                $idOpcion = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
-            } else {
-                $sqlInsert = "INSERT INTO j_trivia_opcion (opcion) VALUES (:txt)";
-                $stmt = $this->conexion->prepare($sqlInsert);
-                $stmt->bindParam(':txt', $op['texto']);
-                $stmt->execute();
-                $idOpcion = $this->conexion->lastInsertId();
-            }
-
-            // Insertar relación
-            $sqlRel = "INSERT INTO j_trivia_respuesta (id_pregunta, id_opcion, esCorrecta)
-                   VALUES (:idTrivia, :idOpcion, :correcta)";
-
-            $stmt = $this->conexion->prepare($sqlRel);
-            $stmt->bindParam(':idTrivia', $idTrivia);
-            $stmt->bindParam(':idOpcion', $idOpcion);
-            $stmt->bindParam(':correcta', $op['correcta']);
-            $stmt->execute();
-        }
-
-        return true;
     }
 
     public function obtenerJuegosSinCompletar(int $idUsuario): array

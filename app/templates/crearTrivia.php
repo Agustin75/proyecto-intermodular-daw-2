@@ -35,7 +35,7 @@
     ============================= -->
     <label for="numOpciones">Número de opciones:</label>
     <input type="number" id="numOpciones" name="numOpciones" min="2" max="10"
-           value="<?= !empty($params['opciones']) ? count($params['opciones']) : 2 ?>">
+        value="<?= !empty($params['opciones']) ? count($params['opciones']) : 2 ?>">
     <button type="button" id="generarOpciones" class="btn btn-primary">Generar</button>
     <label for="info">(Marca el checkbox si esa opcion es correcta)</label>
     <br><br>
@@ -63,33 +63,33 @@
     <!-- ============================
          POKÉMON RECOMPENSA
     ============================= -->
-  <label for="typeSelect">Tipo: </label>
-<select name="typeSelect" id="typeSelect">
-    <option value="">-- Selecciona un tipo --</option>
-    <?php foreach ($params['type_list'] as $type): ?>
-        <option value="<?= $type["id"] ?>"><?= ucfirst($type["name"]) ?></option>
-    <?php endforeach; ?>
-</select>
+    <label for="typeSelect">Tipo: </label>
+    <select name="typeSelect" id="typeSelect">
+        <option value="">-- Selecciona un tipo --</option>
+        <?php foreach ($params['type_list'] as $type): ?>
+            <option value="<?= $type["id"] ?>"><?= ucfirst($type["name"]) ?></option>
+        <?php endforeach; ?>
+    </select>
 
-<label for="generationSelect">Generación: </label>
-<select name="generationSelect" id="generationSelect">
-    <option value="">-- Selecciona una generación --</option>
-    <?php for ($i = 1; $i <= $params['num_generations']; $i++): ?>
-        <option value="<?= $i ?>"><?= $i ?></option>
-    <?php endfor; ?>
-</select>
+    <label for="generationSelect">Generación: </label>
+    <select name="generationSelect" id="generationSelect">
+        <option value="">-- Selecciona una generación --</option>
+        <?php for ($i = 1; $i <= $params['num_generations']; $i++): ?>
+            <option value="<?= $i ?>"><?= $i ?></option>
+        <?php endfor; ?>
+    </select>
 
-<br><br>
-<label for="pokemonNameInput">Pokémon: </label>
+    <br><br>
+    <label for="pokemonNameInput">Pokémon: </label>
 
-<input type="text" id="pokemonNameInput" name="pokemonNameInput" list="pokemonList" value="<?=htmlspecialchars($params["id_pkmn"]) ?>">
-<datalist id="pokemonList">
-    <?php foreach ($params['pokemon_list'] as $pokemon): ?>
-        <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->
-        <!-- We add the &#8291; character to be able to listen to on click events of the datalist -->
-        <option data-id="<?= $pokemon["id"] ?>" value="<?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) . "&#8291;" ?>"></option>
-    <?php endforeach; ?>
-</datalist><br><br>
+    <input type="text" id="pokemonNameInput" name="pokemonNameInput" list="pokemonList" value="<?= htmlspecialchars($params["id_pkmn"]) ?>">
+    <datalist id="pokemonList">
+        <?php foreach ($params['pokemon_list'] as $pokemon): ?>
+            <!-- TODO: Change this funcion to use the PokemonCapitalize function isntead of ucfirst? -->
+            <!-- We add the &#8291; character to be able to listen to on click events of the datalist -->
+            <option data-id="<?= $pokemon["id"] ?>" value="<?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) . "&#8291;" ?>"></option>
+        <?php endforeach; ?>
+    </datalist><br><br>
 
     <!-- ============================
          BOTONES
@@ -97,8 +97,10 @@
     <button class="btn btn-primary" type="submit" name="<?= ($params['modo'] === 'editar') ? 'bEditarTrivia' : 'bCrearTrivia' ?>">
         <?= ($params['modo'] === 'editar') ? 'Actualizar Trivia' : 'Crear Trivia' ?>
     </button>
+    <?php if ($params["modo"] === "editar"): ?>
+        <a href="index.php?ctl=eliminarTrivia&id=<?= htmlspecialchars($params['id']) ?>" class="btn btn-danger">Eliminar</a>
+    <?php endif; ?>
 
-    
 
 </form>
 
