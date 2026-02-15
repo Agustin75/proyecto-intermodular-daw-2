@@ -205,3 +205,20 @@ textarea {
     max-width: 35%;
     max-height: 35%;
 }
+
+/* We manually set the width of the div manually so the options aren't too far apart because Bootstrap doesn't have responsive width */
+/* These breakpoints are equivalent to the infixes: none, "md", "lg" and "xl" respectively */
+.crear-clasificar-container {
+    @media (min-width: 0px) {
+        width: 100%;
+    }
+    @media (min-width: 768px) {
+        width: 80%;
+    }
+    @media (min-width: 992px) {
+        width: 60%;
+    }
+    @media (min-width: 1200px) {
+        width: 50%;
+    }
+}
