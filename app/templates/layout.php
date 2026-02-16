@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <img class="logo" src="images/logo_proyect.png" alt="Logo de PokeHunt">
+                        <a href="index.php?ctl=inicio"><img class="logo" src="images/logo_proyect.png" alt="Logo de PokeHunt"></a>
                     </div>
                 </div>
             </div>
