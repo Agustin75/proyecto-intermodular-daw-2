@@ -1,22 +1,32 @@
-FROM php:7.4-apache
+FROM php:7.4-apache-bullseye
 
-# Instalar dependencias necesarias
+# Actualizar e instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
     git \
     openssl \
     libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
     libzip-dev \
-    && docker-php-ext-install mysqli pdo pdo_mysql gd zip mbstring
+    zip \
+    unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd mysqli pdo pdo_mysql zip
+
+# Generar certificados SSL válidos automáticamente
+RUN mkdir -p /etc/ssl/private /etc/ssl/certs && \
+    openssl req -x509 -nodes -days 365 \
+    -newkey rsa:2048 \
+    -keyout /etc/ssl/private/ssl.key \
+    -out /etc/ssl/certs/ssl.crt \
+    -subj "/C=ES/ST=Valencia/L=Valencia/O=Proyecto/OU=Dev/CN=localhost"
 
 # Clonar tu repositorio
-RUN git clone https://github.com/Agustin75/proyecto-intermodular-daw-2.git /var/www/html
+# RUN git clone https://github.com/Agustin75/proyecto-intermodular-daw-2.git /var/www/html
 
 # Copiar archivo de configuración unificado
-COPY config/apache.conf /etc/apache2/apache2.conf
-
-# Copiar certificados SSL
-COPY config/ssl.crt /etc/ssl/certs/ssl.crt
-COPY config/ssl.key /etc/ssl/private/ssl.key
+COPY config/apache.conf /etc/apache2/conf-available/proyecto.conf
+RUN a2enconf proyecto
 
 # Activar módulos necesarios
 RUN a2enmod ssl rewrite headers

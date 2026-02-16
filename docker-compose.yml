@@ -8,6 +8,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+     - .:/var/www/html
     depends_on:
       - mysql
     networks:
