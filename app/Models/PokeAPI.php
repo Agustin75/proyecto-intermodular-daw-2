@@ -170,6 +170,8 @@ class PokeAPI {
             if (count($speciesInformation) > 0) {
                 // We add a generation field to $lastPokemonObtained
                 $this->lastPokemonObtained["generation"] = $this->getURLId($speciesInformation["generation"]["url"]);
+                // We use the species name, so it doesn't show forms on the name itself
+                $this->lastPokemonObtained["name"] = $speciesInformation["name"];
             }
         }
 

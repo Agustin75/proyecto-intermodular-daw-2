@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2026 a las 15:36:46
+-- Tiempo de generación: 16-02-2026 a las 20:42:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `proyecto`
+-- Base de datos: `pokehunt_db`
 --
 
 -- --------------------------------------------------------
@@ -35,6 +35,15 @@ CREATE TABLE `j_adivinanza` (
   `pista2` text NOT NULL,
   `pista3` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `j_adivinanza`
+--
+
+INSERT INTO `j_adivinanza` (`id`, `id_pokemon`, `id_tipo`, `pista1`, `pista2`, `pista3`) VALUES
+(1, 25, 2, 'Es un roedor.', 'Puedes encontrarlo en el Bosque Verde.', 'Es la mascota de Pokémon.'),
+(2, 282, 1, 'Fue introducido en la tercera generación.', 'No se puede encontrar salvaje en Hoenn.', 'Uno de sus tipos es el Psíquico.'),
+(3, 773, 3, 'Es de tipo normal.', 'Fue introducido en la generación 7.', 'Fue creado en base a un Pokémon legendario.');
 
 -- --------------------------------------------------------
 
@@ -56,8 +65,8 @@ CREATE TABLE `j_clasificar` (
 --
 
 INSERT INTO `j_clasificar` (`id`, `id_pokemon`, `id_tipo`, `num_pokemon`, `num_opciones`, `num_requerido`) VALUES
-(20, 1, 2, 11, 11, 1),
-(21, 5, 1, 2, 2, 2);
+(1, 493, 1, 4, 4, 3),
+(2, 1, 2, 2, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -116,9 +125,7 @@ CREATE TABLE `j_trivia_enunciado` (
 --
 
 INSERT INTO `j_trivia_enunciado` (`id`, `id_pokemon`, `pregunta`, `tiempo`) VALUES
-(15, 4, 'Pregunta 1', 3),
-(16, 24, 'asd', 2),
-(17, 282, 'ajsdakjsd', 12);
+(1, 6, '¿Cuántos Pokémon existen en la primera generación de Pokémon?', 20);
 
 -- --------------------------------------------------------
 
@@ -136,11 +143,8 @@ CREATE TABLE `j_trivia_opcion` (
 --
 
 INSERT INTO `j_trivia_opcion` (`id`, `opcion`) VALUES
-(20, '1'),
-(21, '2'),
-(22, '22'),
-(23, 'aa'),
-(24, 'ss');
+(1, '150'),
+(2, '151');
 
 -- --------------------------------------------------------
 
@@ -159,12 +163,8 @@ CREATE TABLE `j_trivia_respuesta` (
 --
 
 INSERT INTO `j_trivia_respuesta` (`id_pregunta`, `id_opcion`, `esCorrecta`) VALUES
-(15, 20, 1),
-(15, 21, 0),
-(16, 21, 0),
-(16, 22, 1),
-(17, 23, 1),
-(17, 24, 0);
+(1, 1, 0),
+(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -183,19 +183,19 @@ CREATE TABLE `pokemon_usuario` (
 --
 
 INSERT INTO `pokemon_usuario` (`id_pokemon`, `id_usuario`, `favorito`) VALUES
-(1, 7, 0),
-(1, 8, 1),
-(4, 7, 0),
-(4, 8, 0),
-(4, 11, 0),
-(5, 7, 1),
-(5, 8, 1),
-(24, 7, 0),
-(24, 8, 1),
-(24, 11, 0),
-(282, 7, 0),
-(282, 8, 0),
-(282, 11, 0);
+(25, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `token_validacion`
+--
+
+CREATE TABLE `token_validacion` (
+  `id_user` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `valido_hasta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -219,16 +219,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `nombre`, `contrasenya`, `email`, `activo`, `imagen`, `puntuacion`, `nivel`) VALUES
-(1, 'admin', 'admin', 'cooladmin@pokehunt.net', 0, 'default', 0, 3),
-(2, 'ffffff', '$2y$10$WxsKF4qMD47MpurUztDxOuf1fvmrNy3h1', 'f@gmail.com', 0, 'default', 0, 0),
-(3, 'wedfs', '$2y$10$feri9CimuPPFPlsP8j.SzuRtSuvDTNjhP', 'addfs@gmail.com', 0, 'default', 0, 2),
-(4, 'usuario', '$2y$10$RyKIwVkr62c3saPB7zhtiu6q9i7eIXt2A', 'a@gmail.com', 0, 'default', 0, 3),
-(5, 'z', '$2y$10$pg9LiO/X1wNSz6uZ/.TK2e8yyGLvSyTHw', 'z@gmail.com', 0, 'default', 0, 2),
-(6, 'a', '$2y$10$0mYf6P.0ExHv6R.pxcfK6.g31bKyT9Y4/qp7fzyz9yoVDfBDTDoFq', 'a@gmail.com', 0, 'default', 0, 2),
-(7, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 1, 'default', 0, 3),
-(8, 'Ash', '$2y$10$xtZuuYs3Vcp2JBpvdk3qb.RdgmPkSV7YWo4JzJR6HhJXBFdxOk4za', 'ash@paleta.com', 0, 'imagen2', 0, 2),
-(9, 'p', '$2y$10$AtpBNhS2j.jDDW6vlRYxeOxpFRZTGfAoh/MFOFQ/bH0.cYU1kNQZ2', 'p@email.com', 0, 'default', 0, 2),
-(11, 'x', '$2y$10$qZslcad6O4GxTf1znJHesecQ3vvhb.QslwVKnOHIdG8BImGGFXANG', 'x@email.com', 0, 'default', 0, 2);
+(1, 'root', '$2y$10$tQRGLlG2ZPj8oECa5UJxr.ZOJ/ETIT7a972P4AnKzc111E4OCMPV6', 'r@email.com', 1, 'avatar00', 0, 3),
+(2, 'Ash', '$2y$10$xtZuuYs3Vcp2JBpvdk3qb.RdgmPkSV7YWo4JzJR6HhJXBFdxOk4za', 'ash@paleta.com', 1, 'avatar00', 0, 2);
 
 --
 -- Índices para tablas volcadas
@@ -287,6 +279,12 @@ ALTER TABLE `pokemon_usuario`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
+-- Indices de la tabla `token_validacion`
+--
+ALTER TABLE `token_validacion`
+  ADD PRIMARY KEY (`token`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -301,13 +299,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `j_adivinanza`
 --
 ALTER TABLE `j_adivinanza`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `j_clasificar`
 --
 ALTER TABLE `j_clasificar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `j_tipo_clasificar`
@@ -319,19 +317,19 @@ ALTER TABLE `j_tipo_clasificar`
 -- AUTO_INCREMENT de la tabla `j_trivia_enunciado`
 --
 ALTER TABLE `j_trivia_enunciado`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `j_trivia_opcion`
 --
 ALTER TABLE `j_trivia_opcion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -355,6 +353,12 @@ ALTER TABLE `j_clasificar`
 ALTER TABLE `j_trivia_respuesta`
   ADD CONSTRAINT `j_trivia_respuesta_ibfk_1` FOREIGN KEY (`id_opcion`) REFERENCES `j_trivia_opcion` (`id`),
   ADD CONSTRAINT `j_trivia_respuesta_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `j_trivia_enunciado` (`id`);
+
+--
+-- Filtros para la tabla `pokemon_usuario`
+--
+ALTER TABLE `pokemon_usuario`
+  ADD CONSTRAINT `pokemon_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

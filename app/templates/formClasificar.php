@@ -22,40 +22,51 @@
 <?php endif; ?>
 <br>
 
-<div class="container-fluid text-left">
-    <div class="container">
+<!-- We use d-flex to align the form container to the center of the screen -->
+<div class="d-flex justify-content-center">
+    <div class="crear-clasificar-container">
         <form ACTION="index.php?ctl=<?= $params["modo"] === MODE_CREATE ? "crearClasificar" : "guardarClasificar" ?>" METHOD="post">
             <?php if ($params["modo"] === MODE_EDIT): ?>
                 <input type="hidden" id="idClasificar" name="idClasificar" value="<?= htmlspecialchars($params['idClasificar']) ?>">
             <?php endif; ?>
-            <label for="idPokemon">Pokémon de recompensa: </label>
-            <input type="text" id="idPokemon" name="idPokemon" list="pokemonList" value="<?= htmlspecialchars($params['idPokemon']) ?>"><br>
-            <label for="selectTipoClasificar">Clasificar por: </label>
-            <select name="idTipo" id="selectTipoClasificar">
-                <option value="-1">-- Selecciona un tipo de juego --</option>
-                <?php foreach ($params["tiposClasificar"] as $tipo): ?>
-                    <option value="<?= $tipo["id"] ?>" <?= $tipo["id"] === $params["idTipo"] ? 'selected="selected"' : "" ?>><?= $tipo["tipo_clasificar"] ?></option>
-                <?php endforeach; ?>
-            </select><br>
-            <label for="numPokemon">Número de Pokémon a mostrar: </label>
-            <input type="number" id="numPokemon" name="numPokemon" value="<?= htmlspecialchars($params['numPokemon']) ?>"><br>
-            <label for="numOpciones">Número de opciones: </label>
-            <input type="number" id="numOpciones" name="numOpciones" value="<?= htmlspecialchars($params['numOpciones']) ?>"><br>
-            <label for="numRequerido">Número de clasificaciones correctas: </label>
-            <input type="number" id="numRequerido" name="numRequerido" value="<?= htmlspecialchars($params['numRequerido']) ?>"><br>
-            <?php if ($params["modo"] === MODE_CREATE): ?>
-                <input class="btn btn-primary" TYPE="submit" name="bCrearClasificar" VALUE="Crear"><br>
-            <?php else: ?>
-                <input class="btn btn-primary" TYPE="submit" name="bGuardarClasificar" VALUE="Guardar"><br>
-            <?php endif; ?>
+            <div class="d-flex justify-content-between">
+                <label for="idPokemon">Pokémon de recompensa: </label>
+                <input type="text" id="idPokemon" name="idPokemon" list="pokemonList" size="8" value="<?= htmlspecialchars($params['idPokemon']) ?>">
+            </div>
+            <div class="d-flex justify-content-between">
+                <label for="selectTipoClasificar">Clasificar por: </label>
+                <select name="idTipo" id="selectTipoClasificar">
+                    <option value="-1">-- Tipo de juego --</option>
+                    <?php foreach ($params["tiposClasificar"] as $tipo): ?>
+                        <option value="<?= $tipo["id"] ?>" <?= $tipo["id"] === $params["idTipo"] ? 'selected="selected"' : "" ?>><?= $tipo["tipo_clasificar"] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between">
+                <label for="numPokemon">Número de Pokémon a mostrar: </label>
+                <input type="number" id="numPokemon" name="numPokemon" size="2" value="<?= htmlspecialchars($params['numPokemon']) ?>">
+            </div>
+            <div class="d-flex justify-content-between">
+                <label for="numOpciones">Número de opciones: </label>
+                <input type="number" id="numOpciones" name="numOpciones" size="2" value="<?= htmlspecialchars($params['numOpciones']) ?>">
+            </div>
+            <div class="d-flex justify-content-between">
+                <label for="numRequerido">Respuestar correctas necesarias: </label>
+                <input type="number" id="numRequerido" name="numRequerido" size="2" value="<?= htmlspecialchars($params['numRequerido']) ?>">
+            </div>
+            <div class="text-center pt-3">
+                <?php if ($params["modo"] === MODE_CREATE): ?>
+                    <input class="btn btn-primary" TYPE="submit" name="bCrearClasificar" VALUE="Crear"><br>
+                <?php else: ?>
+                    <input class="btn btn-primary" TYPE="submit" name="bGuardarClasificar" VALUE="Guardar">
+                    <a href="index.php?ctl=eliminarClasificar&idClasificar=<?= htmlspecialchars($params['idClasificar']) ?>" class="btn btn-danger">Eliminar</a>
+                <?php endif; ?>
+            </div>
         </form>
     </div>
 </div>
 
 <br>
-<?php if ($params["modo"] === MODE_EDIT): ?>
-    <a href="index.php?ctl=eliminarClasificar&idClasificar=<?= htmlspecialchars($params['idClasificar']) ?>" class="btn btn-danger btn-sm">Eliminar</a>
-<?php endif; ?>
 
 <datalist id="pokemonList">
     <?php foreach ($params['pokemon_list'] as $pokemon): ?>

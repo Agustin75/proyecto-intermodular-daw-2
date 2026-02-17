@@ -9,32 +9,35 @@
 
 <div class="container">
     <div class="row d-flex justify-content-between">
-        <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
+        <div class="col-12 col-sm-6 col-md-4 border border-dark d-flex flex-column p-2 text-center">
             <h3>Adivina el Pokémon</h3>
             <img src="images/adivinanza_cover.png" alt="Imagen sobre el juego de adivinanzas">
-            <p>Adivina el Pokémon según su silueta, grito o descripción</p>
-            <p>Tienes 4 intentos para adivinar el Pokémon</p>
-            <p>Por cada intento fallido revelará una nueva pista</p>
-            <p>Cuanto menos intentos utilices, mayor será tu puntuación</p>
+            <p>Adivina el Pokémon según su silueta, grito o descripción.</p>
+            <p>Tendrás 3 pistas para ayudarte a adivinar el Pokémon.</p>
+            <p>Deberás escribir su nombre correctamente para obtenerlo.</p>
+            <!-- <p>Tienes 4 intentos para adivinar el Pokémon</p> -->
+            <!-- <p>Por cada intento fallido revelará una nueva pista</p> -->
+            <!-- <p>Cuanto menos intentos utilices, mayor será tu puntuación</p> -->
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
                 <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarAdivinanza">Jugar</a>
             <?php endif; ?>
         </div>
-        <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
+        <div class="col-12 col-sm-6 col-md-4 border border-dark d-flex flex-column p-2 text-center">
             <h3>Trivia</h3>
             <img src="images/trivia_cover.png" alt="Imagen sobre el juego de trivias">
             <p>Selecciona todas las respuestas correctas a la pregunta mostrada</p>
-            <p>Tienes un límite de tiempo para responder a la pregunta</p>
-            <p>Cuanto más opciones correctas selecciones, mayor será tu puntuación</p>
+            <!-- <p>Tienes un límite de tiempo para responder a la pregunta</p> -->
+            <!-- <p>Cuanto más opciones correctas selecciones, mayor será tu puntuación</p> -->
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
                 <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarTrivia">Jugar</a>
             <?php endif; ?>
         </div>
-        <div class="col-12 col-sm-3 border border-dark d-flex flex-column p-2 text-center">
+        <div class="col-12 col-sm-6 col-md-4 border border-dark d-flex flex-column p-2 text-center">
             <h3>Clasifica los Pokémon</h3>
             <img src="images/clasificar_cover.png" alt="Imagen sobre el juego de clasificar">
             <p>En este juego verás múltiples Pokémon. Para cada uno, deberás elegir cuál es su tipo o generación.</p>
-            <p>Cuanto menos errores cometas, mayor será tu puntuación</p>
+            <!-- <p>Cuanto menos errores cometas, mayor será tu puntuación</p> -->
+            <p>Deberás contestar una cierta cantidad correctamente para obtener el Pokémon.</p>
             <?php if ($params["user_level"] >= USER_REGISTERED): ?>
                 <a class="btn btn-success mt-auto mx-auto" href="index.php?ctl=jugarClasificar">Jugar</a>
             <?php endif; ?>

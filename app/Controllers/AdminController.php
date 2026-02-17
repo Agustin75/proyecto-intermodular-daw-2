@@ -41,6 +41,14 @@ class AdminController extends Controller
 
     public function mostrarTools()
     {
+        $params = [];
+
+        try {
+            $mUsuario = new Usuario();
+            $params["usuarios"] = $mUsuario->listarUsuarios();
+        } catch (Exception $e) {
+            $this->handleError($e);
+        }
         require __DIR__ . '/../templates/DevTools.php';
     }
 

@@ -85,51 +85,21 @@ class Controller
                 ['Registro', 'registro', 'signup.png']
             ],
             USER_REGISTERED => [
-                ['Mi Perfil', 'miPerfil', 'settings.png'],
-                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png'],
+                ['Opciones', 'opciones', 'settings.png'],
+                ['Mi Perfil', 'mostrarPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ],
             USER_ADMIN => [
                 ['Dev Tools', 'mostrarTools', 'devtools.png'],
-                ['Mi Perfil', 'miPerfil', 'settings.png'],
-                ['Perfil Pokemon', 'perfilPokemon', 'pkmn.png'],
+                ['Gestionar Juegos', 'gestionarJuegos', 'gestionarjuego.png'],
+                ['Opciones', 'opciones', 'settings.png'],
+                ['Mi Perfil', 'mostrarPerfil', 'pkmn.png'],
                 ['Cerrar Sesión', 'cerrarSesion', 'logout.png']
             ]
         ];
 
         // Seleccionar menú base
         $menu = $menusUsuarios[$nivel];
-
-        // ---------------------------------------------------------
-        // 2. Marcar elemento activo
-        // ---------------------------------------------------------
-        foreach ($menu as &$item) {
-            $item['active'] = ($item[1] === $ruta);
-        }
-
-        return $menu;
-    }
-
-    // Returns the admin-related menus based on current page
-    protected function adminMenu(): array
-    {
-        if ($this->session->getUserLevel() != USER_ADMIN) {
-            return [];
-        }
-
-        $ruta  = $this->currentRoute;
-
-        // ---------------------------------------------------------
-        // 1. Menús a agregar según ruta
-        // ---------------------------------------------------------
-        $menusAdmin = [
-            "juegos" => [
-                ['Jugar', 'juegos'],
-                ['Gestionar Juegos', 'gestionarJuegos']
-            ],
-        ];
-
-        $menu = $menusAdmin[$ruta] ?? [];
 
         // ---------------------------------------------------------
         // 2. Marcar elemento activo

@@ -1,7 +1,7 @@
 <?php
 define('DB_HOST', 'localhost');
 //Aqui ponemos la BD de nuestro proyecto
-define('DB_NAME', 'proyecto');
+define('DB_NAME', 'pokehunt_db');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
@@ -78,4 +78,7 @@ define("ADIVINANZA_GRITO", 1);
 define("ADIVINANZA_SILUETA", 2);
 define("ADIVINANZA_DESCRIPCION", 3);
 
+define("NUM_AVATARS", 22);
+define("AVATAR_NAMING_CONVENTION", "avatar");
+define("DEFAULT_AVATAR", AVATAR_NAMING_CONVENTION . "00");
 ?>

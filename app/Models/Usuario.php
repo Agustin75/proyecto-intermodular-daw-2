@@ -93,4 +93,15 @@ class Usuario
         $stmt->bindParam(':nombre', $new);
         return $stmt->execute();
     }
+
+    public function cambiarPassword($password, $id): bool
+    {
+        $sql = "UPDATE usuario
+        SET contrasenya = :password
+        WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':password', $password);
+        return $stmt->execute();
+    }
 }

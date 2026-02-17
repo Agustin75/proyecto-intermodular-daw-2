@@ -1,5 +1,4 @@
 <?php ob_start() ?>
-<head> <link rel=stylesheet href="../web/css/estilo.css" type="text/css"></head>
 
 <h1 class="text-center">Adivina el Pokémon</h1>
 
@@ -28,11 +27,12 @@
     ============================= -->
     <?php if ($params["gameState"] === GAME_STATE_WON): ?>
 
-        <div class="alert alert-success text-center">
-            <h2>¡Bien hecho!</h2>
-            <img src="<?= $params["imagen_pokemon_recompensa"] ?>" 
+        <div class="alert alert-success text-center ">
+            <h2 class="text-dark">¡Bien hecho!</h2>
+            <img src="<?= $params["imagen_pokemon_recompensa"] ?>"
                 alt="Imagen de <?= $params["nombre_pokemon_recompensa"] ?>">
-            <p>¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
+            <p class="text-dark">¡Has ganado un <?= ucfirst($params["nombre_pokemon_recompensa"]) ?>!</p>
+            <img class="win-image" src="images/win.gif">
         </div>
 
         <div class="container text-center">
@@ -44,9 +44,10 @@
     ============================= -->
     <?php elseif ($params["gameState"] === GAME_STATE_LOST): ?>
 
-        <div class="alert alert-danger text-center">
-            <h2>Buen intento</h2>
-            <p>No te rindas, ¡hazte con todos!</p>
+        <div class="alert alert-danger text-center text-dark">
+            <h2 class="text-dark">Buen intento</h2>
+            <img class="loss-image" src="images/loss.png" alt="Imagen de derrota">
+            <p class="text-dark">No te rindas, ¡hazte con todos!</p>
         </div>
 
         <div class="container text-center">
@@ -57,39 +58,41 @@
          ESTADO: JUGANDO
     ============================= -->
     <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
- <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
+        <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
             <h4 class="text-center">Grito de pokemon:</h4>
-           <audio controls>
+            <audio id="audio" controls>
 
-             <source src="<?= $params['tipo_object'] ?>" type="audio/ogg">
-           </audio>
- <?php endif; ?>
+                <source id="audio" src="<?= $params['tipo_object'] ?>" type="audio/ogg">
+            </audio>
+        <?php endif; ?>
 
- <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
+        <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
             <h4 class="text-center">Silueta de pokemon:</h4>
-            <img id="silueta" src=" <?=  $params['tipo_object'] ?>">
- <?php endif; ?>
- 
- <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
-            <h4 class="text-center">Grito de pokemon:</h4>
-            <?=  $params['tipo_object'] ?>
- <?php endif; ?>
- 
+            <div id="sileutadiv">
+                <img id="silueta" src=" <?= $params['tipo_object'] ?>">
+            </div>
+        <?php endif; ?>
+
+        <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
+            <h4 class="text-center">Descripción de pokemon:</h4>
+            <p id="descripcion"> <?= $params['tipo_object'] ?> </p>
+        <?php endif; ?>
+
         <br>
 
-        <form action="index.php?ctl=jugarAdivinanza" method="POST" class="text-center">
-            <p> <?=  $params['pista1'] ?> </p><br>
-        <p> <?=  $params['pista2'] ?> </p><br>
-        <p> <?=  $params['pista3'] ?> </p><br>
+        <form action="index.php?ctl=jugarAdivinanza" method="POST" class=" game text-center">
+            <p id="pista"> <?= $params['pista1'] ?> </p><br>
+            <p id="pista"> <?= $params['pista2'] ?> </p><br>
+            <p id="pista"> <?= $params['pista3'] ?> </p><br>
 
             <input type="hidden" name="id" value="<?= $params["id"] ?>">
             <input type="hidden" name="correctPokemonId" value="<?= $params["correctPokemonId"] ?>">
 
             <div class="container">
-            <input name="respuesta">
-                
-            </input>
-        </div>
+                <input name="respuesta">
+
+                </input>
+            </div>
 
             <br>
             <button class="btn btn-success" type="submit" name="bEnviar">

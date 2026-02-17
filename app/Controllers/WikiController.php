@@ -35,7 +35,7 @@ public function verPokemon()
     }
 
     // Datos básicos
-    $nombre = ucfirst($pokemon["name"]);
+    $nombre = $mApi->getPokemonName($id);
     $tipos = array_map(fn($t) => $t["type"]["name"], $pokemon["types"]);
     $imagenNormal = $pokemon["sprites"]["front_default"] ?? "";
     $imagenShiny = $pokemon["sprites"]["front_shiny"] ?? "";
