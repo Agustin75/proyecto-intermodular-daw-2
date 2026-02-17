@@ -33,31 +33,41 @@
 
     <div class="container">
         <div class="row menu-container">
-            <div class="col-6 text-start">
+            <div class="col-6 text-start  ">
 
                 <?php
                 $menu = $this->menu();
 
-
+                echo "<div  style='display: inline;'>";
                 foreach ($menu as [$texto, $ruta, $img]): ?>
-                    <a class="icon" href="index.php?ctl=<?= $ruta ?>">
-                        <span class="text"><?= $texto ?></span>
+                
+                    <div class="elevar">
+                        <a style="text-decoration: none;" href="index.php?ctl=<?= $ruta ?>">
+                            <span class="text"><?= $texto ?></span>
                         <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
                     </a>
+                        
+                    </div>
+                
                 <?php endforeach; ?>
-
+</div>
             </div>
 
             <div class="col-6 text-end">
                 <?php
                 $userMenu = $this->userMenu();
+                 echo "<div  style='display: inline;'>";
                 foreach ($userMenu as [$texto, $ruta, $img]): ?>
-                    <a class="icon" href="index.php?ctl=<?= $ruta ?>">
+                   <div class="elevar">
+                        <a style="text-decoration: none;" href="index.php?ctl=<?= $ruta ?>">
+                            <span class="text"><?= $texto ?></span>
                         <img alt="<?= $texto ?>" class="icon" src="images/<?= $img ?>">
-                        <span class="text"><?= $texto ?></span>
                     </a>
+                        
+                    </div>
 
                 <?php endforeach; ?>
+                </div>
             </div>
         </div>
     </div>
@@ -86,4 +96,5 @@
         <?php endif; ?>
     <?php endif; ?>
 </body>
+
 </html>
