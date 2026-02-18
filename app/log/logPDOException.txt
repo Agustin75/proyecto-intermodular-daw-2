@@ -1,0 +1,1 @@
+SQLSTATE[HY000] [1130] Host 'localhost' is not allowed to connect to this MariaDB server | 0.63808400 1771432272

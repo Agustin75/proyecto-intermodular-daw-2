@@ -7,7 +7,7 @@ class Database {
         if (self::$instance === null) {
             
                 self::$instance = new PDO(
-                    "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+                    "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";port=3306;charset=utf8mb4",
                     DB_USER,
                     DB_PASS,
                     [

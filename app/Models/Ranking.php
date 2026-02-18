@@ -19,7 +19,7 @@ class Ranking
     public function obtenerRankingPokemon(int $page, int $limit = 100)
     {
         // First of all, we check to make sure we received a valid page based on the limit
-        $sqlCheck = "SELECT * FROM pokemon_usuario GROUP BY id_usuario";
+        $sqlCheck = "SELECT COUNT(*) FROM pokemon_usuario GROUP BY id_usuario";
 
         $stmt = $this->conexion->prepare($sqlCheck);
         $stmt->execute();
@@ -34,7 +34,7 @@ class Ranking
         }
 
         // We obtain a list of users (excluding any admin users) with their amount of Pokemon owned
-        $sql = "SELECT usuario.id, usuario.nombre, imagen, COUNT(id_pokemon) AS num_pokemon
+        $sql = "SELECT usuario.id, usuario.nombre, imagen, COUNT(*) AS num_pokemon
                  FROM pokemon_usuario
                  INNER JOIN usuario ON pokemon_usuario.id_usuario=usuario.id AND nivel!=:adminLevel
                  GROUP BY id_usuario

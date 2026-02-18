@@ -1,9 +1,11 @@
 <?php
-define('DB_HOST', 'localhost');
+define("DESPLEGAR", false);
+
+define('DB_HOST', DESPLEGAR ? 'mysql' : 'localhost');
 //Aqui ponemos la BD de nuestro proyecto
 define('DB_NAME', 'pokehunt_db');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_USER', DESPLEGAR ? 'pokehunt_admin' : 'root');
+define('DB_PASS', DESPLEGAR ? 'hdcsnSD682K' : '');
 
 define("USER_GUEST", 1);
 define("USER_REGISTERED", 2);

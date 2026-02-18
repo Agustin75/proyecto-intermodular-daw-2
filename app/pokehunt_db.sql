@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pokehunt_db`
 --
+CREATE DATABASE IF NOT EXISTS pokehunt_db;
+USE pokehunt_db;
 
 -- --------------------------------------------------------
 
