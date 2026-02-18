@@ -39,6 +39,7 @@
 					echo "<tr class='" . $class . "'>";
 					echo "<td>" . $i['nombre'] . "</td>";
 					echo "<td>" . $i['email'] . "</td>";
+					if ($i['nivel'] !== 3)
 					echo "<td><input type='hidden' value='" . $id . "'><input type='checkbox' " . $checked . "></td>";
 					echo "</tr>";
 				}

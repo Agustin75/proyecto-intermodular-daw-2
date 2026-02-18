@@ -46,7 +46,7 @@
 
         <div class="alert alert-danger text-center text-dark">
             <h2 class="text-dark">Buen intento</h2>
-            <img class="loss-image" src="images/loss.png" alt="Imagen de derrota">
+            <img class="loss-image" src="images/loss.gif" alt="Imagen de derrota">
             <p class="text-dark">No te rindas, ¡hazte con todos!</p>
         </div>
 

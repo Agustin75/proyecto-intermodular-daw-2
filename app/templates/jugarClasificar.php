@@ -43,7 +43,7 @@
 <?php elseif ($params["gameState"] === GAME_STATE_LOST): ?>
     <div class="alert alert-danger text-center">
         <h2 class="text-dark">Buen intento</h2>
-        <img class="loss-image" src="images/loss.png" alt="Imagen de derrota">
+        <img class="loss-image" src="images/loss.gif" alt="Imagen de derrota">
         <p class="text-dark">No te rindas, ¡hazte con todos!</p>
     </div>
     <div class="container text-center">
