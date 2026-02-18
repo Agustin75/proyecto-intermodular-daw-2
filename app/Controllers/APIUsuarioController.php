@@ -51,13 +51,17 @@ class APIUsuarioController extends Controller
         $act = recoge('act');
         $id_pkmn = recoge('id');
         $id = $this->session->getUserId();
-        $m = new PokemonUsuario;
-        $check = $m->obtenerPokemonUsuario($id, true);
+        try {
+            $m = new PokemonUsuario;
+            $check = $m->obtenerPokemonUsuario($id, true);
 
-        if (count($check) >= 6 && $act == true) {
-            $errors = "Se ha llegado al numero máximo de favoritos";
-        } else {
-            $m->asignarFavorito($id, $id_pkmn, $act);
+            if (count($check) >= 6 && $act == true) {
+                $errors = "Se ha llegado al numero máximo de favoritos";
+            } else {
+                $m->asignarFavorito($id, $id_pkmn, $act);
+            }
+        } catch (Exception $e) {
+            $this->handleError($e);
         }
     }
 }

@@ -16,21 +16,17 @@ class PokemonUsuario
      * @param int $idPokemon ID of the Pokémon the User has just obtained
      * @return bool whether the pair was added successfully
      */
-    public function insertarRegistro(int $idUsuario, int $idPokemon): bool
+    public function insertarRegistro(int $idUsuario, int $idPokemon)
     {
-        try {
-            $sql = "INSERT INTO pokemon_usuario (id_pokemon, id_usuario)
+        $sql = "INSERT INTO pokemon_usuario (id_pokemon, id_usuario)
                 VALUES (:idPokemon, :idUsuario)";
 
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':idPokemon', $idPokemon);
-            $stmt->bindParam(':idUsuario', $idUsuario);
-            $stmt->execute();
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idPokemon', $idPokemon);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->execute();
 
-            return true;
-        } catch (PDOException $e) {
-            return false;
-        }
+        return $stmt->rowCount() > 0;
     }
 
     /**
@@ -43,17 +39,13 @@ class PokemonUsuario
      */
     public function asignarFavorito(int $idUsuario, int $idPokemon, bool $favorito): bool
     {
-        try {
-            $sql = "UPDATE pokemon_usuario SET favorito = :favorito WHERE id_pokemon = :idPokemon AND id_usuario = :idUsuario";
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':idPokemon', $idPokemon);
-            $stmt->bindParam(':idUsuario', $idUsuario);
-            $stmt->bindParam(':favorito', $favorito, PDO::PARAM_BOOL);
-            $stmt->execute();
-            return $stmt->rowCount() > 0;
-        } catch (Exception $e) {
-            return false;
-        }
+        $sql = "UPDATE pokemon_usuario SET favorito = :favorito WHERE id_pokemon = :idPokemon AND id_usuario = :idUsuario";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idPokemon', $idPokemon);
+        $stmt->bindParam(':idUsuario', $idUsuario);
+        $stmt->bindParam(':favorito', $favorito, PDO::PARAM_BOOL);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 
     /**
@@ -74,7 +66,4 @@ class PokemonUsuario
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
-    
 }

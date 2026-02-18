@@ -539,8 +539,13 @@ class ClasificarController extends Controller
                         if ($correctAnswers >= $game["num_requerido"]) {
                             // The player won, give them the Pokemon
                             $pokemonWonId = $game["id_pokemon"];
-                            $mPokemonUsuario = new PokemonUsuario();
-                            $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $pokemonWonId);
+                            try {
+                                $mPokemonUsuario = new PokemonUsuario();
+                                $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $pokemonWonId);
+                            } catch (Exception $e) {
+                                    $this->handleError($e);
+                                    return;
+                            }
 
                             // We set the variables necessary to display the Pokemon won here
                             $params["imagen_pokemon_recompensa"] = $mPokeAPI->getPokemonNormalSprite($pokemonWonId);

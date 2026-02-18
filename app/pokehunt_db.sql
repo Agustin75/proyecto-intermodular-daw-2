@@ -177,7 +177,7 @@ INSERT INTO `j_trivia_respuesta` (`id_pregunta`, `id_opcion`, `esCorrecta`) VALU
 CREATE TABLE `pokemon_usuario` (
   `id_pokemon` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `favorito` tinyint(1) NOT NULL
+  `favorito` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
