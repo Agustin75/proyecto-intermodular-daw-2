@@ -13,7 +13,7 @@
 
         <div class="col-md-4 text-center">
             <h4>Shiny</h4>
-            <img width="60%" src="<?= $params["imagenes"]["shiny"] ?>" class="imgWiki">
+            <img width="60%" src="<?= $params["imagenes"]["shiny"] ?>">
         </div>
 
     </div>
