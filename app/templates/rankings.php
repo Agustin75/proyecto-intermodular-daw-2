@@ -1,7 +1,10 @@
 <?php ob_start() ?>
 
 <h1 class="text-center">Rankings</h1>
+<img class="img-fluid mx-auto d-block" src="images/trainer_ranking.png">
 <h2>Pokémon Capturados</h2>
+
+
 <table class="table table-bordered text-center align-middle">
     <thead>
         <tr>
