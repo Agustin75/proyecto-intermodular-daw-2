@@ -60,10 +60,13 @@
     <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
         <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
             <h4 class="text-center">Grito de pokemon:</h4>
+            <br>
+            <div class="text-center">
             <audio id="audio" controls>
 
                 <source id="audio" src="<?= $params['tipo_object'] ?>" type="audio/ogg">
             </audio>
+            </div>
         <?php endif; ?>
 
         <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
@@ -75,7 +78,9 @@
 
         <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
             <h4 class="text-center">Descripción de pokemon:</h4>
+            
             <p id="descripcion"> <?= $params['tipo_object'] ?> </p>
+            
         <?php endif; ?>
 
         <br>
