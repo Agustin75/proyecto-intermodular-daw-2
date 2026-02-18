@@ -7,7 +7,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-     - .:/var/www/html
+     - .:/var/www/docker
      - ./config/pokehunt.ini:/usr/local/etc/php/conf.d/pokehunt.ini
     depends_on:
       - mysql
@@ -23,7 +23,7 @@ services:
       MYSQL_DATABASE: pokehunt_db
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./app/pokehunt_db.sql:/docker-entrypoint-initdb.d/pokehunt_db.sql
+      - ./pokehunt_db.sql:/docker-entrypoint-initdb.d/pokehunt_db.sql
       - ./mysql/init:/docker-entrypoint-initdb.d
     networks:
       - backend

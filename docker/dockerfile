@@ -21,8 +21,8 @@ RUN mkdir -p /etc/ssl/private /etc/ssl/certs && \
     -out /etc/ssl/certs/ssl.crt \
     -subj "/C=ES/ST=Valencia/L=Valencia/O=Proyecto/OU=Dev/CN=localhost"
 
-# Clonar tu repositorio
-# RUN git clone https://github.com/Agustin75/proyecto-intermodular-daw-2.git /var/www/html
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Copiar archivo de configuración unificado
 COPY config/apache.conf /etc/apache2/conf-available/proyecto.conf
@@ -32,3 +32,6 @@ RUN a2enconf proyecto
 RUN a2enmod ssl rewrite headers
 
 EXPOSE 80 443
+
+# Este script clona el repositorio o le hace pull cada vez que se ejecuta
+ENTRYPOINT ["/entrypoint.sh"]
