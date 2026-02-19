@@ -8,4 +8,4 @@ else
     git pull
 fi
 
-apache2-foreground
+exec apache2-foreground
