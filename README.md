@@ -36,8 +36,6 @@ La página cuenta con 3 tipos de usuarios distintos: Invitado, registrado y admi
 
 ## Página Web
 ### Inicio
-![Página de inicio](/app/images-readme/inicio.png)
-
 Al entrar a nuestra página web, el usuario verá la página de inicio con 2 menús: uno general y uno de usuario. En el menú general tendrá la opción de ir al Home, a la Wiki, a los juegos o al ranking. El menú de usuario será distinto para cada usuario. Los usuarios invitados tendrán la opción de iniciar sesión o registrarse, los usuarios registrados podrán acceder a su perfil y a sus opciones, y los usuarios administradores podrán además acceder a la gestión de los juegos y a la administración de los usuarios.
 
 ### Registro
