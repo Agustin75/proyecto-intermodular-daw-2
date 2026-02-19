@@ -43,7 +43,7 @@
             <?php endif; ?>
         </div>
     </div>
-</div>
+</div><br>
 <img id="center" src="images/trainer_think.png">
 <?php if ($params["user_level"] == USER_GUEST): ?>
     <div class="container text-center pt-2">
@@ -52,7 +52,7 @@
         <p>Si no tienes una cuenta aún, <a href="index.php?ctl=registro">regístrate</a>.</p>
     </div>
 <?php endif; ?>
-
+<br>
 <?php $contenido = ob_get_clean() ?>
 
 <?php include 'layout.php' ?>
