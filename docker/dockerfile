@@ -2,6 +2,7 @@ FROM php:7.4-apache-bullseye
 
 # Actualizar e instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
+    dos2unix \
     git \
     openssl \
     libpng-dev \
@@ -22,6 +23,7 @@ RUN mkdir -p /etc/ssl/private /etc/ssl/certs && \
     -subj "/C=ES/ST=Valencia/L=Valencia/O=Proyecto/OU=Dev/CN=localhost"
 
 COPY entrypoint.sh /entrypoint.sh
+RUN dos2unix /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Copiar archivo de configuración unificado
