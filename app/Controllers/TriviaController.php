@@ -111,7 +111,7 @@ class TriviaController extends Controller
                 exit;
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando insertar la trivia en la base de datos.");
         }
 
 
@@ -242,7 +242,7 @@ class TriviaController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando actualizar la trivia en la base de datos.");
         }
 
 
@@ -287,7 +287,7 @@ class TriviaController extends Controller
             exit;
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando eliminar la trivia de la base de datos.");
         }
     }
     public function jugarTrivia()
@@ -376,7 +376,7 @@ class TriviaController extends Controller
                 $params["gameState"] = GAME_STATE_LOST;
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Ha ocurrido un error inesperado.");
         }
         require __DIR__ . '/../templates/jugarTrivia.php';
     }

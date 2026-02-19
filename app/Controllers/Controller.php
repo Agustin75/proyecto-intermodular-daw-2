@@ -112,7 +112,7 @@ class Controller
     }
 
     // Método para el manejo de errores y excepciones
-    protected function handleError(Throwable $e): void
+    protected function handleError(Throwable $e, string $message): void
     {
         switch (true) {
             case $e instanceof PDOException:
@@ -132,7 +132,7 @@ class Controller
             $logFile
         );
 
-        header('Location: index.php?ctl=error?error=' . $e->getMessage());
+        header('Location: index.php?ctl=error&error=' . $message);
         exit;
     }
 

@@ -49,7 +49,7 @@ $map = [
     // Admin user functions
     'mostrarTools'    => ['controller' => 'AdminController',  'action' => 'mostrarTools',    'nivel' => USER_ADMIN],
     'gestionarJuegos' => ['controller' => 'AdminController',  'action' => 'gestionarJuegos', 'nivel' => USER_ADMIN],
-    
+
     //ADIVINANZA:
     'jugarAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'jugarAdivinanza', 'nivel' => USER_REGISTERED],
     'crearAdivinanza'   => ['controller' => 'AdivinanzaController', 'action' => 'crearAdivinanza', 'nivel' => USER_ADMIN],
@@ -61,19 +61,19 @@ $map = [
     'eliminarTrivia'  => ['controller' => 'TriviaController', 'action' => 'eliminarTrivia',  'nivel' => USER_ADMIN],
     'editarTrivia'  => ['controller' => 'TriviaController', 'action' => 'editarTrivia',  'nivel' => USER_ADMIN],
     'jugarTrivia' => ['controller' => 'TriviaController', 'action' => 'jugarTrivia', 'nivel' => USER_REGISTERED],
-    
+
     // CLASIFICAR:
     'crearClasificar'    => ['controller' => 'ClasificarController', 'action' => 'crearClasificar',    'nivel' => USER_ADMIN],
     'editarClasificar'   => ['controller' => 'ClasificarController', 'action' => 'editarClasificar',   'nivel' => USER_ADMIN],
     'guardarClasificar'  => ['controller' => 'ClasificarController', 'action' => 'guardarClasificar',  'nivel' => USER_ADMIN],
     'eliminarClasificar' => ['controller' => 'ClasificarController', 'action' => 'eliminarClasificar', 'nivel' => USER_ADMIN],
-    
+
     // API functions
     'wikiFilterByType'       => ['controller' => 'APIWikiController',    'action' => 'filterByType',       'nivel' => USER_GUEST],
     'wikiFilterByGeneration' => ['controller' => 'APIWikiController',    'action' => 'filterByGeneration', 'nivel' => USER_GUEST],
     'activarUser'            => ['controller' => 'APIUsuarioController', 'action' => 'activarUser',        'nivel' => USER_ADMIN],
     'confirmarCuenta'        => ['controller' => 'APIUsuarioController', 'action' => 'confirmarCuenta',    'nivel' => USER_GUEST],
-    ];
+];
 // -------------------------------------------------------------
 // Resolución de ruta
 // -------------------------------------------------------------
@@ -81,7 +81,8 @@ $ruta = $_GET['ctl'] ?? 'inicio';
 
 if (!isset($map[$ruta])) {
     header("HTTP/1.0 404 Not Found");
-    echo "<h1>Error 404: Ruta '$ruta' no encontrada</h1>";
+    // echo "<h1>Error 404: Ruta '$ruta' no encontrada</h1>";
+    $controller->handleError(new ErrorException(), "ERROR 404: Ruta '$ruta' no encontrada");
     exit;
 }
 
@@ -94,7 +95,8 @@ $requiredLevel  = $map[$ruta]['nivel'];
 // -------------------------------------------------------------
 if (!$session->hasLevel($requiredLevel)) {
     header("HTTP/1.0 403 Forbidden");
-    echo "<h1>403: No tienes permisos para acceder a esta acción</h1>";
+    // echo "<h1>403: No tienes permisos para acceder a esta acción</h1>";
+    $controller->handleError(new ErrorException(), "ERROR 403: No tienes permisos para acceder a esta acción");
     exit;
 }
 
@@ -105,8 +107,13 @@ $controller = new $controllerName($session);
 
 if (!method_exists($controller, $actionName)) {
     header("HTTP/1.0 404 Not Found");
-    echo "<h1>Error 404: Acción '$actionName' no encontrada en $controllerName</h1>";
+    // echo "<h1>Error 404: Acción '$actionName' no encontrada en $controllerName</h1>";
+    $controller->handleError(new ErrorException(), "ERROR 404: Acción '$actionName' no encontrada en $controllerName");
     exit;
 }
 
-$controller->$actionName();
+try {
+    $controller->$actionName();
+} catch (Throwable $e) {
+    $controller->handleError($e, "Ha habido un error inesperado.");
+}

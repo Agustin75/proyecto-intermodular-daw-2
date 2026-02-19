@@ -17,7 +17,7 @@ class APIUsuarioController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando actualizar la cuenta del usuario.");
         }
     }
 
@@ -41,7 +41,7 @@ class APIUsuarioController extends Controller
                 $mValidacion->eliminarToken($token);
             }
         } catch (Exception $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando actualizar la cuenta del usuario.");
         }
     }
 
@@ -61,7 +61,7 @@ class APIUsuarioController extends Controller
                 $m->asignarFavorito($id, $id_pkmn, $act);
             }
         } catch (Exception $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando actualizar la cuenta del usuario.");
         }
     }
 }

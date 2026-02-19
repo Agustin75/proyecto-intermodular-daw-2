@@ -19,7 +19,7 @@ class APIWikiController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener la lista de Pokémon.");
         }
     }
 
@@ -41,7 +41,7 @@ class APIWikiController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener la lista de Pokémon.");
         }
     }
 }

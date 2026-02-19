@@ -1,12 +1,8 @@
 <?php ob_start(); ?>
 
-<h1>Error encontrado</h1>
+<h1>Ha habido un error</h1>
 <?php if (isset($params['mensaje'])): ?>
-    <b><span style="color: rgba(200, 119, 119, 1);">
-    <?php
-        echo $params['mensaje'];
-        echo "</span></b>";
-    ?>
+    <strong><p style="color: rgba(200, 119, 119, 1);"><?= $params['mensaje'] ?></p></strong>
 <?php endif; ?>
 
 <?php $contenido = ob_get_clean() ?>

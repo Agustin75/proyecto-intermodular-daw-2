@@ -57,7 +57,7 @@ class RankingController extends Controller
                     }
                 }
             } catch (Exception $e) {
-                $this->handleError($e);
+                $this->handleError($e, "Hubo un error intentando mostrar los rankings.");
             }
 
             // EXPANSION: We would now obtain a different, score-related ranking here

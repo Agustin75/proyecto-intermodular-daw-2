@@ -75,7 +75,7 @@ class AdivinanzaController extends Controller
                 $params['mensaje'] = implode('<br>', $errores);
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando insertar la adivinanza en la base de datos.");
         }
         require __DIR__ . '/../templates/crearAdivinanza.php';
     }
@@ -195,7 +195,7 @@ class AdivinanzaController extends Controller
             }
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando actualizar la adivinanza en la base de datos.");
         }
 
         require __DIR__ . '/../templates/crearAdivinanza.php';
@@ -234,7 +234,7 @@ class AdivinanzaController extends Controller
             exit;
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando eliminar la adivinanza de la base de datos.");
         }
     }
 
@@ -316,7 +316,7 @@ class AdivinanzaController extends Controller
                 return;
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Ha ocurrido un error inesperado.");
         }
         require __DIR__ . '/../templates/jugarAdivinanza.php';
     }

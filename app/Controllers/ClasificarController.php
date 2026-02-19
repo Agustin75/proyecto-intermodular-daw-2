@@ -97,7 +97,7 @@ class ClasificarController extends Controller
             }
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando insertar el juego de clasificar en la base de datos.");
         }
 
         // We load the Clasificar creation form view
@@ -155,7 +155,7 @@ class ClasificarController extends Controller
                 $params['mensaje'] = implode('<br>', $errores);
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando editar el juego de clasificar en la base de datos.");
         }
 
         // We load the Clasificar creation form view
@@ -258,7 +258,7 @@ class ClasificarController extends Controller
             }
         } catch (Throwable $e) {
             // We delegate the error handling to the controller's method
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando actualizar el juego de clasificar en la base de datos.");
         }
 
         // We load the Clasificar creation form view
@@ -312,7 +312,7 @@ class ClasificarController extends Controller
                 $params['mensaje'] = implode('<br>', $errores);
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando eliminar el juego de clasificar de la base de datos.");
             exit;
         }
 
@@ -463,7 +463,7 @@ class ClasificarController extends Controller
                     $params["numRequerido"] = $selectedGame["num_requerido"];
                 }
             } catch (Throwable $e) {
-                $this->handleError($e);
+                $this->handleError($e, "Ha ocurrido un error inesperado.");
             }
             // We're going back to an already started game (because the player didn't select all the answers)
         } else {
@@ -598,7 +598,7 @@ class ClasificarController extends Controller
                         }
                     }
                 } catch (Throwable $e) {
-                    $this->handleError($e);
+                    $this->handleError($e, "Ha ocurrido un error inesperado.");
                 }
             }
         }

@@ -55,7 +55,7 @@ class UsuarioController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando inicar sesión.");
         }
 
         require __DIR__ . '/../templates/formInicioSesion.php';
@@ -126,7 +126,7 @@ class UsuarioController extends Controller
                         $params['mensaje'] = 'No se ha podido registrar el usuario.';
                     }
                 } catch (Throwable $e) {
-                    $this->handleError($e);
+                    $this->handleError($e, "Hubo un error intentando registrarse.");
                 }
             }
         }
@@ -157,7 +157,7 @@ class UsuarioController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando cambiar la imagen de perfil.");
         }
 
         require __DIR__ . '/../templates/cambioImagen.php';
@@ -193,7 +193,7 @@ class UsuarioController extends Controller
                 $usuario = $m->elegirFavorito($id, $fav_state, $id_pkmn);
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando editar los favoritos.");
         }
         require __DIR__ . '/../templates/cartaPkmn.php';
     }
@@ -227,7 +227,7 @@ class UsuarioController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando cambiar el nombre.");
         }
         require __DIR__ . '/../templates/cambioNombre.php';
     }
@@ -272,7 +272,7 @@ class UsuarioController extends Controller
                 }
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener el correo enlazado al usuario.");
         }
 
         require __DIR__ . '/../templates/pedirUsuario.php';
@@ -336,7 +336,7 @@ class UsuarioController extends Controller
                 }
             }
         } catch (Exception $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando cambiar la contraseña.");
         }
 
         require __DIR__ . '/../templates/cambiarPassword.php';
@@ -351,7 +351,7 @@ class UsuarioController extends Controller
             header("Location: index.php?ctl=inicio");
             exit;
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando cerrar sesión.");
         }
     }
 
@@ -372,7 +372,7 @@ class UsuarioController extends Controller
                 exit;
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener el usuario.");
         }
 
         require __DIR__ . '/../templates/opciones.php';
@@ -382,7 +382,7 @@ class UsuarioController extends Controller
     {
         try {
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener la lista de usuarios.");
         }
         require __DIR__ . '/../templates/DevTools.php';
     }
@@ -436,7 +436,7 @@ class UsuarioController extends Controller
                 $params["allPokemon"][$index] = $currPokemon;
             }
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando acceder al perfil del usuario.");
         }
 
         require __DIR__ . '/../templates/perfilPokemon.php';

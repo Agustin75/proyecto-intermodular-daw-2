@@ -12,7 +12,7 @@ class WikiController extends Controller
                 "num_generations" => $mApi->getNumGenerations(),
             );
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener la lista de Pokémon.");
         }
 
         require __DIR__ . '/../templates/verWiki.php';
@@ -64,7 +64,7 @@ class WikiController extends Controller
                 "generacion" => $generacion
             ];
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener la información del Pokémon.");
         }
         require __DIR__ . '/../templates/verPokemon.php';
     }

@@ -37,7 +37,7 @@ class AdminController extends Controller
                 "adivinar" => $adivinar
             ];
         } catch (Throwable $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener los juegos de la base de datos.");
         }
         require __DIR__ . '/../templates/gestionarJuegos.php';
     }
@@ -50,7 +50,7 @@ class AdminController extends Controller
             $mUsuario = new Usuario();
             $params["usuarios"] = $mUsuario->listarUsuarios();
         } catch (Exception $e) {
-            $this->handleError($e);
+            $this->handleError($e, "Hubo un error intentando obtener los usuarios de la base de datos.");
         }
         require __DIR__ . '/../templates/DevTools.php';
     }
