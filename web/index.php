@@ -82,7 +82,8 @@ $ruta = $_GET['ctl'] ?? 'inicio';
 if (!isset($map[$ruta])) {
     header("HTTP/1.0 404 Not Found");
     // echo "<h1>Error 404: Ruta '$ruta' no encontrada</h1>";
-    $controller->handleError(new ErrorException(), "ERROR 404: Ruta '$ruta' no encontrada");
+    header("Location: index.php?ctl=error&error=ERROR 404: Ruta '$ruta' no encontrada");
+    // $controller->handleError(new ErrorException(), "ERROR 404: Ruta '$ruta' no encontrada");
     exit;
 }
 
