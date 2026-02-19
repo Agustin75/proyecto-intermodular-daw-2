@@ -9,7 +9,6 @@ class InicioController extends Controller
                 "Ve a la Wiki para aprender más sobre los Pokémon, o empieza a capturar Pokémon en la sección de Juegos.",
                 "Compite con otros entrenadores en los Rankings. ¿Lograrás ser el mejor maestro Pokémon?"
             ],
-            // TODO: Añadir imagen para el home aquí
             "image" => "images/logo_proyect.png"
         );
 

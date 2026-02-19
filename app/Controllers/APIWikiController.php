@@ -19,6 +19,7 @@ class APIWikiController extends Controller
                 }
             }
         } catch (Throwable $e) {
+            $this->handleError($e);
         }
     }
 
@@ -40,6 +41,7 @@ class APIWikiController extends Controller
                 }
             }
         } catch (Throwable $e) {
+            $this->handleError($e);
         }
     }
 }

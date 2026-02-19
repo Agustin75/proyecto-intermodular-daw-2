@@ -132,12 +132,14 @@ class Controller
             $logFile
         );
 
-        header('Location: index.php?ctl=error');
+        header('Location: index.php?ctl=error?error=' . $e->getMessage());
         exit;
     }
 
     public function error()
     {
+        $params["mensaje"] = recoge("error");
+
         require __DIR__ . '/../templates/error.php';
     }
 }

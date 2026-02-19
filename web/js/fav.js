@@ -24,7 +24,7 @@ console.log(petition);
     try {
         let info = await fetch(petition);
         if (info.ok) {
-            let data = await info.json();
+            // let data = await info.json();
 
         } else {
             console.log(info.status);

@@ -135,14 +135,14 @@ class UsuarioController extends Controller
 
     public function cambiarImagen()
     {
-        $m = new Usuario();
         $id = $this->session->getUserId();
-
-        $params = [
-            'currImage' => $m->obtenerUsuario($id)["imagen"]
-        ];
-
         try {
+            $m = new Usuario();
+
+            $params = [
+                'currImage' => $m->obtenerUsuario($id)["imagen"]
+            ];
+
             if (isset($_POST['bCambiarImagen'])) {
                 $imagen = recoge('newImage');
 
