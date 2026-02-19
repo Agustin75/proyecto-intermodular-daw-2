@@ -57,9 +57,12 @@
     <!-- ============================
          ESTADO: JUGANDO
     ============================= -->
+    
     <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
+        <div class="game fondoAdivinanza">
         <?php if ($params["tipo"] === ADIVINANZA_GRITO): ?>
-            <h4 class="text-center">Grito de pokemon:</h4>
+            
+            <h4 class="text-center p-3">Grito de pokemon:</h4>
             <br>
             <div class="text-center">
             <audio id="audio" controls>
@@ -70,14 +73,14 @@
         <?php endif; ?>
 
         <?php if ($params["tipo"] === ADIVINANZA_SILUETA): ?>
-            <h4 class="text-center">Silueta de pokemon:</h4>
+            <h4 class="text-center p-3">Silueta de pokemon:</h4>
             <div id="sileutadiv">
                 <img id="silueta" src=" <?= $params['tipo_object'] ?>">
             </div>
         <?php endif; ?>
 
         <?php if ($params["tipo"] === ADIVINANZA_DESCRIPCION): ?>
-            <h4 class="text-center">Descripción de pokemon:</h4>
+            <h4 class="text-center p-3">Descripción de pokemon:</h4>
             
             <p id="descripcion"> <?= $params['tipo_object'] ?> </p>
             
@@ -85,10 +88,10 @@
 
         <br>
 
-        <form action="index.php?ctl=jugarAdivinanza" method="POST" class=" game text-center">
-            <p id="pista"> <?= $params['pista1'] ?> </p><br>
-            <p id="pista"> <?= $params['pista2'] ?> </p><br>
-            <p id="pista"> <?= $params['pista3'] ?> </p><br>
+        <form action="index.php?ctl=jugarAdivinanza" method="POST" class="text-center p-5">
+            <p class="border border-success alert alert-success text-center" id="pista"> <?= $params['pista1'] ?> </p><br>
+            <p class="border border-success alert alert-success text-center" id="pista"> <?= $params['pista2'] ?> </p><br>
+            <p class="border border-success alert alert-success text-center" id="pista"> <?= $params['pista3'] ?> </p><br>
 
             <input type="hidden" name="id" value="<?= $params["id"] ?>">
             <input type="hidden" name="correctPokemonId" value="<?= $params["correctPokemonId"] ?>">
@@ -104,7 +107,7 @@
                 Confirmar
             </button>
         </form>
-
+        </div>
     <?php endif; ?>
 
 <?php endif; ?>

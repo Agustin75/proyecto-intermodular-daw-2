@@ -1,7 +1,7 @@
 <?php ob_start() ?>
 
 <h1 class="text-center">Lista de Pokemon</h1>
-<h3 class="text-center">Selecciona un Pokemon para ver su información</h3>
+<h3 class="text-center">Selecciona un Pokemon para ver su información</h3><br>
 
 <div class="container">
     <div class="row text-center">
@@ -50,7 +50,7 @@
         <option data-id="<?= $pokemon["id"] ?>" value="<?= $pokemon["id"] . " - " . ucfirst($pokemon["name"]) . "&#8291;" ?>"></option>
     <?php endforeach; ?>
 </datalist>
-
+<br>
 <?php $contenido = ob_get_clean() ?>
 
 <?php $script = "wiki.js"; ?>

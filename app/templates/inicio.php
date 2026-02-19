@@ -1,5 +1,5 @@
 <?php ob_start() ?><br>
-<h1 class="text-center"><?php echo $params['page_title'] ?></h1><br><br>
+<h1 class="text-center"><?php echo $params['page_title'] ?></h1><br>
 
 <div class="text-center">
     <img width="65%" src="images/inicio.png" alt="Imagen de profesor Juniper">

@@ -58,14 +58,15 @@
          ESTADO: JUGANDO
     ============================= -->
     <?php elseif ($params["gameState"] === GAME_STATE_PLAYING): ?>
-
-        <h4 class="text-center">
+        <div class="border border-success alert alert-success p-0 text-center">
+        <br>
+        <h4 class="text-center text-dark" style="color:#000;">
             <?= htmlspecialchars($params["trivia"]["enunciado"]["pregunta"]) ?>
         </h4>
 
         <br>
 
-        <form class="game" action="index.php?ctl=jugarTrivia" method="POST" class="text-center">
+        <form action="index.php?ctl=jugarTrivia" method="POST" class="text-center">
 
             <input type="hidden" name="idTrivia" value="<?= $params["idTrivia"] ?>">
             <input type="hidden" name="idPokemon" value="<?= $params["idPokemon"] ?>">
@@ -73,14 +74,14 @@
             <div class="container">
                 <?php if (isset($params["trivia"]["opciones"]) && !empty($params["trivia"]["opciones"])): ?>
                     <?php foreach ($params["trivia"]["opciones"] as $i => $op): ?>
-                        <div class="form-check text-start">
-                            <input class="form-check-input"
+                        <div class="form-check my-2 d-flex justify-content-center align-items-center">
+                            <input class="form-check-input me-2"
                                 type="checkbox"
                                 name="opcion[]"
                                 value="<?= $i ?>"
                                 id="op<?= $i ?>">
 
-                            <label class="form-check-label" for="op<?= $i ?>">
+                            <label class="form-check-label text-dark mb-0" for="op<?= $i ?>" style="color:#000;">
                                 <?= htmlspecialchars($op->texto) ?>
                             </label>
                         </div>
@@ -93,7 +94,7 @@
                 Confirmar
             </button>
         </form>
-
+        </div>
     <?php endif; ?>
 
 <?php endif; ?>

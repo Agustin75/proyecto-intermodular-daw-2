@@ -29,7 +29,7 @@
         </div>
     <?php endforeach; ?>
 </div>
-
+<br>
 <h3> Capturados </h3>
 <div class="row">
     <?php if (count($params["allPokemon"]) === 0): ?>
@@ -47,6 +47,7 @@
         </div>
     <?php endforeach; ?>
 </div>
+<br>
 
 <?php $contenido = ob_get_clean() ?>
 <?php $script = "fav.js"; ?>
