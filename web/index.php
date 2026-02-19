@@ -96,7 +96,8 @@ $requiredLevel  = $map[$ruta]['nivel'];
 if (!$session->hasLevel($requiredLevel)) {
     header("HTTP/1.0 403 Forbidden");
     // echo "<h1>403: No tienes permisos para acceder a esta acción</h1>";
-    $controller->handleError(new ErrorException(), "ERROR 403: No tienes permisos para acceder a esta acción");
+    header("Location: index.php?ctl=error&error=ERROR 403: No tienes permisos para acceder a esta acción");
+    // $controller->handleError(new ErrorException(), "ERROR 403: No tienes permisos para acceder a esta acción");
     exit;
 }
 
@@ -108,7 +109,8 @@ $controller = new $controllerName($session);
 if (!method_exists($controller, $actionName)) {
     header("HTTP/1.0 404 Not Found");
     // echo "<h1>Error 404: Acción '$actionName' no encontrada en $controllerName</h1>";
-    $controller->handleError(new ErrorException(), "ERROR 404: Acción '$actionName' no encontrada en $controllerName");
+    header("Location: index.php?ctl=error&error=ERROR 404: Acción '$actionName' no encontrada en $controllerName");
+    // $controller->handleError(new ErrorException(), "ERROR 404: Acción '$actionName' no encontrada en $controllerName");
     exit;
 }
 
