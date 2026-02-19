@@ -93,9 +93,8 @@ $requiredLevel  = $map[$ruta]['nivel'];
 // Comprobación de permisos
 // -------------------------------------------------------------
 if (!$session->hasLevel($requiredLevel)) {
-    header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-    // header("HTTP/1.0 403 Forbidden");
-    // header("Location: index.php?ctl=error&error=ERROR 403: No tienes permisos para acceder a esta acción");
+    header("HTTP/1.0 403 Forbidden");
+    header("Location: index.php?ctl=error&error=ERROR 403: No tienes permisos para acceder a esta acción");
     exit;
 }
 
