@@ -1,9 +1,12 @@
 <?php ob_start(); ?>
 
-<h1>Ha habido un error</h1>
-<?php if (isset($params['mensaje'])): ?>
-    <strong><p style="color: rgba(200, 119, 119, 1);"><?= $params['mensaje'] ?></p></strong>
-<?php endif; ?>
+<div class="container text-center alert-danger p-3">
+    <h1 class="text-danger">ERROR</h1>
+    <img src="images/error.png" alt="Imagen de error">
+    <?php if (isset($params['mensaje'])): ?>
+        <p class="text-danger"><?= $params['mensaje'] ?></p>
+    <?php endif; ?>
+</div>
 
 <?php $contenido = ob_get_clean() ?>
 
