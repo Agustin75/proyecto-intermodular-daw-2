@@ -1,5 +1,5 @@
 <?php
-define("DESPLEGAR", false);
+define("DESPLEGAR", true);
 
 define('DB_HOST', DESPLEGAR ? 'mysql' : 'localhost');
 //Aqui ponemos la BD de nuestro proyecto
