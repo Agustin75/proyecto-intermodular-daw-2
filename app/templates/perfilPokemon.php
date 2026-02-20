@@ -17,9 +17,9 @@
     <img src="images/avatars/<?= $params["userImage"] ?>.png">
 </div>
 <h3 class="text-center"> Favoritos </h3>
-<div class="row alert-primary border-primary text-center text-dark p-2">
+<div class="row alert-primary border-primary text-center">
     <?php if (count($params["favorites"]) === 0): ?>
-        <p class="text-center">No se ha elegido ningún Pokémon favorito.</p>
+        <p class="text-center text-dark m-2">No se ha elegido ningún Pokémon favorito.</p>
     <?php endif; ?>
     <?php foreach ($params["favorites"] as $pokemon): ?>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
@@ -31,12 +31,12 @@
 </div>
 <br>
 <h3 class="text-center"> Capturados </h3>
-<div class="row alert-secondary border-secondary text-center text-dark p-2">
+<div class="row alert-secondary border-secondary text-center">
      <?php if (isset($params['mensaje'])) : ?>
             <b><span style="color: rgba(200, 119, 119, 1);"><?php echo $params['mensaje'] ?></span></b>
         <?php endif; ?>
     <?php if (count($params["allPokemon"]) === 0): ?>
-        <p class="text-center">No ha capturado ningún Pokémon.</p>
+        <p class="text-center text-dark m-2">No ha capturado ningún Pokémon.</p>
     <?php endif; ?>
     <?php foreach ($params["allPokemon"] as $pokemon): ?>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">

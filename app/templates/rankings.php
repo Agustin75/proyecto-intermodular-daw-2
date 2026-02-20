@@ -26,7 +26,7 @@
                         <a href="index.php?ctl=mostrarPerfil&id=<?= $user["id"] ?>"><?= $user["name"] ?></a>
                     </td>
                     <td class="text-dark"><?= $user["amount"] ?></td>
-                    <td >
+                    <td class="text-dark">
                         <?php if (empty($user["favorites"])): ?>
                             Este usuario no tiene ningún Pokémon favorito
                         <?php else: ?>
