@@ -253,6 +253,7 @@ class AdivinanzaController extends Controller
         ];
 
         $params["gameState"] = GAME_STATE_PLAYING;
+        $params["gameFound"] = true;
 
         try {
             if (isset($_POST["bEnviar"])) {
@@ -283,6 +284,7 @@ class AdivinanzaController extends Controller
                 $mAdivinanza = new Adivinar();
                 $id = recoge('id');
                 if ($id !== "" && cNum($id, "id", $errores, false)) {
+                    $params["gameFound"] = true;
                     $selectedGame = $mAdivinanza->obtenerAdivinanza($id);
 
                     if ($selectedGame === false) {
@@ -293,15 +295,17 @@ class AdivinanzaController extends Controller
                     $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
                     $numGamesLeft = count($gamesList);
                     $params["gameFound"] = $numGamesLeft > 0;
-                    if (!$params["gameFound"]) {
-                        $params['mensaje'] = "No se han encontrado juegos de Adivinanza";
-                    }
                     if ($numGamesLeft > 0) {
                         // Obtain a random game from the list
                         $mPokeAPI = new PokeAPI();
-                    }
-                }
-                $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
+                        }
+                        $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
+                        }
+                        if (!$params["gameFound"]) {
+                            $params['mensaje'] = "No se han encontrado juegos de Adivinanza";
+                        }
+
+                var_dump($selectedGame);
                 $params['id'] = $selectedGame['id'];
                 $params['correctPokemonId'] = $selectedGame["id_pokemon"];
                 $pkmn = $mPokeAPI->getPokemonById($params['correctPokemonId']);
