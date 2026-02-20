@@ -17,6 +17,7 @@ Para la creación de este sitio web utilizamos las siguientes tecnologías:
 - __Bootstrap y CSS:__ Se utilizó una combinación de Bootstrap y CSS para el diseño de las páginas web, así como su adaptabilidad frente a differentes tamaños de pantallas.
 - __MySQL:__ Utilizamos MySQL y phpMyAdmin para crear y gestionar la estructura de la base de datos.
 - __PokeAPI:__ Para obtener toda la información de los Pokémon para su utilización tanto en juegos como en la Wiki utilizamos el API de PokeAPI. Lo conectamos al resto del proyecto a través de un modelo que se encarga de obtener y guardar toda la información necesaria para que los controladores puedan usarla.
+
 ## Base de datos
 ![Diagrama de la base de datos](/app/images-readme/diagrama-base-de-datos.png)
 Para la base de datos, optamos por crear las siguientes tablas:
