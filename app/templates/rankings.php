@@ -2,15 +2,15 @@
 
 <h1 class="text-center">Rankings</h1>
 <img class="img-fluid mx-auto d-block" src="images/trainer_ranking.png">
-<h2>Pokémon Capturados</h2>
+<h2 class="text-center">Pokémon Capturados</h2>
 
 
 <table class="table table-bordered text-center align-middle">
     <thead>
-        <tr>
-            <th>Usuario</th>
-            <th>Capturados</th>
-            <th>Favoritos</th>
+        <tr class="alert-warning text-dark">
+            <th class="text-dark">Usuario</th>
+            <th class="text-dark" >Capturados</th>
+            <th class="text-dark" >Favoritos</th>
         </tr>
     </thead>
     <tbody>
@@ -20,13 +20,13 @@
             </tr>
         <?php else: ?>
             <?php foreach ($params["users"] as $user): ?>
-                <tr>
+                <tr class="alert-secondary text-dark">
                     <td>
                         <img src="images/avatars/<?= $user["image"] ?>.png" alt="Imagen de perfil de <?= $user["name"] ?>"><br>
                         <a href="index.php?ctl=mostrarPerfil&id=<?= $user["id"] ?>"><?= $user["name"] ?></a>
                     </td>
-                    <td><?= $user["amount"] ?></td>
-                    <td>
+                    <td class="text-dark"><?= $user["amount"] ?></td>
+                    <td >
                         <?php if (empty($user["favorites"])): ?>
                             Este usuario no tiene ningún Pokémon favorito
                         <?php else: ?>
