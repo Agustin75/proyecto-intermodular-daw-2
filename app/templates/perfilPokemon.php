@@ -16,10 +16,10 @@
 <div class="text-center">
     <img src="images/avatars/<?= $params["userImage"] ?>.png">
 </div>
-<h3 style="text-align: center;"> Favoritos </h3>
-<div class="row alert-primary text-center">
+<h3 class="text-center"> Favoritos </h3>
+<div class="row alert-primary border-primary text-center text-dark p-2">
     <?php if (count($params["favorites"]) === 0): ?>
-        <p style="text-align: center;">No se ha elegido ningún Pokémon favorito.</p>
+        <p class="text-center">No se ha elegido ningún Pokémon favorito.</p>
     <?php endif; ?>
     <?php foreach ($params["favorites"] as $pokemon): ?>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
@@ -30,13 +30,13 @@
     <?php endforeach; ?>
 </div>
 <br>
-<h3 style="text-align: center;"> Capturados </h3>
-<div class="row alert-secondary text-center">
+<h3 class="text-center"> Capturados </h3>
+<div class="row alert-secondary border-secondary text-center text-dark p-2">
      <?php if (isset($params['mensaje'])) : ?>
             <b><span style="color: rgba(200, 119, 119, 1);"><?php echo $params['mensaje'] ?></span></b>
         <?php endif; ?>
     <?php if (count($params["allPokemon"]) === 0): ?>
-        <p style="text-align: center;">No ha capturado ningún Pokémon.</p>
+        <p class="text-center">No ha capturado ningún Pokémon.</p>
     <?php endif; ?>
     <?php foreach ($params["allPokemon"] as $pokemon): ?>
         <div class="col-6 col-sm-4 col-md-3 col-lg-2">
