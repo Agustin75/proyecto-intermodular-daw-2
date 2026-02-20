@@ -142,4 +142,14 @@ class Controller
 
         require __DIR__ . '/../templates/error.php';
     }
+
+    public function error404()
+    {
+        header("Location: index.php?ctl=error&error=ERROR 404: No se econtró la página solicitada");
+    }
+
+    public function error500()
+    {
+        header("Location: index.php?ctl=error&error=ERROR 500: Hubo un error interno en el servidor");
+    }
 }
