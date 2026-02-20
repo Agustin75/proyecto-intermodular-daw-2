@@ -6,6 +6,13 @@ Proyecto intermodular del segundo año del Grado Superior de Desarrollo de Aplic
 - Agustin Conti
 - Julio Perez
 
+## Índice
+- [PokeHunt](#PokeHunt)
+- [Tecnologías utilizadas](#Tecnologías-utilizadas)
+- [Base de datos](#Base-de-datos)
+- [Página Web](#Página-Web)
+- [Descarga](#Descarga)
+
 ## PokeHunt
 PokeHunt es un sitio web donde no sólo se puede ver información de los distintos Pokémon, sino también jugar a una variedad de juegos para capturar Pokémon y ampliar tu colección.
 
