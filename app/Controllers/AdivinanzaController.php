@@ -305,7 +305,6 @@ class AdivinanzaController extends Controller
                             $params['mensaje'] = "No se han encontrado juegos de Adivinanza";
                         }
 
-                var_dump($selectedGame);
                 $params['id'] = $selectedGame['id'];
                 $params['correctPokemonId'] = $selectedGame["id_pokemon"];
                 $pkmn = $mPokeAPI->getPokemonById($params['correctPokemonId']);
