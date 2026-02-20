@@ -276,7 +276,9 @@ class AdivinanzaController extends Controller
                         $params["gameState"] = GAME_STATE_LOST;
                     }
                 }
-            } else {
+            } 
+            
+            if ($params["gameState"] == GAME_STATE_PLAYING) {
                 $selectedGame = null;
                 $mAdivinanza = new Adivinar();
                 $id = recoge('id');
