@@ -243,77 +243,90 @@ class AdivinanzaController extends Controller
     {
         $errores = [];
 
-        $params = [];
+        $params = [
+            // "id" => "",
+            // "tipo" => "",
+            // "pista1" => "",
+            // "pista2" => "",
+            // "pista3" => "",
+            // "correctPokemonId" => ""
+        ];
+
         $params["gameState"] = GAME_STATE_PLAYING;
 
         try {
-            $mAdivinanza = new Adivinar();
-
-            // Obtain the list of games the player hasn't completed (A game where he hasn't obtained the Pokémon yet)
-            $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
-            $numGamesLeft = count($gamesList);
-            $params["gameFound"] = $numGamesLeft > 0;
-            if (!$params["gameFound"]) {
-                $params['mensaje'] = "No se han encontrado juegos de Adivinanza";
-            }
-
-            if (!isset($_POST["bEnviar"])) {
-
-
-                if ($numGamesLeft > 0) {
-                    // Obtain a random game from the list
-                    $mPokeAPI = new PokeAPI();
-                    $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
-                    $params['id'] = $selectedGame['id'];
-                    $params['correctPokemonId'] = $selectedGame["id_pokemon"];
-                    $pkmn = $mPokeAPI->getPokemonById($params['correctPokemonId']);
-                    $descripcion = $mPokeAPI->getPokemonDescriptionEs($params['correctPokemonId']);
-                    $params['tipo'] = $selectedGame['id_tipo'];
-                    switch ($params['tipo']) {
-                        case 1:
-                            $params['tipo_object'] = $pkmn["cries"]["latest"];
-                            break;
-
-                        case 2:
-                            $params['tipo_object'] = $pkmn["sprites"]["front_default"];
-                            break;
-
-                        case 3:
-                            $params['tipo_object'] = $descripcion;
-                            break;
-                    }
-
-                    $params['pista1'] = $selectedGame["pista1"];
-                    $params['pista2'] = $selectedGame["pista2"];
-                    $params['pista3'] = $selectedGame["pista3"];
-                }
-            } else {
+            if (isset($_POST["bEnviar"])) {
                 $mPokeAPI = new PokeAPI();
-                $id = recoge('id');
                 $respuesta = recoge('respuesta');
                 $correct = recoge('correctPokemonId');
 
-                cTexto($respuesta, "respuesta", $errores);
+                if (cTexto($respuesta, "respuesta", $errores)) {
+                    $correct = intval($correct);
+                    $correct2 = $mPokeAPI->getPokemonName($correct);
+                    $correctcheck = strtolower($correct2);
+                    $respuestacheck = strtolower($respuesta);
+                    if ($correctcheck == $respuestacheck) {
+                        $params['gameState'] = GAME_STATE_WON;
+                        $params['imagen_pokemon_recompensa'] = $mPokeAPI->getPokemonNormalSprite($correct);
+                        $params['nombre_pokemon_recompensa'] = $correct2;
 
-                $correct = intval($correct);
-                $correct2 = $mPokeAPI->getPokemonName($correct);
-                $correctcheck = strtolower($correct2);
-                $respuestacheck = strtolower($respuesta);
-                if ($correctcheck == $respuestacheck) {
-                    $params['gameState'] = GAME_STATE_WON;
-                    $params['imagen_pokemon_recompensa'] = $mPokeAPI->getPokemonNormalSprite($correct);
-                    $params['nombre_pokemon_recompensa'] = $correct2;
-
-                    $mPokemonUsuario = new PokemonUsuario();
-                    $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $correct);
-                } else {
-                    $params["gameState"] = GAME_STATE_LOST;
+                        $mPokemonUsuario = new PokemonUsuario();
+                        $mPokemonUsuario->insertarRegistro($this->session->getUserId(), $correct);
+                    } else {
+                        $params["gameState"] = GAME_STATE_LOST;
+                    }
                 }
-            }
-            if (!empty($errores)) {
-                $params['mensaje'] = implode("<br>", $errores);
+            } else {
+                $selectedGame = null;
+                $mAdivinanza = new Adivinar();
+                $id = recoge('id');
+                if ($id !== "" && cNum($id, "id", $errores, false)) {
+                    $selectedGame = $mAdivinanza->obtenerAdivinanza($id);
 
-                return;
+                    if ($selectedGame === false) {
+                        $errors[] = "No se encontró un juego con ese id.";
+                    }
+                } else {
+                    // Obtain the list of games the player hasn't completed (A game where he hasn't obtained the Pokémon yet)
+                    $gamesList = $mAdivinanza->obtenerJuegosSinCompletar($this->session->getUserId());
+                    $numGamesLeft = count($gamesList);
+                    $params["gameFound"] = $numGamesLeft > 0;
+                    if (!$params["gameFound"]) {
+                        $params['mensaje'] = "No se han encontrado juegos de Adivinanza";
+                    }
+                    if ($numGamesLeft > 0) {
+                        // Obtain a random game from the list
+                        $mPokeAPI = new PokeAPI();
+                    }
+                }
+                $selectedGame = $gamesList[rand(0, $numGamesLeft - 1)];
+                $params['id'] = $selectedGame['id'];
+                $params['correctPokemonId'] = $selectedGame["id_pokemon"];
+                $pkmn = $mPokeAPI->getPokemonById($params['correctPokemonId']);
+                $descripcion = $mPokeAPI->getPokemonDescriptionEs($params['correctPokemonId']);
+                $params['tipo'] = $selectedGame['id_tipo'];
+                switch ($params['tipo']) {
+                    case 1:
+                        $params['tipo_object'] = $pkmn["cries"]["latest"];
+                        break;
+
+                    case 2:
+                        $params['tipo_object'] = $pkmn["sprites"]["front_default"];
+                        break;
+
+                    case 3:
+                        $params['tipo_object'] = $descripcion;
+                        break;
+                }
+
+                $params['pista1'] = $selectedGame["pista1"];
+                $params['pista2'] = $selectedGame["pista2"];
+                $params['pista3'] = $selectedGame["pista3"];
+
+
+                if (!empty($errores)) {
+                    $params['mensaje'] = implode("<br>", $errores);
+                }
             }
         } catch (Throwable $e) {
             $this->handleError($e, "Ha ocurrido un error inesperado.");

@@ -29,11 +29,11 @@
             <?php if ($params["modo"] === MODE_EDIT): ?>
                 <input type="hidden" id="idClasificar" name="idClasificar" value="<?= htmlspecialchars($params['idClasificar']) ?>">
             <?php endif; ?>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between py-2">
                 <label for="idPokemon">Pokémon de recompensa: </label>
                 <input type="text" id="idPokemon" name="idPokemon" list="pokemonList" size="8" value="<?= htmlspecialchars($params['idPokemon']) ?>">
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between py-2">
                 <label for="selectTipoClasificar">Clasificar por: </label>
                 <select name="idTipo" id="selectTipoClasificar">
                     <option value="-1">-- Tipo de juego --</option>
@@ -42,15 +42,15 @@
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between py-2">
                 <label for="numPokemon">Número de Pokémon a mostrar: </label>
                 <input type="number" id="numPokemon" name="numPokemon" size="2" value="<?= htmlspecialchars($params['numPokemon']) ?>">
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between py-2">
                 <label for="numOpciones">Número de opciones: </label>
                 <input type="number" id="numOpciones" name="numOpciones" size="2" value="<?= htmlspecialchars($params['numOpciones']) ?>">
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between py-2">
                 <label for="numRequerido">Respuestar correctas necesarias: </label>
                 <input type="number" id="numRequerido" name="numRequerido" size="2" value="<?= htmlspecialchars($params['numRequerido']) ?>">
             </div>
