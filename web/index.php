@@ -29,8 +29,6 @@ $map = [
     // General functions
     'inicio'            => ['controller' => 'InicioController', 'action'  => 'inicio',           'nivel' => USER_GUEST],
     'error'             => ['controller' => 'InicioController', 'action'  => 'error',            'nivel' => USER_GUEST],
-    'error404'          => ['controller' => 'InicioController', 'action'  => 'error404',         'nivel' => USER_GUEST],
-    'error500'          => ['controller' => 'InicioController', 'action'  => 'error500',         'nivel' => USER_GUEST],
     'registro'          => ['controller' => 'UsuarioController', 'action' => 'registrarUsuario', 'nivel' => USER_GUEST],
     'iniciarSesion'     => ['controller' => 'UsuarioController', 'action' => 'iniciarSesion',    'nivel' => USER_GUEST],
     'wiki'              => ['controller' => 'WikiController',    'action' => 'verWiki',          'nivel' => USER_GUEST],
