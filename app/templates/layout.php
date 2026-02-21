@@ -81,8 +81,9 @@
     </div>
 
     <div class="pie mt-auto p-2">
-        <div class="container">
-            <h5 class="text-center"> contact@pokehunt.com </h5>
+        <div class="container text-center">
+            <a href="" class="text-center px-2">contact@pokehunt.com</a>
+            <a href="" class="text-center px-2">Políticas de Privacidad</a>
         </div>
     </div>
 
